@@ -1,39 +1,176 @@
 {
-  "version": 2.0,
-  "questions": [
-    {
-      "question": "This is a Sample Question 1?",
-      "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+    "version": 2.0,
+    "questions": [
+      {
+        "question": "What mathematical criterion does the Wiener filter minimize to achieve optimality?",
+        "answers": {
+          "a": "Maximum likelihood estimation error.",
+          "b": "Mean-square error (MSE) between the desired and estimated signals.",
+          "c": "Maximum energy of the desired signal.",
+          "d": "Cross-correlation between the noise and the desired signal."
+        },
+        "explanations": {
+          "a": "Maximum likelihood estimation is a separate statistical approach.",
+          "b": "The Wiener filter minimizes the mean-square error (MSE) to achieve optimality.",
+          "c": "Maximizing signal energy is not part of the Wiener filter's objective.",
+          "d": "Cross-correlation minimization is not the primary criterion for Wiener filtering."
+        },
+        "correctAnswer": "b",
+        "difficulty": "hard"
       },
-      "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+      {
+        "question": "How does the Wiener filter achieve the optimal solution in the frequency domain?",
+        "answers": {
+          "a": "By maximizing the signal-to-noise ratio (SNR).",
+          "b": "By minimizing the power spectral density (PSD) of the noise.",
+          "c": "By matching the filter response to the ratio of the signal PSD to the total PSD.",
+          "d": "By minimizing the energy of the filtered noise."
+        },
+        "explanations": {
+          "a": "While SNR is improved, the Wiener filter focuses on minimizing the MSE.",
+          "b": "The Wiener filter does not explicitly minimize noise PSD but uses its relationship with the signal.",
+          "c": "The Wiener filter is derived using the ratio of the signal PSD to the total PSD (signal + noise).",
+          "d": "Minimizing noise energy is a byproduct, not the explicit goal."
+        },
+        "correctAnswer": "c",
+        "difficulty": "hard"
       },
-      "correctAnswer": "a",
-      "difficulty": "beginner"
-    },
-    {
-      "question": "This is a Sample Question 2?",
-      "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+      {
+        "question": "In Wiener filtering, the filter output is guaranteed to be:",
+        "answers": {
+          "a": "The exact replica of the desired signal.",
+          "b": "The minimum mean-square-error estimate of the desired signal.",
+          "c": "The maximum likelihood estimate of the desired signal.",
+          "d": "The maximum a posteriori estimate of the desired signal."
+        },
+        "explanations": {
+          "a": "Wiener filtering does not provide an exact replica, especially in the presence of noise.",
+          "b": "The Wiener filter provides the minimum mean-square-error (MMSE) estimate.",
+          "c": "Maximum likelihood estimation is not the basis of Wiener filtering.",
+          "d": "The Wiener filter does not explicitly use Bayesian approaches for maximum a posteriori estimation."
+        },
+        "correctAnswer": "b",
+        "difficulty": "hard"
       },
-      "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+      {
+        "question": "What is the form of the Wiener filter in the time domain?",
+        "answers": {
+          "a": "A convolution operation involving the cross-correlation and autocorrelation functions.",
+          "b": "An addition of the desired signal and noise.",
+          "c": "A subtraction of the noise from the observed signal.",
+          "d": "A multiplication of the observed signal with the inverse of the noise spectrum."
+        },
+        "explanations": {
+          "a": "The Wiener filter involves a convolution of the inverse of the autocorrelation matrix and the cross-correlation vector.",
+          "b": "The Wiener filter does not simply add the desired signal and noise.",
+          "c": "It is not a subtraction process but an optimization using statistical properties.",
+          "d": "This describes the frequency domain implementation, not the time domain."
+        },
+        "correctAnswer": "a",
+        "difficulty": "hard"
       },
-      "correctAnswer": "c",
-      "difficulty": "beginner"
-    }
-  ]
-}
+      {
+        "question": "What is the role of the power spectral density (PSD) in the Wiener filter design?",
+        "answers": {
+          "a": "It determines the filter's stability.",
+          "b": "It adjusts the filter's cutoff frequency.",
+          "c": "It defines the optimal filter response in the frequency domain.",
+          "d": "It directly minimizes the noise energy."
+        },
+        "explanations": {
+          "a": "Stability is not determined by PSD.",
+          "b": "The cutoff frequency adjustment is not the main purpose of PSD.",
+          "c": "The PSD is used to compute the filter's optimal frequency response.",
+          "d": "Minimizing noise energy is a result of the filter's design, not a direct PSD role."
+        },
+        "correctAnswer": "c",
+        "difficulty": "hard"
+      },
+      {
+        "question": "When applying the Wiener filter to an autoregressive (AR) process, how is the prediction error minimized?",
+        "answers": {
+          "a": "By estimating the coefficients using the Yule-Walker equations.",
+          "b": "By directly computing the inverse of the autocorrelation matrix.",
+          "c": "By assuming the noise is white and uncorrelated.",
+          "d": "By maximizing the output power of the filter."
+        },
+        "explanations": {
+          "a": "The Yule-Walker equations are used to compute AR coefficients, minimizing prediction error.",
+          "b": "Direct computation of the matrix inverse is not specific to AR processes.",
+          "c": "While white noise is often assumed, minimizing prediction error requires AR modeling.",
+          "d": "Output power maximization is not the goal of Wiener filtering."
+        },
+        "correctAnswer": "a",
+        "difficulty": "hard"
+      },
+      {
+        "question": "Why does the Wiener filter require knowledge of the cross-correlation between the input and the desired signal?",
+        "answers": {
+          "a": "To compute the inverse of the noise spectrum.",
+          "b": "To determine the filter length.",
+          "c": "To calculate the optimal filter weights.",
+          "d": "To minimize the autocorrelation of the noise."
+        },
+        "explanations": {
+          "a": "The cross-correlation is not directly used for the noise spectrum.",
+          "b": "Filter length is not determined by the cross-correlation.",
+          "c": "Cross-correlation is crucial for deriving the optimal weights in the Wiener filter.",
+          "d": "Minimizing noise autocorrelation is not the primary purpose of the cross-correlation."
+        },
+        "correctAnswer": "c",
+        "difficulty": "hard"
+      },
+      {
+        "question": "In practice, why is the Wiener filter often approximated as the Least Mean Squares (LMS) filter?",
+        "answers": {
+          "a": "LMS provides a better mean square error than Wiener filtering.",
+          "b": "LMS does not require prior knowledge of the signal and noise statistics.",
+          "c": "LMS operates in the frequency domain instead of the time domain.",
+          "d": "LMS minimizes the maximum error rather than the mean square error."
+        },
+        "explanations": {
+          "a": "LMS does not outperform Wiener filtering in terms of theoretical MSE.",
+          "b": "LMS adapts to unknown signal and noise statistics, unlike Wiener filtering.",
+          "c": "Both can operate in the time domain.",
+          "d": "LMS also minimizes the mean square error, not the maximum error."
+        },
+        "correctAnswer": "b",
+        "difficulty": "hard"
+      },
+      {
+        "question": "How does the Wiener filter handle colored noise in signal processing applications?",
+        "answers": {
+          "a": "By assuming noise is white and uncorrelated.",
+          "b": "By incorporating the noise autocorrelation into the filter design.",
+          "c": "By applying a high-pass filter to remove the noise.",
+          "d": "By reducing the power spectral density of the signal."
+        },
+        "explanations": {
+          "a": "Colored noise cannot be accurately modeled as white noise.",
+          "b": "The Wiener filter accounts for colored noise by considering its autocorrelation properties.",
+          "c": "A high-pass filter is not sufficient for colored noise.",
+          "d": "Reducing signal PSD is not the goal of handling colored noise."
+        },
+        "correctAnswer": "b",
+        "difficulty": "hard"
+      },
+      {
+        "question": "What is a key limitation of the Wiener filter in real-time applications?",
+        "answers": {
+          "a": "It cannot be implemented in the time domain.",
+          "b": "It requires prior knowledge of signal and noise statistics.",
+          "c": "It only works for linear systems.",
+          "d": "It is computationally unstable."
+        },
+        "explanations": {
+          "a": "The Wiener filter can be implemented in both time and frequency domains.",
+          "b": "The Wiener filter requires known signal and noise statistics, which are not always available in real-time.",
+          "c": "While the Wiener filter is linear, it is not limited to only linear systems.",
+          "d": "The Wiener filter is computationally stable but may require high resources."
+        },
+        "correctAnswer": "b",
+        "difficulty": "hard"
+      }
+    ]
+  }
+  
