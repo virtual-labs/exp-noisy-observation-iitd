@@ -70,12 +70,11 @@
     <h1>Instructions for Wiener Filtering for Sine, Cosine, AM, and DSB-SC Signals</h1>
     <ul>
         <li>Step 1: Click on 'Generate Message' button to generate input message signal</li>
-		<li>Step 2: Click on 'Generate PSD for Message Signal' to view the power spectral density of the original signal</li>
-        <li>Step 3: Click on 'Generate Noisy Signal' button to generate noisy signal</li>
-		<li>Step 4: Click on 'Generate PSD for Noisy Signal' to view the power spectral density of the noisy signal</li>
-        <li>Step 5: Click on 'Show Filter Coefficeints' to view wiener filter Coefficients</li>
-		<li>Step 6: Click on 'Generate Estimated Signal' to view the estimated signal emerging from the Wiener filter.</li>
-		<li>Step 7: Click on 'Generate Residual Signal' to view the difference between the original message signal and the filtered signal</li>
+        <li>Step 2: Click on 'Generate Noisy Signal' button to generate noisy signal</li>
+		<li>Step 3: Click on 'Generate PSD for Noisy Signal' to view the power spectral density of the noisy signal</li>
+        <li>Step 4: Click on 'Show Filter Coefficeints' to view wiener filter Coefficients</li>
+		<li>Step 5: Click on 'Generate Estimated Signal' to view the estimated signal emerging from the Wiener filter.</li>
+		<li>Step 6: Click on 'Generate Residual Signal' to view the difference between the original message signal and the filtered signal</li>
 		</ul>
 	</div>
 	<hr/>
@@ -143,12 +142,6 @@
                 >
                   Generate Message
                 </button>
-				<button
-                  class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[500px] left-[2px]"
-                  onclick="generatePSD1()"
-                >
-                  Generate PSD for Message Signal
-                </button>
 								<button
                   class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[540px] left-[2px]"
                   onclick="generateNoisySignal()"
@@ -194,9 +187,6 @@
 	<div class = "middle">
 	            <div id = "scrolltomessage" class="flex items-center gap-2 justify-center max-lg:flex-col">
               <div id="plot11" class="w-[600px] h-[450px]"></div>
-			</div>
-		    <div id = "scrolltopsd1" class="flex items-center gap-2 justify-center max-lg:flex-col">
-              <div id="psdPlot1" class="w-[600px] h-[450px]"></div>
 			</div>
 			<div id = "scrolltonoisy" class="flex items-center gap-2 justify-center max-lg:flex-col">
               <div id="plot12" class="w-[600px] h-[450px]"></div>
@@ -804,7 +794,7 @@ function handleInputChange(fs, fm, fc) {
                     //range: [-120, 0] // Specify your desired y-axis range here
                 }
             });
-			document.getElementById('scrolltopsd1').scrollIntoView({ behavior: 'smooth' });
+			//document.getElementById('scrolltopsd1').scrollIntoView({ behavior: 'smooth' });
 
             // If x is not null, calculate and plot the PSD for the noisy signal
             if (x) {
