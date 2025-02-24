@@ -235,6 +235,7 @@
             // Check if the length of the array is odd
             if (messageFrequency >= carrierFrequency) {
                 alert("The carrier frequency must be higher than the message frequency.");
+				window.location.reload(true); 
             } 
         }
 
@@ -257,6 +258,7 @@
             // Check if the length of the array is odd
             if (samplingFreq <= carrierFreq) {
                 alert("The sampling frequency must be higher than the carrier frequency.");
+				window.location.reload(true); 
             } 
         }
 
@@ -418,6 +420,12 @@ function solveToeplitz(toeplitzMatrix, Rxy) {
         function nextPowerOf2(n) {
             return Math.pow(2, Math.ceil(Math.log2(n)));
         }
+	
+		        const rr = {
+            showLink: false,             
+            displaylogo: false,           
+            modeBarButtonsToRemove: ['sendDataToCloud'] 
+        };
 
         let fs;    // Sampling frequency
 		let fm;
@@ -529,7 +537,7 @@ function handleInputChange(fs, fm, fc) {
             // Plot original message signal
             Plotly.newPlot('plot11', [
                 { x: Array.from({ length: fs }, (_, i) => i / fs), y: y, mode: 'lines', name: 'Original Message Signal' }
-            ], { title: 'Original Message Signal' });
+            ], { title: 'Original Message Signal' }, rr);
 				document.getElementById('scrolltomessage').scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -553,7 +561,7 @@ function handleInputChange(fs, fm, fc) {
 
 		        Plotly.newPlot('plot12', [
             { x: tt, y: x, mode: 'lines', name: 'Noisy Signal' },
-        ], { title: 'Noisy Signal' });
+        ], { title: 'Noisy Signal' }, rr);
 			document.getElementById('scrolltonoisy').scrollIntoView({ behavior: 'smooth' });
     }
 	
@@ -602,7 +610,7 @@ function handleInputChange(fs, fm, fc) {
         xest = xest.map(val => Math.round(val * 1e6) / 1e6);
         Plotly.newPlot('plot2', [
             { x: tt.slice(N), y: xest.slice(N), mode: 'lines', name: 'Estimated Signal' }
-        ], { title: 'Estimated Signal' });
+        ], { title: 'Estimated Signal' }, rr);
 	   document.getElementById('scrolltoestimated').scrollIntoView({ behavior: 'smooth' });
     }
     
@@ -645,7 +653,7 @@ function handleInputChange(fs, fm, fc) {
         let xest = ifft(Y_fft);
         Plotly.newPlot('plot3', [
             { x: tt.slice(N), y: x.slice(N).map((val, i) => val - xest[i + N]), mode: 'lines', name: 'Residue Signal', line: { width: 0.5 } }
-        ], { title: 'Residue Signal', yaxis: { range: [-1, 1] } });
+        ], { title: 'Residue Signal', yaxis: { range: [-1, 1] } }, rr);
 		document.getElementById('scrolltoresidue').scrollIntoView({ behavior: 'smooth' });
     }
  
@@ -793,7 +801,7 @@ function handleInputChange(fs, fm, fc) {
                     title: 'Power/Frequency (dB/Hz)'
                     //range: [-120, 0] // Specify your desired y-axis range here
                 }
-            });
+            }, rr);
 			//document.getElementById('scrolltopsd1').scrollIntoView({ behavior: 'smooth' });
 
             // If x is not null, calculate and plot the PSD for the noisy signal
@@ -817,7 +825,7 @@ function handleInputChange(fs, fm, fc) {
                         title: 'Power/Frequency (dB/Hz)'
                         //range: [-120, 10] // Specify your desired y-axis range here
                     }
-                });
+                }, rr);
 			document.getElementById('scrolltopsd2').scrollIntoView({ behavior: 'smooth' });
             }
         }
@@ -873,7 +881,7 @@ function handleInputChange(fs, fm, fc) {
         title: 'Wiener Filter Coefficients',
         xaxis: { title: 'Coefficient Index' },
         yaxis: { title: 'Coefficient Value' }
-    });
+    }, rr);
 		document.getElementById('scrolltocoefficients').scrollIntoView({ behavior: 'smooth' });
 }
 
