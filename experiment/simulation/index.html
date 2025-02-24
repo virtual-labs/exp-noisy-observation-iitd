@@ -644,8 +644,8 @@ function handleInputChange(fs, fm, fc) {
         let Y_fft = multiplyComplexArrays(B_fft, X_fft);
         let xest = ifft(Y_fft);
         Plotly.newPlot('plot3', [
-            { x: tt.slice(N), y: x.slice(N).map((val, i) => val - xest[i + N]), mode: 'lines', name: 'Residue Signal' }
-        ], { title: 'Residue Signal' });
+            { x: tt.slice(N), y: x.slice(N).map((val, i) => val - xest[i + N]), mode: 'lines', name: 'Residue Signal', line: { width: 0.5 } }
+        ], { title: 'Residue Signal', yaxis: { range: [-1, 1] } });
 		document.getElementById('scrolltoresidue').scrollIntoView({ behavior: 'smooth' });
     }
  
