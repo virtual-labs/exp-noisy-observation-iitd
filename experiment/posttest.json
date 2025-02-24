@@ -2,7 +2,7 @@
     "version": 2.0,
     "questions": [
       {
-        "question": "What mathematical criterion does the Wiener filter minimize to achieve optimality?",
+        "question": "1. What mathematical criterion does the Wiener filter minimize to achieve optimality?",
         "answers": {
           "a": "Maximum likelihood estimation error.",
           "b": "Mean-square error (MSE) between the desired and estimated signals.",
@@ -19,7 +19,7 @@
         "difficulty": "hard"
       },
       {
-        "question": "How does the Wiener filter achieve the optimal solution in the frequency domain?",
+        "question": "2. How does the Wiener filter achieve the optimal solution in the frequency domain?",
         "answers": {
           "a": "By maximizing the signal-to-noise ratio (SNR).",
           "b": "By minimizing the power spectral density (PSD) of the noise.",
@@ -36,7 +36,7 @@
         "difficulty": "hard"
       },
       {
-        "question": "In Wiener filtering, the filter output is guaranteed to be:",
+        "question": "3. In Wiener filtering, the filter output is guaranteed to be:",
         "answers": {
           "a": "The exact replica of the desired signal.",
           "b": "The minimum mean-square-error estimate of the desired signal.",
@@ -53,7 +53,7 @@
         "difficulty": "hard"
       },
       {
-        "question": "What is the form of the Wiener filter in the time domain?",
+        "question": "4. What is the form of the Wiener filter in the time domain?",
         "answers": {
           "a": "A convolution operation involving the cross-correlation and autocorrelation functions.",
           "b": "An addition of the desired signal and noise.",
@@ -70,7 +70,7 @@
         "difficulty": "hard"
       },
       {
-        "question": "What is the role of the power spectral density (PSD) in the Wiener filter design?",
+        "question": "5. What is the role of the power spectral density (PSD) in the Wiener filter design?",
         "answers": {
           "a": "It determines the filter's stability.",
           "b": "It adjusts the filter's cutoff frequency.",
@@ -87,7 +87,7 @@
         "difficulty": "hard"
       },
       {
-        "question": "When applying the Wiener filter to an autoregressive (AR) process, how is the prediction error minimized?",
+        "question": "6. When applying the Wiener filter to an autoregressive (AR) process, how is the prediction error minimized?",
         "answers": {
           "a": "By estimating the coefficients using the Yule-Walker equations.",
           "b": "By directly computing the inverse of the autocorrelation matrix.",
@@ -104,7 +104,7 @@
         "difficulty": "hard"
       },
       {
-        "question": "Why does the Wiener filter require knowledge of the cross-correlation between the input and the desired signal?",
+        "question": "7. Why does the Wiener filter require knowledge of the cross-correlation between the input and the desired signal?",
         "answers": {
           "a": "To compute the inverse of the noise spectrum.",
           "b": "To determine the filter length.",
@@ -121,7 +121,7 @@
         "difficulty": "hard"
       },
       {
-        "question": "In practice, why is the Wiener filter often approximated as the Least Mean Squares (LMS) filter?",
+        "question": "8. In practice, why is the Wiener filter often approximated as the Least Mean Squares (LMS) filter?",
         "answers": {
           "a": "LMS provides a better mean square error than Wiener filtering.",
           "b": "LMS does not require prior knowledge of the signal and noise statistics.",
@@ -138,7 +138,7 @@
         "difficulty": "hard"
       },
       {
-        "question": "How does the Wiener filter handle colored noise in signal processing applications?",
+        "question": "9. How does the Wiener filter handle colored noise in signal processing applications?",
         "answers": {
           "a": "By assuming noise is white and uncorrelated.",
           "b": "By incorporating the noise autocorrelation into the filter design.",
@@ -155,7 +155,7 @@
         "difficulty": "hard"
       },
       {
-        "question": "What is a key limitation of the Wiener filter in real-time applications?",
+        "question": "10. What is a key limitation of the Wiener filter in real-time applications?",
         "answers": {
           "a": "It cannot be implemented in the time domain.",
           "b": "It requires prior knowledge of signal and noise statistics.",
