@@ -1,1 +1,1 @@
-### The aim of this experiment is to estimate the signal from its noisy observation using a Wiener filter designed by minimizing the mean square error, and to study the statistical properties of the error in these estimates for various filter orders
+**The aim of this experiment is to estimate the signal from its noisy observation using a Wiener filter designed by minimizing the mean square error, and to study the statistical properties of the error in these estimates for various filter orders**
