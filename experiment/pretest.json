@@ -2,171 +2,172 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "1. What is the primary purpose of a Wiener filter in signal processing?",
+      "question": "1. In Wiener filtering, under what condition does the optimal filter become a simple gain factor (i.e., scalar multiplication)?",
       "answers": {
-        "a": "To amplify weak signals.",
-        "b": "To minimize the mean square error between the desired and output signals.",
-        "c": "To perform frequency domain analysis.",
-        "d": "To design an ideal low-pass filter."
+        "a": "When the noise is white and the signal is deterministic.",
+        "b": "When both signal and noise are uncorrelated white processes.",
+        "c": "When the autocorrelation matrix becomes diagonal.",
+        "d": "When the signal and noise have equal power spectra."
       },
       "explanations": {
-        "a": "Wiener filters do not amplify signals but focus on error minimization.",
-        "b": "The Wiener filter is designed to minimize the mean square error between the desired and output signals.",
-        "c": "While useful in frequency domain analysis, this is not the Wiener filter's primary purpose.",
-        "d": "Wiener filters are not ideal low-pass filters."
-      },
-      "correctAnswer": "b",
-      "difficulty": "intermediate"
-    },
-    {
-      "question": "2. Which assumption is critical for the Wiener filter to work optimally?",
-      "answers": {
-        "a": "The input signal is deterministic.",
-        "b": "The signal and noise are wide-sense stationary (WSS).",
-        "c": "The noise power is negligible.",
-        "d": "The filter operates only in the frequency domain."
-      },
-      "explanations": {
-        "a": "The Wiener filter is not limited to deterministic signals.",
-        "b": "The Wiener filter assumes that the signal and noise are wide-sense stationary (WSS).",
-        "c": "The Wiener filter can handle non-negligible noise power.",
-        "d": "Wiener filters operate in both time and frequency domains."
-      },
-      "correctAnswer": "b",
-      "difficulty": "intermediate"
-    },
-    {
-      "question": "3. In the Wiener filter, what does the term 'cross-correlation' refer to?",
-      "answers": {
-        "a": "Correlation between the input and output signals.",
-        "b": "Correlation between the desired signal and the noise.",
-        "c": "Correlation between the desired signal and the input signal.",
-        "d": "Correlation between the noise and the filter coefficients."
-      },
-      "explanations": {
-        "a": "Cross-correlation does not involve the output signal directly.",
-        "b": "Cross-correlation does not directly measure the relationship between signal and noise.",
-        "c": "Cross-correlation measures the relationship between the desired and input signals.",
-        "d": "The noise and filter coefficients do not define cross-correlation."
+        "a": "Deterministic signals violate the random process assumption.",
+        "b": "White and uncorrelated processes lead to diagonal correlation matrices.",
+        "c": "A diagonal autocorrelation matrix results in scalar gain per frequency.",
+        "d": "Equal power does not lead to scalar filtering; it leads to SNR = 1."
       },
       "correctAnswer": "c",
       "difficulty": "intermediate"
     },
     {
-      "question": "4. What kind of signals does the Wiener filter perform best with?",
+      "question": "2. What is the form of the Wiener filter H(f) in the frequency domain for stationary input and noise?",
       "answers": {
-        "a": "Deterministic signals with no noise.",
-        "b": "Random signals corrupted by additive noise.",
-        "c": "Signals with varying noise characteristics over time.",
-        "d": "Signals processed in the frequency domain only."
+        "a": "H(f) = S_x(f) / S_y(f)",
+        "b": "H(f) = S_d(f) / (S_d(f) + S_n(f))",
+        "c": "H(f) = S_{dx}(f) / S_x(f)",
+        "d": "H(f) = |X(f)|^2 / |Y(f)|^2"
       },
       "explanations": {
-        "a": "The Wiener filter is not designed specifically for deterministic signals.",
-        "b": "The Wiener filter is ideal for random signals corrupted by additive noise.",
-        "c": "The Wiener filter assumes stationary noise characteristics.",
-        "d": "The Wiener filter can be applied in time and frequency domains."
-      },
-      "correctAnswer": "b",
-      "difficulty": "intermediate"
-    },
-    {
-      "question": "5. What is the role of the power spectral density (PSD) in Wiener filtering?",
-      "answers": {
-        "a": "To calculate the filter coefficients.",
-        "b": "To estimate the frequency response of the filter.",
-        "c": "To model the signal and noise characteristics.",
-        "d": "To perform time-domain convolution."
-      },
-      "explanations": {
-        "a": "The PSD helps model signal and noise, not directly calculate coefficients.",
-        "b": "The PSD does not directly estimate the filter's frequency response.",
-        "c": "The PSD models the characteristics of the signal and noise used in the Wiener filter design.",
-        "d": "Time-domain convolution is not a direct application of PSD."
+        "a": "This is not the Wiener solution; it's related to power ratios.",
+        "b": "This is an approximation often used in practice but not general form.",
+        "c": "This is the correct frequency-domain Wiener filter: cross-spectrum over input spectrum.",
+        "d": "This relates to periodogram estimation, not Wiener filtering."
       },
       "correctAnswer": "c",
       "difficulty": "intermediate"
     },
     {
-      "question": "6. What does the Wiener-Hopf equation solve in Wiener filtering?",
+      "question": "3. The Wiener-Hopf equation arises from which of the following optimization principles?",
       "answers": {
-        "a": "The optimal filter coefficients.",
-        "b": "The power spectrum of the input signal.",
-        "c": "The inverse of the correlation matrix.",
-        "d": "The noise variance in the signal."
+        "a": "Least squares estimation of noise.",
+        "b": "Maximizing output SNR.",
+        "c": "Orthogonality principle in MMSE estimation.",
+        "d": "Minimizing filter energy subject to distortion constraints."
       },
       "explanations": {
-        "a": "The Wiener-Hopf equation is used to calculate the optimal filter coefficients.",
-        "b": "The Wiener-Hopf equation does not directly solve for the power spectrum.",
-        "c": "The equation may involve the correlation matrix but solves for coefficients.",
-        "d": "Noise variance is not directly solved by the Wiener-Hopf equation."
+        "a": "Noise estimation is not the primary criterion.",
+        "b": "Wiener filtering minimizes MSE, not maximizes SNR directly.",
+        "c": "The orthogonality principle gives rise to the Wiener-Hopf equations.",
+        "d": "This is related to constrained optimization, not Wiener filtering."
       },
-      "correctAnswer": "a",
+      "correctAnswer": "c",
       "difficulty": "intermediate"
     },
     {
-      "question": "7. How does the Wiener filter handle noise in the input signal?",
+      "question": "4. In the frequency domain Wiener filter design, what condition leads to the filter behaving as an ideal pass-through (i.e., H(f) ≈ 1)?",
       "answers": {
-        "a": "It removes all noise from the signal.",
-        "b": "It minimizes the impact of noise while preserving the signal.",
-        "c": "It amplifies weak signals to overpower noise.",
-        "d": "It increases the noise floor to improve signal clarity."
+        "a": "When the noise power spectral density is much greater than the signal power spectral density.",
+        "b": "When the signal power spectral density dominates the noise power spectral density at all frequencies.",
+        "c": "When the signal and noise power spectra are equal at all frequencies.",
+        "d": "When both signal and noise are uncorrelated and zero-mean."
       },
       "explanations": {
-        "a": "The Wiener filter does not completely remove noise.",
-        "b": "The Wiener filter minimizes the impact of noise while preserving the desired signal.",
-        "c": "The Wiener filter does not amplify signals to handle noise.",
-        "d": "Increasing the noise floor is not a filtering strategy."
+        "a": "In this case, the filter suppresses the signal to minimize noise impact, not pass it through.",
+        "b": "When signal power >> noise power, the Wiener filter approaches unity (pass-through behavior).",
+        "c": "This results in a Wiener filter magnitude of 0.5, not 1.",
+        "d": "This is a general assumption, not a frequency-domain pass-through condition."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    }
+    ,
+    {
+      "question": "5. In practice, what issue arises when estimating the Wiener filter coefficients using sample data?",
+      "answers": {
+        "a": "High computational complexity in estimating Fourier transforms.",
+        "b": "Noise whitening can distort the desired signal.",
+        "c": "Sample autocorrelation matrix may be ill-conditioned or non-invertible.",
+        "d": "The Wiener filter only works on infinite-length signals."
+      },
+      "explanations": {
+        "a": "DFT is not the core issue in coefficient estimation.",
+        "b": "Noise whitening is not a requirement in Wiener filtering.",
+        "c": "The sample correlation matrix can be nearly singular, affecting stability.",
+        "d": "Finite-length implementations are possible but need caution."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "6. Which of the following is **not** an assumption made in the derivation of the Wiener filter?",
+      "answers": {
+        "a": "Signal and noise are uncorrelated.",
+        "b": "Signal and noise are jointly Gaussian.",
+        "c": "The system is linear and time-invariant.",
+        "d": "Mean square error is the cost function."
+      },
+      "explanations": {
+        "a": "This is a core assumption of Wiener filtering.",
+        "b": "Joint Gaussianity is not required — only second-order statistics matter.",
+        "c": "LTI systems are assumed to apply convolution-based filtering.",
+        "d": "Wiener filtering is defined to minimize MSE."
       },
       "correctAnswer": "b",
       "difficulty": "intermediate"
     },
     {
-      "question": "8. Which of the following is a common application of the Wiener filter?",
+      "question": "7. Which of the following best describes the effect of the Wiener filter on the input spectrum?",
       "answers": {
-        "a": "Image denoising.",
-        "b": "Audio amplification.",
-        "c": "Frequency modulation.",
-        "d": "Pulse shaping in communication."
+        "a": "It normalizes the signal spectrum.",
+        "b": "It suppresses frequencies where the SNR is low.",
+        "c": "It equalizes the spectrum of the signal.",
+        "d": "It boosts the noise spectrum to enhance clarity."
       },
       "explanations": {
-        "a": "The Wiener filter is widely used for image denoising.",
-        "b": "Audio amplification is not a primary application of Wiener filtering.",
-        "c": "Frequency modulation does not involve Wiener filtering.",
-        "d": "Pulse shaping is not a direct application of Wiener filtering."
+        "a": "Normalization is not the filtering objective.",
+        "b": "Wiener filters attenuate components where SNR is low.",
+        "c": "Equalization differs from Wiener filtering objectives.",
+        "d": "Boosting noise is counterproductive and incorrect."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "8. In adaptive implementations, which algorithm is considered a stochastic approximation of the Wiener solution?",
+      "answers": {
+        "a": "LMS (Least Mean Squares) algorithm.",
+        "b": "Kalman filter.",
+        "c": "Matched filter algorithm.",
+        "d": "Fourier series estimator."
+      },
+      "explanations": {
+        "a": "LMS approximates the Wiener solution iteratively with stochastic gradients.",
+        "b": "Kalman filter is recursive but more complex than Wiener filtering.",
+        "c": "Matched filters maximize correlation, not minimize MSE.",
+        "d": "Fourier series estimation is unrelated."
       },
       "correctAnswer": "a",
       "difficulty": "intermediate"
     },
     {
-      "question": "9. What is the main difference between the Wiener filter and a matched filter?",
+      "question": "9. For colored noise, the optimal Wiener filter requires knowledge of:",
       "answers": {
-        "a": "The Wiener filter minimizes error, while the matched filter maximizes signal-to-noise ratio (SNR).",
-        "b": "The Wiener filter operates in the frequency domain only.",
-        "c": "The Wiener filter is more complex than a matched filter.",
-        "d": "The Wiener filter is designed for deterministic signals."
+        "a": "Only the signal power spectrum.",
+        "b": "Only the noise autocorrelation.",
+        "c": "Both signal and noise power spectra.",
+        "d": "The amplitude spectrum of the desired signal."
       },
       "explanations": {
-        "a": "The Wiener filter minimizes error, and the matched filter maximizes SNR.",
-        "b": "The Wiener filter works in both time and frequency domains.",
-        "c": "While complex, the main difference lies in their objectives.",
-        "d": "The Wiener filter is not restricted to deterministic signals."
+        "a": "Noise characteristics are essential when it's colored.",
+        "b": "Signal characteristics are also required for optimal filtering.",
+        "c": "Both spectra are needed to derive the optimal filter in the frequency domain.",
+        "d": "Amplitude is not sufficient; power spectra are needed."
       },
-      "correctAnswer": "a",
+      "correctAnswer": "c",
       "difficulty": "intermediate"
     },
     {
-      "question": "10. In adaptive signal processing, how does the Wiener filter differ from adaptive filters?",
+      "question": "10. What is a major limitation of the classical Wiener filter in real-time applications?",
       "answers": {
-        "a": "The Wiener filter adjusts its coefficients in real-time.",
-        "b": "The Wiener filter assumes stationary signal and noise statistics.",
-        "c": "The Wiener filter uses machine learning algorithms.",
-        "d": "The Wiener filter is designed for non-linear systems."
+        "a": "It introduces significant phase distortion.",
+        "b": "It assumes non-causal filtering which is non-implementable in real-time.",
+        "c": "It increases the noise floor significantly.",
+        "d": "It only works for band-limited signals."
       },
       "explanations": {
-        "a": "The Wiener filter does not adjust coefficients in real-time.",
-        "b": "The Wiener filter assumes stationary signal and noise statistics.",
-        "c": "The Wiener filter does not involve machine learning.",
-        "d": "The Wiener filter is designed for linear systems."
+        "a": "Phase distortion is not the main constraint.",
+        "b": "The classical Wiener filter is non-causal, hence impractical for real-time use without modifications.",
+        "c": "It minimizes noise impact, not increases it.",
+        "d": "It can be used outside band-limited cases with appropriate assumptions."
       },
       "correctAnswer": "b",
       "difficulty": "intermediate"

@@ -69,12 +69,12 @@
 	<div id = "instructions">
     <h1>Instructions for Wiener Filtering for Sine, Cosine, AM, and DSB-SC Signals</h1>
     <ul>
-        <li>Step 1: Click on 'Generate Message' button to generate input message signal</li>
-        <li>Step 2: Click on 'Generate Noisy Signal' button to generate noisy signal</li>
-		<li>Step 3: Click on 'Generate PSD for Noisy Signal' to view the power spectral density of the noisy signal</li>
-        <li>Step 4: Click on 'Show Filter Coefficeints' to view wiener filter Coefficients</li>
-		<li>Step 5: Click on 'Generate Estimated Signal' to view the estimated signal emerging from the Wiener filter.</li>
-		<li>Step 6: Click on 'Generate Residual Signal' to view the difference between the original message signal and the filtered signal</li>
+        <li class="step step1">Step 1: Click on 'Generate Message' button to generate input message signal</li>
+        <li class="step step2">Step 2: Click on 'Generate Noisy Signal' button to generate noisy signal</li>
+		<li class="step step3">Step 3: Click on 'Generate PSD for Noisy Signal' to view the power spectral density of the noisy signal</li>
+        <li class="step step4">Step 4: Click on 'Show Filter Coefficeints' to view wiener filter Coefficients</li>
+		<li class="step step1">Step 5: Click on 'Generate Estimated Signal' to view the estimated signal emerging from the Wiener filter.</li>
+		<li class="step step2">Step 6: Click on 'Generate Residual Signal' to view the difference between the original message signal and the filtered signal</li>
 		</ul>
 	</div>
 	<hr/>
@@ -98,19 +98,19 @@
 
               <div class="flex items-center justify-center gap-1 mt-2">
         <label for="messageFrequency">Message Frequency (Hz):</label>
-<input class="input-field border border-black px-2 py-1 rounded-sm" type="number" id="messageFrequency" value="100">
+<input class="input-field border border-black px-2 py-1 rounded-sm" type="number" id="messageFrequency" value="10">
                 </div>
 			              <div class="flex items-center justify-center gap-1 mt-2">
         <label for="carrierFrequency">Carrier Frequency (Hz):</label>
-<input class="input-field border border-black px-2 py-1 rounded-sm" type="number" id="carrierFrequency" value="1000">
+<input class="input-field border border-black px-2 py-1 rounded-sm" type="number" id="carrierFrequency" value="100">
                 </div>
 				              <div class="flex items-center justify-center gap-1 mt-2">
         <label for="samplingFrequency">Sampling Frequency (Hz):</label>
-<input class="input-field border border-black px-2 py-1 rounded-sm" type="number" id="samplingFrequency" value="10000">
+<input class="input-field border border-black px-2 py-1 rounded-sm" type="number" id="samplingFrequency" value="1000">
                 </div>
 				<div class="flex items-center justify-center gap-1 mt-2">
         <label for="filterOrder">Filter Order:</label>
-<input class="input-field border border-black px-2 py-1 rounded-sm" type="number" id="filterOrder" value="200" min="10">
+<input class="input-field border border-black px-2 py-1 rounded-sm" type="number" id="filterOrder" value="100" min="10">
                 </div>
               <div class="flex items-center justify-center gap-1 mt-2">
         <label for="snrInput">SNR (in dB):</label>
@@ -126,7 +126,7 @@
 	<hr/>
 	
 	<div class = "container">
-	<div class = "left-half">
+	<div class = "left-half relative">
 	          <div class="flex gap-1">
               <div class="flex-1 flex flex-col items-center">
                 <div class="w-full">
@@ -137,41 +137,41 @@
 					style= "height:450px; width: 550px; margin-left: 40px"
                   />
 				<button
-                  class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[460px] left-[2px]"
+                  class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[60px] left-[2px]"
                   onclick="simulateWiener()"
                 >
                   Generate Message
                 </button>
 								<button
-                  class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[540px] left-[2px]"
+                  class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[100px] left-[2px]"
                   onclick="generateNoisySignal()"
                 >
                   Generate Noisy Signal
                 </button>
 				
 			    <button
-                  class="button bg-blue-500 text-white rounded-md px-2 py-1 relative bottom-[100px] left-[2px]"
+                  class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[450px] left-[2px]"
                   onclick="generatePSD2()"
                 >
                   Generate PSD for Noisy Signal
                 </button>
 				
 					                <button
-                  class="button bg-blue-500 text-white rounded-md px-2 py-1 relative bottom-[100px] left-[10px]"
+                  class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[450px] left-[250px]"
                   onclick="wienerCoefficients()"
                 >
                 Show Filter Coefficeints
                 </button>
 				
 			    <button
-                  class="button bg-blue-500 text-white rounded-md px-2 py-1 relative bottom-[132px] left-[430px]"
+                  class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[500px] left-[12px]"
                   onclick="generateEstimatedSignal()"
                 >
                 Generate Estimated Signal
                 </button>
 				
 							    <button
-                  class="button bg-gray-500 text-white rounded-md px-2 py-1 relative bottom-[80px] left-[10px]"
+                  class="button bg-gray-500 text-white rounded-md px-2 py-1 absolute top-[500px] left-[245px]"
                   onclick="generateResidueSignal()"
                 >
                 Generate Residue Signal
@@ -228,8 +228,8 @@
 	<script>
         // Function to check if the number of input bits is odd
         function checkFrequencies() {
-            const messageFrequency = document.getElementById('messageFrequency').value;
-			const carrierFrequency = document.getElementById('carrierFrequency').value;
+            const messageFrequency = document.getElementById('messageFrequency').valueASNumber;
+			const carrierFrequency = document.getElementById('carrierFrequency').valueASNumber;
             //const bitsArray = input.split(',').map(item => item.trim()); // Create an array from the input
 
             // Check if the length of the array is odd
@@ -251,8 +251,8 @@
 		<script>
         // Function to check if the number of input bits is odd
         function checkFrequencies2() {
-			const carrierFreq = document.getElementById('carrierFrequency').value;
-			const samplingFreq = document.getElementById('samplingFrequency').value;
+			const carrierFreq = document.getElementById('carrierFrequency').valueASNumber;
+			const samplingFreq = document.getElementById('samplingFrequency').valueASNumber;
             //const bitsArray = input.split(',').map(item => item.trim()); // Create an array from the input
 
             // Check if the length of the array is odd
@@ -491,8 +491,8 @@ function handleInputChange(fs, fm, fc) {
             // Main Wiener Filter Process
             let fs = parseInt(document.getElementById('samplingFrequency').value);  
             //fs = nextPowerOf2(fs);  // Ensure fs is a power of 2 for FFT
-            let fm = parseInt(document.getElementById('messageFrequency').value);
             let fc = parseInt(document.getElementById('carrierFrequency').value);
+            let fm = parseInt(document.getElementById('messageFrequency').value);
 
             // Generate input signal based on the selection
             let y = handleInputChange(fs, fm, fc);
@@ -888,29 +888,68 @@ function handleInputChange(fs, fm, fc) {
     </script>
 	
 	<style>
-	h1 {
-    color: #333;
-    font-size: 22px; /* Increased font size */
-    margin-bottom: 20px;
-}
-	ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    background-color: #e0e7ff;
-    margin: 5px 0;
-    padding: 5px;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    font-size: 14px; /* Set font size for list items */
+#container {
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  padding: 25px 40px;
+  max-width: 100%;
+  margin: 20px auto;
+  text-align: left;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-li::before {
-    content: "✔";
-    color: #4caf50;
-    margin-right: 10px;
+h1 {
+  color: #1e3a8a;
+  font-size: 24px;
+  margin-bottom: 25px;
+  text-align: justify;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li.step {
+  margin: 12px 0;
+  padding: 12px 15px;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+li.step::before {
+  content: "✔";
+  color: #10b981;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+li.step:hover {
+  transform: scale(1.02);
+  background-color: #f3f4f6;
+}
+
+/* Color code each step */
+.step1 {
+  background-color: #ffe0e0;
+  border-left: 5px solid #ef4444;
+}
+.step2 {
+  background-color: #e0f7ff;
+  border-left: 5px solid #0ea5e9;
+}
+.step3 {
+  background-color: #e0ffe5;
+  border-left: 5px solid #22c55e;
+}
+.step4 {
+  background-color: #f5e0ff;
+  border-left: 5px solid #a855f7;
 }
 	</style>
   </body>
