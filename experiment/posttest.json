@@ -1,176 +1,175 @@
 {
-    "version": 2.0,
-    "questions": [
-      {
-        "question": "1. What mathematical criterion does the Wiener filter minimize to achieve optimality?",
-        "answers": {
-          "a": "Maximum likelihood estimation error.",
-          "b": "Mean-square error (MSE) between the desired and estimated signals.",
-          "c": "Maximum energy of the desired signal.",
-          "d": "Cross-correlation between the noise and the desired signal."
-        },
-        "explanations": {
-          "a": "Maximum likelihood estimation is a separate statistical approach.",
-          "b": "The Wiener filter minimizes the mean-square error (MSE) to achieve optimality.",
-          "c": "Maximizing signal energy is not part of the Wiener filter's objective.",
-          "d": "Cross-correlation minimization is not the primary criterion for Wiener filtering."
-        },
-        "correctAnswer": "b",
-        "difficulty": "hard"
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "1. Which statement best compares a matched filter and a Wiener filter for detecting random signals in additive noise?",
+      "answers": {
+        "a": "They become identical when the signal‑to‑noise ratio is low and the noise is white.",
+        "b": "The matched filter maximises peak SNR for a deterministic template, whereas the Wiener filter minimises mean‑square error for a random template.",
+        "c": "Both filters coincide if the signal is Gaussian and the channel is flat.",
+        "d": "The Wiener filter is always implemented as a matched filter followed by a noise‑whitening stage."
       },
-      {
-        "question": "2. How does the Wiener filter achieve the optimal solution in the frequency domain?",
-        "answers": {
-          "a": "By maximizing the signal-to-noise ratio (SNR).",
-          "b": "By minimizing the power spectral density (PSD) of the noise.",
-          "c": "By matching the filter response to the ratio of the signal PSD to the total PSD.",
-          "d": "By minimizing the energy of the filtered noise."
-        },
-        "explanations": {
-          "a": "While SNR is improved, the Wiener filter focuses on minimizing the MSE.",
-          "b": "The Wiener filter does not explicitly minimize noise PSD but uses its relationship with the signal.",
-          "c": "The Wiener filter is derived using the ratio of the signal PSD to the total PSD (signal + noise).",
-          "d": "Minimizing noise energy is a byproduct, not the explicit goal."
-        },
-        "correctAnswer": "c",
-        "difficulty": "hard"
+      "explanations": {
+        "a": "Low SNR does not make the objectives the same.",
+        "b": "Correct: their criteria and optimality conditions differ fundamentally.",
+        "c": "Even with Gaussian signals, the goals differ.",
+        "d": "Whitening may appear, but a Wiener filter is not simply a matched filter plus whitening."
       },
-      {
-        "question": "3. In Wiener filtering, the filter output is guaranteed to be:",
-        "answers": {
-          "a": "The exact replica of the desired signal.",
-          "b": "The minimum mean-square-error estimate of the desired signal.",
-          "c": "The maximum likelihood estimate of the desired signal.",
-          "d": "The maximum a posteriori estimate of the desired signal."
-        },
-        "explanations": {
-          "a": "Wiener filtering does not provide an exact replica, especially in the presence of noise.",
-          "b": "The Wiener filter provides the minimum mean-square-error (MMSE) estimate.",
-          "c": "Maximum likelihood estimation is not the basis of Wiener filtering.",
-          "d": "The Wiener filter does not explicitly use Bayesian approaches for maximum a posteriori estimation."
-        },
-        "correctAnswer": "b",
-        "difficulty": "hard"
+      "correctAnswer": "b",
+      "difficulty": "hard"
+    },
+    {
+      "question": "2. In discrete‑time causal Wiener filtering, the optimum transfer function can be written H(z) = B(z) / A_star(z) where A(z) A_star(z) equals the observation spectrum S_x. What does the polynomial B(z) represent?",
+      "answers": {
+        "a": "The whitening filter for the observation sequence",
+        "b": "The causal minimum‑phase part of the cross‑spectrum between desired and observed signals",
+        "c": "The noise shaping filter that forces unit variance noise",
+        "d": "The anti‑causal component of the desired spectrum"
       },
-      {
-        "question": "4. What is the form of the Wiener filter in the time domain?",
-        "answers": {
-          "a": "A convolution operation involving the cross-correlation and autocorrelation functions.",
-          "b": "An addition of the desired signal and noise.",
-          "c": "A subtraction of the noise from the observed signal.",
-          "d": "A multiplication of the observed signal with the inverse of the noise spectrum."
-        },
-        "explanations": {
-          "a": "The Wiener filter involves a convolution of the inverse of the autocorrelation matrix and the cross-correlation vector.",
-          "b": "The Wiener filter does not simply add the desired signal and noise.",
-          "c": "It is not a subtraction process but an optimization using statistical properties.",
-          "d": "This describes the frequency domain implementation, not the time domain."
-        },
-        "correctAnswer": "a",
-        "difficulty": "hard"
+      "explanations": {
+        "a": "Whitening corresponds to 1 / A(z), not B(z).",
+        "b": "Correct: B(z) is the causal factor of the cross‑spectrum after division by A_star(z).",
+        "c": "Noise shaping is implicit in A(z).",
+        "d": "Anti‑causal terms are removed in the factorisation."
       },
-      {
-        "question": "5. What is the role of the power spectral density (PSD) in the Wiener filter design?",
-        "answers": {
-          "a": "It determines the filter's stability.",
-          "b": "It adjusts the filter's cutoff frequency.",
-          "c": "It defines the optimal filter response in the frequency domain.",
-          "d": "It directly minimizes the noise energy."
-        },
-        "explanations": {
-          "a": "Stability is not determined by PSD.",
-          "b": "The cutoff frequency adjustment is not the main purpose of PSD.",
-          "c": "The PSD is used to compute the filter's optimal frequency response.",
-          "d": "Minimizing noise energy is a result of the filter's design, not a direct PSD role."
-        },
-        "correctAnswer": "c",
-        "difficulty": "hard"
+      "correctAnswer": "b",
+      "difficulty": "hard"
+    },
+    {
+      "question": "3. The Kalman filter can be viewed as a generalisation of the Wiener filter that handles which situation?",
+      "answers": {
+        "a": "Time‑varying state‑space models with sequential minimum‑mean‑square estimation",
+        "b": "White noise only in linear time‑invariant systems",
+        "c": "Non‑linear systems corrupted by Laplacian noise",
+        "d": "Frequency‑selective channels with known impulse response"
       },
-      {
-        "question": "6. When applying the Wiener filter to an autoregressive (AR) process, how is the prediction error minimized?",
-        "answers": {
-          "a": "By estimating the coefficients using the Yule-Walker equations.",
-          "b": "By directly computing the inverse of the autocorrelation matrix.",
-          "c": "By assuming the noise is white and uncorrelated.",
-          "d": "By maximizing the output power of the filter."
-        },
-        "explanations": {
-          "a": "The Yule-Walker equations are used to compute AR coefficients, minimizing prediction error.",
-          "b": "Direct computation of the matrix inverse is not specific to AR processes.",
-          "c": "While white noise is often assumed, minimizing prediction error requires AR modeling.",
-          "d": "Output power maximization is not the goal of Wiener filtering."
-        },
-        "correctAnswer": "a",
-        "difficulty": "hard"
+      "explanations": {
+        "a": "Kalman filtering extends Wiener theory to non‑stationary, time‑varying systems.",
+        "b": "That describes the classical stationary Wiener setting.",
+        "c": "Standard Kalman assumes Gaussian noise.",
+        "d": "Kalman is not limited to communication channels."
       },
-      {
-        "question": "7. Why does the Wiener filter require knowledge of the cross-correlation between the input and the desired signal?",
-        "answers": {
-          "a": "To compute the inverse of the noise spectrum.",
-          "b": "To determine the filter length.",
-          "c": "To calculate the optimal filter weights.",
-          "d": "To minimize the autocorrelation of the noise."
-        },
-        "explanations": {
-          "a": "The cross-correlation is not directly used for the noise spectrum.",
-          "b": "Filter length is not determined by the cross-correlation.",
-          "c": "Cross-correlation is crucial for deriving the optimal weights in the Wiener filter.",
-          "d": "Minimizing noise autocorrelation is not the primary purpose of the cross-correlation."
-        },
-        "correctAnswer": "c",
-        "difficulty": "hard"
+      "correctAnswer": "a",
+      "difficulty": "hard"
+    },
+    {
+      "question": "4. For image deblurring, the two‑dimensional Wiener deconvolution filter is H(u,v) = H_psf_conj(u,v) / ( |H_psf(u,v)|^2 + K ). What is the physical meaning of the constant K?",
+      "answers": {
+        "a": "Inverse of the blur kernel energy",
+        "b": "Noise‑to‑signal power ratio",
+        "c": "Trace of the system covariance matrix",
+        "d": "Determinant of the autocorrelation matrix"
       },
-      {
-        "question": "8. In practice, why is the Wiener filter often approximated as the Least Mean Squares (LMS) filter?",
-        "answers": {
-          "a": "LMS provides a better mean square error than Wiener filtering.",
-          "b": "LMS does not require prior knowledge of the signal and noise statistics.",
-          "c": "LMS operates in the frequency domain instead of the time domain.",
-          "d": "LMS minimizes the maximum error rather than the mean square error."
-        },
-        "explanations": {
-          "a": "LMS does not outperform Wiener filtering in terms of theoretical MSE.",
-          "b": "LMS adapts to unknown signal and noise statistics, unlike Wiener filtering.",
-          "c": "Both can operate in the time domain.",
-          "d": "LMS also minimizes the mean square error, not the maximum error."
-        },
-        "correctAnswer": "b",
-        "difficulty": "hard"
+      "explanations": {
+        "a": "Kernel energy does not set K.",
+        "b": "K equals sigma_noise^2 divided by sigma_signal^2, balancing noise amplification.",
+        "c": "Trace is not used here.",
+        "d": "Determinant is irrelevant."
       },
-      {
-        "question": "9. How does the Wiener filter handle colored noise in signal processing applications?",
-        "answers": {
-          "a": "By assuming noise is white and uncorrelated.",
-          "b": "By incorporating the noise autocorrelation into the filter design.",
-          "c": "By applying a high-pass filter to remove the noise.",
-          "d": "By reducing the power spectral density of the signal."
-        },
-        "explanations": {
-          "a": "Colored noise cannot be accurately modeled as white noise.",
-          "b": "The Wiener filter accounts for colored noise by considering its autocorrelation properties.",
-          "c": "A high-pass filter is not sufficient for colored noise.",
-          "d": "Reducing signal PSD is not the goal of handling colored noise."
-        },
-        "correctAnswer": "b",
-        "difficulty": "hard"
+      "correctAnswer": "b",
+      "difficulty": "hard"
+    },
+    {
+      "question": "5. Given an observed signal x[n] = g[n] * d[n] + v[n] with channel frequency response G(f), the non‑causal Wiener filter that estimates d[n] has frequency response",
+      "answers": {
+        "a": "H(f) = G_conj(f) S_d(f) / ( |G(f)|^2 S_d(f) + S_v(f) )",
+        "b": "H(f) = S_d(f) / ( |G(f)|^2 + S_v(f) )",
+        "c": "H(f) = 1 / G(f)",
+        "d": "H(f) = S_v(f) / S_d(f)"
       },
-      {
-        "question": "10. What is a key limitation of the Wiener filter in real-time applications?",
-        "answers": {
-          "a": "It cannot be implemented in the time domain.",
-          "b": "It requires prior knowledge of signal and noise statistics.",
-          "c": "It only works for linear systems.",
-          "d": "It is computationally unstable."
-        },
-        "explanations": {
-          "a": "The Wiener filter can be implemented in both time and frequency domains.",
-          "b": "The Wiener filter requires known signal and noise statistics, which are not always available in real-time.",
-          "c": "While the Wiener filter is linear, it is not limited to only linear systems.",
-          "d": "The Wiener filter is computationally stable but may require high resources."
-        },
-        "correctAnswer": "b",
-        "difficulty": "hard"
-      }
-    ]
-  }
-  
+      "explanations": {
+        "a": "This follows directly from the ratio S_dx(f) / S_x(f).",
+        "b": "Missing conjugate of the channel and incorrect denominator.",
+        "c": "Pure inverse filtering ignores noise.",
+        "d": "Reverses the desired ratio, increasing noise."
+      },
+      "correctAnswer": "a",
+      "difficulty": "hard"
+    },
+    {
+      "question": "6. Solving the Toeplitz system R w = p for an N‑tap Wiener predictor by brute‑force inversion costs O(N^3) operations. Which recursion lowers this to O(N^2)?",
+      "answers": {
+        "a": "Gram–Schmidt orthogonalisation",
+        "b": "Levinson–Durbin recursion",
+        "c": "QR decomposition with Givens rotations",
+        "d": "Fast Fourier transform"
+      },
+      "explanations": {
+        "a": "Still cubic for dense Toeplitz matrices.",
+        "b": "Levinson–Durbin exploits Toeplitz structure for quadratic complexity.",
+        "c": "Generic QR remains cubic here.",
+        "d": "FFT alone does not solve Toeplitz systems."
+      },
+      "correctAnswer": "b",
+      "difficulty": "hard"
+    },
+    {
+      "question": "7. According to the orthogonality principle, the Wiener estimation error is orthogonal to",
+      "answers": {
+        "a": "the noise component only",
+        "b": "all past samples of the desired signal",
+        "c": "the subspace spanned by the observed data used in the estimate",
+        "d": "the eigenvectors of the autocorrelation matrix"
+      },
+      "explanations": {
+        "a": "Orthogonality is with respect to observations, not just noise.",
+        "b": "Future and past desired samples are not necessarily in the observed subspace.",
+        "c": "Correct: error inner product with any data vector equals zero.",
+        "d": "Eigenvectors may not align with the data subspace."
+      },
+      "correctAnswer": "c",
+      "difficulty": "hard"
+    },
+    {
+      "question": "8. In causal Wiener prediction, the optimum one‑step predictor minimises which quantity?",
+      "answers": {
+        "a": "Variance of the innovation sequence",
+        "b": "Output power",
+        "c": "Covariance between successive innovations",
+        "d": "Trace of the inverse autocorrelation matrix"
+      },
+      "explanations": {
+        "a": "Prediction seeks the smallest possible innovation variance.",
+        "b": "Output power may increase if prediction is poor.",
+        "c": "Innovations are decorrelated by design, not by minimising covariance.",
+        "d": "Trace criterion is unrelated."
+      },
+      "correctAnswer": "a",
+      "difficulty": "hard"
+    },
+    {
+      "question": "9. When the estimated autocorrelation matrix is ill‑conditioned, a practical way to stabilise the Wiener solution is to solve",
+      "answers": {
+        "a": "(R + lambda I) w = p",
+        "b": "R^2 w = p",
+        "c": "R^{-1} w = lambda p",
+        "d": "R w = lambda^2 p"
+      },
+      "explanations": {
+        "a": "Adding lambda I (ridge regularisation) improves conditioning.",
+        "b": "Squaring R worsens conditioning.",
+        "c": "Scaling the right‑hand side does not address ill‑conditioning.",
+        "d": "Rescaling p alone is ineffective."
+      },
+      "correctAnswer": "a",
+      "difficulty": "hard"
+    },
+    {
+      "question": "10. Which theorem guarantees that a causal Wiener filter exists whenever the observation power spectrum can be written as |A(e^jω)|^2 with log‑integrable magnitude?",
+      "answers": {
+        "a": "Wiener–Khinchin theorem",
+        "b": "Kolmogorov spectral‑factorisation theorem",
+        "c": "Parseval energy theorem",
+        "d": "Central‑limit theorem"
+      },
+      "explanations": {
+        "a": "Wiener–Khinchin links autocorrelation and spectrum but does not ensure causal factorisation.",
+        "b": "Kolmogorov’s factorisation theorem gives the minimum‑phase spectral factor needed for a causal Wiener filter.",
+        "c": "Parseval deals with energy equality, not factorisation.",
+        "d": "The central‑limit theorem is unrelated."
+      },
+      "correctAnswer": "b",
+      "difficulty": "hard"
+    }
+  ]
+}
