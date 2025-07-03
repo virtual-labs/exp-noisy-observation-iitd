@@ -1,0 +1,175 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "1. Which statement best compares a matched filter and a Wiener filter for detecting random signals in additive noise?",
+      "answers": {
+        "a": "They become identical when the signal‑to‑noise ratio is low and the noise is white.",
+        "b": "The matched filter maximises peak SNR for a deterministic template, whereas the Wiener filter minimises mean‑square error for a random template.",
+        "c": "Both filters coincide if the signal is Gaussian and the channel is flat.",
+        "d": "The Wiener filter is always implemented as a matched filter followed by a noise‑whitening stage."
+      },
+      "explanations": {
+        "a": "Low SNR does not make the objectives the same.",
+        "b": "Correct: their criteria and optimality conditions differ fundamentally.",
+        "c": "Even with Gaussian signals, the goals differ.",
+        "d": "Whitening may appear, but a Wiener filter is not simply a matched filter plus whitening."
+      },
+      "correctAnswer": "b",
+      "difficulty": "hard"
+    },
+    {
+      "question": "2. In discrete‑time causal Wiener filtering, the optimum transfer function can be written H(z) = B(z) / A_star(z) where A(z) A_star(z) equals the observation spectrum S_x. What does the polynomial B(z) represent?",
+      "answers": {
+        "a": "The whitening filter for the observation sequence",
+        "b": "The causal minimum‑phase part of the cross‑spectrum between desired and observed signals",
+        "c": "The noise shaping filter that forces unit variance noise",
+        "d": "The anti‑causal component of the desired spectrum"
+      },
+      "explanations": {
+        "a": "Whitening corresponds to 1 / A(z), not B(z).",
+        "b": "Correct: B(z) is the causal factor of the cross‑spectrum after division by A_star(z).",
+        "c": "Noise shaping is implicit in A(z).",
+        "d": "Anti‑causal terms are removed in the factorisation."
+      },
+      "correctAnswer": "b",
+      "difficulty": "hard"
+    },
+    {
+      "question": "3. The Kalman filter can be viewed as a generalisation of the Wiener filter that handles which situation?",
+      "answers": {
+        "a": "Time‑varying state‑space models with sequential minimum‑mean‑square estimation",
+        "b": "White noise only in linear time‑invariant systems",
+        "c": "Non‑linear systems corrupted by Laplacian noise",
+        "d": "Frequency‑selective channels with known impulse response"
+      },
+      "explanations": {
+        "a": "Kalman filtering extends Wiener theory to non‑stationary, time‑varying systems.",
+        "b": "That describes the classical stationary Wiener setting.",
+        "c": "Standard Kalman assumes Gaussian noise.",
+        "d": "Kalman is not limited to communication channels."
+      },
+      "correctAnswer": "a",
+      "difficulty": "hard"
+    },
+    {
+      "question": "4. For image deblurring, the two‑dimensional Wiener deconvolution filter is H(u,v) = H_psf_conj(u,v) / ( |H_psf(u,v)|^2 + K ). What is the physical meaning of the constant K?",
+      "answers": {
+        "a": "Inverse of the blur kernel energy",
+        "b": "Noise‑to‑signal power ratio",
+        "c": "Trace of the system covariance matrix",
+        "d": "Determinant of the autocorrelation matrix"
+      },
+      "explanations": {
+        "a": "Kernel energy does not set K.",
+        "b": "K equals sigma_noise^2 divided by sigma_signal^2, balancing noise amplification.",
+        "c": "Trace is not used here.",
+        "d": "Determinant is irrelevant."
+      },
+      "correctAnswer": "b",
+      "difficulty": "hard"
+    },
+    {
+      "question": "5. Given an observed signal x[n] = g[n] * d[n] + v[n] with channel frequency response G(f), the non‑causal Wiener filter that estimates d[n] has frequency response",
+      "answers": {
+        "a": "H(f) = G_conj(f) S_d(f) / ( |G(f)|^2 S_d(f) + S_v(f) )",
+        "b": "H(f) = S_d(f) / ( |G(f)|^2 + S_v(f) )",
+        "c": "H(f) = 1 / G(f)",
+        "d": "H(f) = S_v(f) / S_d(f)"
+      },
+      "explanations": {
+        "a": "This follows directly from the ratio S_dx(f) / S_x(f).",
+        "b": "Missing conjugate of the channel and incorrect denominator.",
+        "c": "Pure inverse filtering ignores noise.",
+        "d": "Reverses the desired ratio, increasing noise."
+      },
+      "correctAnswer": "a",
+      "difficulty": "hard"
+    },
+    {
+      "question": "6. Solving the Toeplitz system R w = p for an N‑tap Wiener predictor by brute‑force inversion costs O(N^3) operations. Which recursion lowers this to O(N^2)?",
+      "answers": {
+        "a": "Gram–Schmidt orthogonalisation",
+        "b": "Levinson–Durbin recursion",
+        "c": "QR decomposition with Givens rotations",
+        "d": "Fast Fourier transform"
+      },
+      "explanations": {
+        "a": "Still cubic for dense Toeplitz matrices.",
+        "b": "Levinson–Durbin exploits Toeplitz structure for quadratic complexity.",
+        "c": "Generic QR remains cubic here.",
+        "d": "FFT alone does not solve Toeplitz systems."
+      },
+      "correctAnswer": "b",
+      "difficulty": "hard"
+    },
+    {
+      "question": "7. According to the orthogonality principle, the Wiener estimation error is orthogonal to",
+      "answers": {
+        "a": "the noise component only",
+        "b": "all past samples of the desired signal",
+        "c": "the subspace spanned by the observed data used in the estimate",
+        "d": "the eigenvectors of the autocorrelation matrix"
+      },
+      "explanations": {
+        "a": "Orthogonality is with respect to observations, not just noise.",
+        "b": "Future and past desired samples are not necessarily in the observed subspace.",
+        "c": "Correct: error inner product with any data vector equals zero.",
+        "d": "Eigenvectors may not align with the data subspace."
+      },
+      "correctAnswer": "c",
+      "difficulty": "hard"
+    },
+    {
+      "question": "8. In causal Wiener prediction, the optimum one‑step predictor minimises which quantity?",
+      "answers": {
+        "a": "Variance of the innovation sequence",
+        "b": "Output power",
+        "c": "Covariance between successive innovations",
+        "d": "Trace of the inverse autocorrelation matrix"
+      },
+      "explanations": {
+        "a": "Prediction seeks the smallest possible innovation variance.",
+        "b": "Output power may increase if prediction is poor.",
+        "c": "Innovations are decorrelated by design, not by minimising covariance.",
+        "d": "Trace criterion is unrelated."
+      },
+      "correctAnswer": "a",
+      "difficulty": "hard"
+    },
+    {
+      "question": "9. When the estimated autocorrelation matrix is ill‑conditioned, a practical way to stabilise the Wiener solution is to solve",
+      "answers": {
+        "a": "(R + lambda I) w = p",
+        "b": "R^2 w = p",
+        "c": "R^{-1} w = lambda p",
+        "d": "R w = lambda^2 p"
+      },
+      "explanations": {
+        "a": "Adding lambda I (ridge regularisation) improves conditioning.",
+        "b": "Squaring R worsens conditioning.",
+        "c": "Scaling the right‑hand side does not address ill‑conditioning.",
+        "d": "Rescaling p alone is ineffective."
+      },
+      "correctAnswer": "a",
+      "difficulty": "hard"
+    },
+    {
+      "question": "10. Which theorem guarantees that a causal Wiener filter exists whenever the observation power spectrum can be written as |A(e^jω)|^2 with log‑integrable magnitude?",
+      "answers": {
+        "a": "Wiener–Khinchin theorem",
+        "b": "Kolmogorov spectral‑factorisation theorem",
+        "c": "Parseval energy theorem",
+        "d": "Central‑limit theorem"
+      },
+      "explanations": {
+        "a": "Wiener–Khinchin links autocorrelation and spectrum but does not ensure causal factorisation.",
+        "b": "Kolmogorov’s factorisation theorem gives the minimum‑phase spectral factor needed for a causal Wiener filter.",
+        "c": "Parseval deals with energy equality, not factorisation.",
+        "d": "The central‑limit theorem is unrelated."
+      },
+      "correctAnswer": "b",
+      "difficulty": "hard"
+    }
+  ]
+}
