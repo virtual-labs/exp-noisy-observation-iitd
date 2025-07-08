@@ -60,7 +60,10 @@
     background-color: #e6f7ff;  /* Light blue background on row hover */
 }
 
-
+#carrierFrequency,
+  label[for="carrierFrequency"] {
+    display: none;
+  }
     </style>
   </head>
   <body>
@@ -136,6 +139,7 @@
                     alt="Wiener Filter" 
 					style= "height:450px; width: 550px; margin-left: 40px"
                   />
+
 				<button
                   class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[60px] left-[2px]"
                   onclick="simulateWiener()"
@@ -171,10 +175,17 @@
                 </button>
 				
 							    <button
-                  class="button bg-gray-500 text-white rounded-md px-2 py-1 absolute top-[500px] left-[245px]"
+                  class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[500px] left-[245px]"
                   onclick="generateResidueSignal()"
                 >
                 Generate Residue Signal
+                </button>
+
+                <button
+                  class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[550px] left-[160px]"
+                  onclick="compare()"
+                >
+                Compare Signals
                 </button>
 				
               </div>
@@ -203,12 +214,22 @@
 			 <div id = "scrolltoresidue" class="flex items-center gap-2 justify-center max-lg:flex-col">
                 <div id="plot3" class="w-[600px] h-[450px]"></div>
               </div>
+            <div id = "scrolltocompare" class="flex items-center gap-2 justify-center max-lg:flex-col">
+                <div id="compare" class="w-[600px] h-[450px]"></div>
+              </div>
 	</div>
 	
 <div class="right-half">
 <br/>
 			  <div id = "scrolltoxyz1" class="flex items-center gap-2 justify-center max-lg:flex-col">
                 <div id="mseDisplay" class="w-[600px] h-[450px]"></div>
+                <a href ="ber_vs_snr.html">
+                    <button
+                    class="button bg-green-500 text-white rounded-md px-2 py-1"
+                  >
+                    Plot MSE vs SNR
+                  </button>
+              </a>
               </div>
 			  <!--
     <table id="resultsTable" border="1" class = "custom-table">
@@ -464,19 +485,31 @@ function handleInputChange(fs, fm, fc) {
     switch (selectedInput) {
         case 'sine':
             y = tt.map((x) => Math.sin(2 * Math.PI * fm * x));
+            label111 = document.querySelector('label[for="carrierFrequency"]');
+	label111.style.display = 'none';
+	carrierFrequency.style.display = 'none';
             break;
         case 'cosine':
             y = tt.map((x) => Math.cos(2 * Math.PI * fm * x));
+            label111 = document.querySelector('label[for="carrierFrequency"]');
+	label111.style.display = 'none';
+	carrierFrequency.style.display = 'none';
             break;
         case 'am':
             let modulatingSignal = tt.map((x) => Math.sin(2 * Math.PI * fm * x));
             let carrier = tt.map((x) => Math.cos(2 * Math.PI * fc * x));
             y = modulatingSignal.map((value, index) => (1 + value) * carrier[index]);
+            label111 = document.querySelector('label[for="carrierFrequency"]');
+	label111.style.display = 'block';
+	carrierFrequency.style.display = 'block';
             break;
         case 'dsbsc':
             let messageSignal = tt.map((x) => Math.sin(2 * Math.PI * fm * x));
             let carrierSignal = tt.map((x) => Math.cos(2 * Math.PI * fc * x));
             y = messageSignal.map((value, index) => value * carrierSignal[index]);
+            label111 = document.querySelector('label[for="carrierFrequency"]');
+	label111.style.display = 'block';
+	carrierFrequency.style.display = 'block';
             break;
         default:
             alert('Please select a valid input.');
@@ -656,6 +689,73 @@ function handleInputChange(fs, fm, fc) {
         ], { title: 'Residue Signal', yaxis: { range: [-1, 1] } }, rr);
 		document.getElementById('scrolltoresidue').scrollIntoView({ behavior: 'smooth' });
     }
+
+    function compare() {
+    let fs = parseInt(document.getElementById('samplingFrequency').value);			
+    let tt = Array.from({ length: fs }, (_, i) => i / fs);
+    let fm = parseInt(document.getElementById('messageFrequency').value);
+    let fc = parseInt(document.getElementById('carrierFrequency').value);
+
+    // Generate input signal
+    let y = handleInputChange(fs, fm, fc);
+    if (!y) return;  // Exit if signal generation failed
+
+    // SNR in dB
+    let snr_db = parseFloat(document.getElementById('snrInput').value);
+
+    // Add Gaussian noise
+    let x = addNoise(y, snr_db);
+
+    // Filter order
+    let N = parseInt(document.getElementById('filterOrder').value);
+    let yN = y.slice(0, N);
+    let xN = x.slice(0, N);
+
+    // FFT
+    let X = fft(xN);
+    let Y = fft(yN);
+
+    // Correlations in frequency domain
+    let Rxx = ifft(autoCorrelation(X));
+    let Rxy = ifft(crossCorrelation(X, Y));
+
+    // Solve Wiener-Hopf equations
+    let RxxToeplitz = toeplitz(Rxx, Rxx);
+    let B = solveToeplitz(RxxToeplitz, Rxy);
+
+    // Apply filter
+    let B_fft = fft([...B, ...new Array(fs - N).fill(0)]);
+    let X_fft = fft(x);
+    let Y_fft = multiplyComplexArrays(B_fft, X_fft);
+    let xest = ifft(Y_fft);
+
+    // Plotting
+    const trace1 = {
+        x: tt.slice(N),
+        y: y.slice(N),
+        mode: 'lines',
+        name: 'Original Message Signal'
+    };
+
+    const trace2 = {
+        x: tt.slice(N),
+        y: xest.slice(N),
+        mode: 'lines',
+        name: 'Estimated Message Signal'
+    };
+
+    const layout = {
+        title: 'Original vs. Estimated Message Signal',
+        xaxis: { title: 'Time (s)' },
+        yaxis: { title: 'Amplitude' }
+    };
+
+    Plotly.newPlot('compare', [trace1, trace2], layout);
+
+    // Smooth scroll
+    document.getElementById('scrolltocompare').scrollIntoView({ behavior: 'smooth' });
+}
+
  
  /////////////////////////////////////////////////////////////////
  /////////////////////////////////////////////////////////////////
