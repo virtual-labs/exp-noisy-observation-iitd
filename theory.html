@@ -1,0 +1,566 @@
+<!DOCTYPE html><html lang="en"><head>
+      <!--Google Tag Manager-->
+      <script class="gtm">
+        var dataLayer = [{
+        'labName': 'Virtual Lab',
+        'discipline': 'Test',
+        'college': 'IITD',
+        'phase': 'Testing',
+        'expName': 'ESTIMATE THE SIGNAL FROM ITS NOISY OBSERVATION USING A LINEAR FILTER DESIGNED BY
+    MINIMIZING THE MEAN SQUARE ERROR (WIENER FILTER)',
+        'expShortName': 'noisy-observation'
+        }];
+    
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-5NMQ9NQ');
+      </script>
+      <!--End Google Tag Manager-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="" name="description">
+    <meta content="" name="author">
+    
+    	<meta name="experiment-short-name" content="noisy-observation">
+    	<meta name="developer-institute" content="IITD">
+    	<meta name="learning-unit" content="ESTIMATE THE SIGNAL FROM ITS NOISY OBSERVATION USING A LINEAR FILTER DESIGNED BY
+    MINIMIZING THE MEAN SQUARE ERROR (WIENER FILTER)">
+    	<meta name="task-name" content="Theory">
+    
+    <!-- For iPhone -->
+    <meta name="msapplication-TileColor" content="#4076e0">
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#4076e0">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#4076e0">
+    <title>Virtual Labs</title>
+    <link rel="shortcut icon" href="./assets/images/favicon.ico">
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css" integrity="sha512-Oy18vBnbSJkXTndr2n6lDMO5NN31UljR8e/ICzVPrGpSud4Gkckb8yUpqhKuUNoE+o9gAb4O/rAxxw1ojyUVzg==" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&amp;family=Raleway&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./assets/css/github-markdown.min.css">
+    <link rel="stylesheet" href="./assets/css/vlabs-style.css">
+    <link rel="stylesheet" href="./assets/css/toast.css">
+    <link rel="stylesheet" href="./assets/katex_assets/katex.min.css">
+    
+    <script src="./assets/js/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+      h1 {
+      font-size: 1.8rem;
+      }
+      h2 {
+      font-size: 1.4rem;
+      }
+      h3 {
+      font-size: 1.2rem;
+      }
+
+      h2, h3 {
+      font-weight: 800;
+      }
+    </style>
+    
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"></head>
+  <body class="p-0 container-fluid vlabs-page d-flex flex-column justify-content-between">
+      <!--Google Tag Manager (noscript)-->
+      <noscript class="gtm">
+        <iframe height="0" src="https://www.googletagmanager.com/ns.html?id=GTM-5NMQ9NQ" style="display:none;visibility:hidden" width="0">
+        </iframe>
+      </noscript>
+      <!--End Google Tag Manager (noscript)-->
+  
+      <header class="vlabs-header sticky-top bg-white">
+        <nav class="p-0 navbar navbar-light d-flex align-items-stretch">
+          
+          <button class="navbar-toggler px-4" type="button" onclick="toggle()">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+      
+          <div class="d-flex justify-content-center">        
+            <a href="https://vlab.co.in" class="navbar-brand">
+              <img src="./assets/images/vlabs-color-small-moe.jpg" alt="vlabs logo" class="vlabs-logo">
+            </a>
+          </div>
+          
+          <div id="headerNavbar" class="d-none border-top flex-grow-1 d-lg-flex align-items-center justify-content-end">
+            <div class="svc-rating-display">
+                <rating-display spreadsheetid="1x12nhpp0QvnsA6x-O1sV4IA9SAbfVsq_wiexWkutOmU" sheetname="Experiment-Database" columnname="Experiment Short Name" columnvalue="noisy-observation" imagesdirectory="/plugins/svc-rating/images/">
+                </rating-display>
+            </div>      <div class="svc-rating-submit">
+                <rating-submit title="Rate" this="" experiment="">
+                </rating-submit>
+            </div>      <bug-report id="bug-report" title="[BUG REPORT] ESTIMATE THE SIGNAL FROM ITS NOISY OBSERVATION USING A LINEAR FILTER DESIGNED BY
+      MINIMIZING THE MEAN SQUARE ERROR (WIENER FILTER)" page-type="text" context-info="{&quot;organisation&quot;:&quot;Virtual Labs&quot;,&quot;developer_institute&quot;:&quot;IITD&quot;,&quot;expname&quot;:&quot;ESTIMATE THE SIGNAL FROM ITS NOISY OBSERVATION USING A LINEAR FILTER DESIGNED BY\nMINIMIZING THE MEAN SQUARE ERROR (WIENER FILTER)&quot;,&quot;labname&quot;:&quot;Virtual Lab&quot;,&quot;phase&quot;:&quot;Testing&quot;}" checkbox-json="{&quot;text&quot;:[&quot;Insufficient Content&quot;],&quot;video&quot;:[&quot;Insufficient Content&quot;],&quot;assesment&quot;:[&quot;Incorrect Options&quot;,&quot;Incorrect Answer&quot;,&quot;Incorrect Question&quot;],&quot;assessment&quot;:[&quot;Incorrect Options&quot;,&quot;Incorrect Answer&quot;,&quot;Incorrect Question&quot;],&quot;simulation&quot;:[&quot;Simulation Not Working&quot;,&quot;Incorrect Results/Observations&quot;,&quot;Insufficient/Incorrect Instructions&quot;],&quot;DEFAULT&quot;:[&quot;Page Not Loading&quot;,&quot;Content Not Visible&quot;,&quot;Incorrect Content&quot;]}" button_style="border: none; color: #fff; background-color: #288ec8; text-align: center; font-size: 1.05rem; border-radius: 1em;padding: 0.6em 1.2em; margin: 0 10px" position="override" custom_button_class="v-button"></bug-report>
+          </div>
+        </nav>
+      </header>
+      <div class="container-fluid flex-fill d-flex flex-column vlabs-page-main">
+        <div class="row d-flex justify-content-between">
+          <div class="flex-column">
+          <div class="row py-4 px-4 breadcrumbs">
+          	<div class="title is-4 tools">Tools</div>
+          	<span class="mx-2">
+          		<i aria-hidden="true" class="fa fa-angle-right"></i>
+          	</span>
+          	<a href="performance-report.html" class="my-2 mx-3" target="_blank">
+          		<button class="v-button">Performance Tool</button>
+          	</a>
+          	<a href="validator-report.html" class="my-2 mx-3" target="_blank">
+          		<button class="v-button">Validation Tool</button>
+          	</a>
+          </div>
+          </div>
+        </div>
+        <div class="row flex-grow-1 d-flex flex-nowrap flex-column flex-lg-row">
+          <div class="modal fade popupmenu" id="popupMenu" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">
+                              <a href="https://vlab.co.in" class="navbar-brand">
+                                  <img src="./assets/images/vlabs-color-small-moe.jpg" alt="vlabs logo" class="vlabs-logo">
+                              </a>
+                          </h5>
+                          <button type="button" class="btn-close align-self-center" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body nav-menu">
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="index.html" class="p-2 ">
+                                      Aim
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="theory.html" class="p-2  current-item ">
+                                      Theory
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="pretest.html" class="p-2 ">
+                                      Pretest
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="procedure.html" class="p-2 ">
+                                      Procedure
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="simulation.html" class="p-2 ">
+                                      Simulation
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="posttest.html" class="p-2 ">
+                                      Posttest
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="references.html" class="p-2 ">
+                                      References
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div>
+                                  <div class="d-flex nav-menu-body">
+                                      <a href="feedback.html" class="p-2 ">
+                                      Feedback
+                                      </a>
+                                      
+                                  </div>
+                                  <div id="t-" class="collapse">
+                                      <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                                      </div>
+                                  </div>
+                              </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="nav flex-column sidebar nav-menu flex-shrink-0 px-lg-4 align-items-center align-items-lg-start hidden d-none d-lg-flex" id="menu">
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="index.html" class="p-2 ">
+                        Aim
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="theory.html" class="p-2  current-item ">
+                        Theory
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="pretest.html" class="p-2 ">
+                        Pretest
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="procedure.html" class="p-2 ">
+                        Procedure
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="simulation.html" class="p-2 ">
+                        Simulation
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="posttest.html" class="p-2 ">
+                        Posttest
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="references.html" class="p-2 ">
+                        References
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex nav-menu-body">
+                        <a href="feedback.html" class="p-2 ">
+                        Feedback
+                        </a>
+                        
+                    </div>
+                    <div id="t-" class="collapse">
+                        <div class="px-3 d-flex flex-column tasks align-items-center align-items-lg-start">
+                        </div>
+                    </div>
+                </div>
+          </div>          <div class="vlabs-page-content px-5 pb-4 flex-grow-1 markdown-body">
+            <div class="text-center fix-spacing">
+              <h2 id="estimate-the-signal-from-its-noisy-observation-using-a-linear-filter-designed-by-minimizing-the-mean-square-error-wiener-filter">Estimate the signal from its noisy observation using a linear filter designed by minimizing the mean square error (Wiener Filter)</h2>
+          
+            </div>
+              <p>Assuming known stationary signal and noise spectra and additive noise, the Wiener filter is a filter used in signal processing to provide an estimate of a desired or target random process through linear time-invariant (LTI) filtering of an observed noisy process. The mean square error between the intended process and the estimated random process is reduced by the Wiener filter.</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-1.png" alt=""></p>
+          <p><strong>Fig: Block diagram view of the FIR Wiener filter for discrete series. An input signal x[n] is convolved with the Wiener filter g[n] and the result is compared to a reference signal s[n] to obtain the filtering error e[n].</strong></p>
+          <p>In the big picture, the signal is attenuated and added with noise, then the signal is passed through a Wiener filter. And the function of the Wiener filter is to minimize the mean square error between the filter output of the received signal and the reference signal by adjusting the Wiener filter tap coefficient.</p>
+          <p><strong>Description</strong></p>
+          <p>By employing a related signal as an input and filtering that known signal to obtain the estimate as an output, the Wiener filter aims to compute a statistical estimate of an unknown signal. For instance, the known signal might be made up of a potentially valuable unknown signal that has been tampered with by additive noise. By removing the noise from the distorted signal, the Wiener filter can estimate the underlying signal of interest. The Wiener filter is based on a statistical methodology, and the article on the minimum mean square error (MMSE) estimator provides a more statistical explanation of the theory. Here x[n] is a wide-sense stationary (WSS) random process that we have measurements of. We want to determine the unit sample response or frequency response of the above LTI system such that the filter output y^[n] is the minimum-mean-square-error (MMSE) estimate of some “target” process y[n] that is jointly WSS with x[n]. Defining the error e[n] as</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-2.png" alt=""></p>
+          <p>we wish to carry out the following minimization:</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-3.png" alt=""></p>
+          <p>The resulting filter h[n] is called the Wiener filter for the estimation of y[n] from x[n]. In some contexts it is appropriate or convenient to restrict the filter to be an FIR (finite-duration impulse response) filter of length N, e.g. h[n] = 0 except in the interval 0 ≤ n ≤ N − 1.</p>
+          <p>The Wiener filter seeks to generate a statistical estimate of an unknown signal by using a related signal as an input and filtering that known signal to produce the estimate as an output. As an illustration, the known signal can consist of an unknown signal that is potentially valuable but has been tampered with by additive noise. The Wiener filter can estimate the underlying signal of interest by eliminating the noise from the distorted signal. The article on the minimal mean square error (MMSE) estimator offers a more statistical justification of the theory because the Wiener filter is based on a statistical technique.</p>
+          <ol>
+          <li> Assumption: signal and (additive) noise are stationary linear stochastic processes with known spectral characteristics or known autocorrelation and cross-correlation</li>
+          <li> Requirement: the filter must be physically realizable/causal (this requirement can be dropped, resulting in a non-causal solution)</li>
+          <li> Performance criterion: minimum mean-square error (MMSE)</li>
+          </ol>
+          <p>This filter is frequently used in the process of deconvolution; for this application, see Wiener deconvolution.</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-4.png" alt=""></p>
+          <p>Fig: DT LTI filter for linear MMSE estimation</p>
+          <p><strong>Non-causal DT Wiener Filter</strong></p>
+          <p>To determine the optimal choice for h[n], we first expand the error criterion in</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-5.png" alt="">&nbsp;&nbsp; … (i)</p>
+          <p>The impulse response values that minimize ϵ can then be obtained by setting&nbsp;&nbsp; ∂ϵ/∂h[m] = 0 for all values of m for which h[m] is not restricted to be zero (or ∂h[m] otherwise pre-specified):</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-6.png" alt="">&nbsp; … (ii)</p>
+          <p>The above equation implies that</p>
+          <p>E{e[n]x[n-m]} = 0&nbsp; … (iii)</p>
+          <p>Or, Rex[m] = 0, for all m for which h[m] can be freely chosen.</p>
+          <p>Rex[m] = E{e[n]x[n-m]}</p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = E{(y^[n] - y[n])x[n-m]}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em>[y__^__[n] is the estimated received signal]</em></p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = Ry^x[m] - Ryx[m]&nbsp;&nbsp;&nbsp; … (iv)</p>
+          <p>Or,</p>
+          <p>Ry^x[m] - Ryx[m] = 0</p>
+          <p>Therefore, an alternative way of stating the orthogonality principle in equation (iv) from equation (iii) is that</p>
+          <p>Ry^x[m] = Ryx[m]&nbsp;&nbsp; for all appropriate m&nbsp;&nbsp;&nbsp;</p>
+          <p><em>[R__yx</em> <em>is the cross-correlation between the output of the wiener filter y and input x]</em></p>
+          <p>In other words, for the optimal system, the cross-correlation between the input and output of the estimator equals the cross-correlation between the input and target output.</p>
+          <p>To actually find the impulse response values, observe that since y^[n] is obtained by filtering x[n] through an LTI system with impulse response h[n], the following relationship applies:</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-7.png" alt="">&nbsp;&nbsp; … (v)</p>
+          <p>Combining this with the alternative statement of the orthogonality condition, we</p>
+          <p>can write</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-8.png" alt="">&nbsp; … (vi)</p>
+          <p>Or, equivalently,</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-9.png" alt="">&nbsp;&nbsp; … (vii)</p>
+          <p>Equation (vii) represents a set of linear equations to be solved for the impulse</p>
+          <p>response values. If the filter is FIR of length N, then there are N equations in the</p>
+          <p>N unrestricted values of h[n]. For instance, suppose that h[n] is restricted to be</p>
+          <p>zero except for n ∈ [0, N −1]. The condition then yields as many equations as unknowns, which can be arranged in the following matrix form, which you may recognize as the appropriate form of the normal equations for LMMSE estimation</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-10.png" alt="">&nbsp;&nbsp;&nbsp; …(viii)</p>
+          <p>In the case of an IIR filter, equation (vii) must hold for an infinite number of values of m and, therefore, cannot simply be solved by the methods used for a finite number of linear equations. However, if h[n] is not restricted to be causal or FIR, the equation must hold for all values of m from −∞ to +∞, so the z-transform can be applied to equation to obtain</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-11.png" alt="">&nbsp; … (ix)</p>
+          <p>The optimal transfer function, i.e. the transfer function of the resulting (Wiener)</p>
+          <p>filter, is then</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-12.png" alt="">&nbsp; … (x)</p>
+          <p>If either of the correlation functions involved in this calculation does not possess a z-transform but if both possess Fourier transforms, then the calculation can be carried out in the Fourier transform domain.</p>
+          <p>Similarly in continuous time results are exactly the same</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-13.png" alt="">&nbsp;&nbsp; … (xi)</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-14.png" alt="">&nbsp;&nbsp; … (xii)</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-15.png" alt="">&nbsp; … (xiii)</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-16.png" alt=""> … (xiv)</p>
+          <p>The mean-square-error corresponding to the optimum filter, i.e. the minimum</p>
+          <p>MSE, can be determined by straightforward computation. We leave you to show</p>
+          <p>That</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-17.png" alt="">&nbsp; … (xv)</p>
+          <p>where h[m] is the impulse response of the optimal filter. The MMSE is then just</p>
+          <p>Ree[0]. It is illuminating to rewrite this in the frequency domain, but dropping the argument ejΩ on the power spectra S(ejΩ) and frequency response H(ejΩ ) below to avoid notational clutter:</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-18.png" alt="">&nbsp;&nbsp; … (xvi)</p>
+          <p>The function ρyx(ejΩ) defined by</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-19.png" alt="">&nbsp;&nbsp;&nbsp; … (xvii)</p>
+          <p>Consider a situation in which x[n], the sum of a target process y[n] and noise v[n], is observed:</p>
+          <p>We would like to estimate y[n] from our observations of x[n]. Assume that the signal and noise are uncorrelated, i.e. Rvy[m] = 0. Then</p>
+          <p>x[n] = y[n] + v[n]&nbsp;&nbsp; … (xviii)</p>
+          <p>We would like to estimate y[n] from our observations of x[n]. Assume that the</p>
+          <p>signal and noise are uncorrelated, i.e. Rvy[m] = 0. Then</p>
+          <p>Rxx[m] = Ryy[m] + Rvv[m]&nbsp; … (xix)</p>
+          <p>Ryx[m] = Ryy[m]&nbsp;&nbsp; … (xx)</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-20.png" alt="">&nbsp;&nbsp;&nbsp;&nbsp; … (xxi)</p>
+          <p>At values of Ω for which the signal power is much greater than the noise power,</p>
+          <p>H(ejΩ) ≈ 1. Where the noise power is much greater than the signal power,</p>
+          <p>H(ejΩ) ≈ 0. For example, when</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-21.png" alt="">&nbsp;&nbsp; … (xxii)</p>
+          <p>and the noise is white, the optimal filter will be a low-pass filter with a frequency response that is appropriately shaped, shown in Figure below. Note that the filter in</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-22.png" alt=""></p>
+          <p>Fig: Optimal filter frequency response, H(ejΩ), input signal PSD signal,</p>
+          <p>Syy(ejΩ), and PSD of white noise, Svv(ejΩ).</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-23.png" alt=""></p>
+          <p>In the Figure 11.4, r[n] is a filtered or “blurred” version of the signal of interest,</p>
+          <p>x[n], while v[n] is additive noise that is uncorrelated with x[n]. We wish to design a filter that will deblur the noisy measured signal ξ[n] and produce an estimate of the input signal x[n]. Note that in the absence of the additive noise, the inverse filter 1/G(z) will recover the input exactly. However, this is not a good solution when noise is present, because the inverse filter accentuates precisely those frequencies where the measurement power is small relative to that of the noise. We shall therefore design a Wiener filter to produce an estimate of the signal x[n].</p>
+          <p>We have shown that the cross-correlation between the measured signal, which is the input to the Wiener filter, and the estimate produced at its output is equal to the cross-correlation between the measurement process and the target process. In the transform domain, the statement of this condition is</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-24.png" alt="">&nbsp; … (xxiii)</p>
+          <p>Or,</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-25.png" alt="">&nbsp; … (xxiv)</p>
+          <p>We also know that,</p>
+          <p>Sξ ξ (z) = Svv(z) + Sxx(z)G(z)G(1/z)&nbsp;&nbsp; … (xxv)</p>
+          <p>SxꜪ (z) = Sxr (z) … (xxvi)</p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = Sxx (z) G(1/z)&nbsp;&nbsp; … (xxvii)</p>
+          <p>where we have (in the first equality above) used the fact that</p>
+          <p>Svr(z) = G(1/z)Svx(z) = 0. We can now write</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-26.png" alt="">&nbsp; … (xxviii)</p>
+          <p>We leave you to check that this system function assumes reasonable values in the limiting cases where the noise power is very small, or very large. It is also interesting to verify that the same overall filter is obtained if we first find an MMSE estimate r^[n] from ξ[n] (as in Example <img src="1736155213_wiener-filter/1736155213_wiener-filter-27.png" alt="">), and then pass r^[n] through the inverse filter 1/G(z).</p>
+          <p><strong>Non-causal CT Wiener Filter</strong></p>
+          <p>In the previous discussion, we derived and illustrated the discrete-time Wiener filter for the FIR and non-causal IIR cases. In this section we derive the continuous-time counterpart of the result for the non-causal IIR Wiener filter. The DT derivation involved taking derivatives with respect to a (countable) set of parameters h[m], but in the CT case the impulse response that we seek to compute is a CT function h(t), so the DT derivation cannot be directly copied. However, you will see that the results take the same form as in the DT case; furthermore, the derivation below has a natural DT counterpart, which provides an alternate route to the results in the preceding section.</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-28.png" alt=""></p>
+          <p>Fig: CT LTI filter for linear MMSE estimation</p>
+          <p>Let x(t) be a (zero-mean) WSS random process that we have measurements of.</p>
+          <p>We want to determine the impulse response or frequency response of the above LTI system such that the filter output y^(t) is the LMMSE estimate of some (zero-mean)&nbsp; “target” process y(t) that is jointly WSS with x(t). We can again write</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-29.png" alt="">&nbsp; … (xxix)</p>
+          <p>Assuming the filter is stable (or at least has a well-defined frequency response), the process y^(t) is jointly WSS with x(t). Furthermore,</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-30.png" alt="">&nbsp;&nbsp; … (xxx)</p>
+          <p>The quantity we want to minimize can again be written as</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-31.png" alt="">&nbsp;&nbsp; … (xxxi)</p>
+          <p>where the error autocorrelation function Ree(τ ) is — using the definition in equation (xxix)</p>
+          <p>— evidently given by</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-32.png" alt="">&nbsp;&nbsp;&nbsp; … (xxxii)</p>
+          <p>Thus</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-33.png" alt="">&nbsp;&nbsp; … (xxxiii)</p>
+          <p>Our task is now to choose H(jω) to minimize the integral in equation (xxxiii). We can do this by minimizing the integrand for each ω. The first term in the integrand does not involve or depend on H, so in effect we need to minimize</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-34.png" alt="">&nbsp;&nbsp; … (xxxiv)</p>
+          <p>is minimization would be straight forward. Even with a complex H and Syx, however, the minimization is not hard. The key to the minimization is an elementary technique referred to as completing the square. For this, we write the quantity in equation (xxxiv) in terms of the squared magnitude of a term that is linear in H. This leads to the following rewriting of equation (xxxiv):</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-35.png" alt="">&nbsp; … (xxxv)</p>
+          <p>In writing √Sxx, we have made use of the fact that Sxx(jω) is real and nonnegative. We have also felt free to divide by √Sxx(jω) because for any ω where this quantity is 0 it can be shown that Syx(jω) = 0 also. The optimal choice of H(jω) is therefore arbitrary at such ω, as evident from equation (xxxiv). We thus only need to compute the optimal H at frequencies where √Sxx(jω) &gt; 0.  
+          &nbsp;</p>
+          <p>Notice that the second term in parentheses in equation (xxxv) is the complex conjugate of the first term, so the product of these two terms in parentheses is real and nonnegative. Also, the last term does not involve H at all. To cause the terms in parentheses to vanish and their product to thereby become 0, which is the best we can do, we evidently must choose as follows (assuming there are no additional constraints such as causality on the estimator):</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-36.png" alt="">&nbsp;&nbsp; … (xxxvi)</p>
+          <p>This expression has the same form as in the DT case. The formula for H(jω) causes it to inherit the symmetry properties of Syx(jω), so H(jω) has a real part that is even in ω, and an imaginary part that is odd in ω. Its inverse transform is thus a real impulse response h(t), and the expression in equation (xxxvi) is the frequency response of the optimum (Wiener) filter.</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-37.png" alt="">&nbsp;&nbsp; … (xxxvii)</p>
+          <p>where the function ρ(jω) is defined by</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-38.png" alt="">&nbsp;&nbsp; … (xxxviii)</p>
+          <p>and evidently plays the role of a (complex) frequency-by-frequency correlation co-efficient, analogous to that played by the correlation coefficient of random variables Y and X</p>
+          <p><strong>Causal Wiener Filtering</strong></p>
+          <p>In the preceding discussion we developed the Wiener filter with no restrictions on the filter frequency response H(jω). This allowed us to minimize a frequency domain integral by choosing H(jω) at each ω to minimize the integrand. However, if we constrain the filter to be causal, then the frequency response cannot be chosen arbitrarily at each frequency, so the previous approach needs to be modified. It can be shown that for a causal system the real part of H(jω) can be determined from the imaginary part, and vice versa, using what is known as a Hilbert transform. This shows that H(jω) is constrained in the causal case. (We shall not need to deal explicitly with the particular constraint relating the real and imaginary parts of H(jω), so we will not pursue the Hilbert transform connection here.) The development of the Wiener filter in the causal case is therefore subtler than the unrestricted case, but you know enough now to be able to follow the argument.</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-39.png" alt=""></p>
+          <p>Fig: Representation of LMMSE estimation using an LTI system.</p>
+          <p>The input x(t) is a (zero-mean) WSS random process that we have measurements of, and we want to determine the impulse response or frequency response of the above LTI system such that the filter output yb(t) is the LMMSE estimate of some (zero-mean) “target” process y(t) that is jointly WSS with x(t):</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-40.png" alt="">&nbsp;&nbsp; … (xxxix)</p>
+          <p>We shall now require, however, that the filter be causal. This is essential in, for example, the problem of prediction, where y(t) = x(t + t0) with t0 &gt; 0. We have already seen that the quantity we want to minimize can be written as</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-41.png" alt="">&nbsp;&nbsp;&nbsp; … (xxxx)</p>
+          <p>The last equality was the result of “completing the square” on the integrand in the preceding integral. In the case where H is unrestricted, we can set the first integral of the last equation to 0 by choosing</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-42.png" alt="">&nbsp;&nbsp;&nbsp;&nbsp; … (xxxxi)</p>
+          <p>at each frequency. The second integral of the last equation is unaffected by our choice of H, and determines the MMSE.</p>
+          <p>If the Wiener filter is required to be causal, then we have to deal with the integral</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-43.png" alt="">&nbsp;&nbsp;&nbsp; … (xxxxii)</p>
+          <p>as a whole when we minimize it, because causality imposes constraints on H(jω) that prevent it being chosen freely at each ω. (Because of the Hilbert transform relationship mentioned earlier, we could for instance choose the real part of H(jω) freely, but then the imaginary part would be totally determined.) We therefore have to proceed more carefully.</p>
+          <p>Note first that the expression we obtained for the integrand in equation (xxxxii) by completing the square is actually not quite as general as we might have made it. Since we may need to use all the flexibility available to us when we tackle the constrained problem, we should explore how generally we can complete the square. Specifically, instead of using the real square root √Sxx of the PSD Sxx, we could choose a complex square root Mxx, defined by the requirement that</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-44.png" alt="">&nbsp; … (xxxxiii)</p>
+          <p>and correspondingly rewrite the criterion in equation (xxxxii) as</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-45.png" alt="">&nbsp;&nbsp;&nbsp; … (xxxxiv)</p>
+          <p>which is easily verified to be the same criterion, although written differently. The quantity Mxx(jω) is termed a spectral factor of Sxx(jω) or a modeling filter for the process x. The reason for the latter name is that passing (zero-mean) unit-variance white noise through a filter with frequency response Mxx(jω) will produce a process with the PSD Sxx(jω), so we can model the process x as being the result of such a filtering operation. Note that the real square root √Sxx(jω) we used earlier is a special case of a spectral factor, but others exist. In fact, multiplying √Sxx(jω) by an all-pass frequency response A(jω) will yield a modeling filter:</p>
+          <p><img src="1736155213_wiener-filter/1736155213_wiener-filter-46.png" alt="">&nbsp;&nbsp; … (xxxxv)</p>
+          <p>Conversely, it is easy to show that the frequency response of any modeling filter can be written as the product of an all-pass frequency response and √Sxx(jω). It turns out that under fairly mild conditions (which we shall not go into here) a PSD is guaranteed to have a spectral factor that is the frequency response of a stable and causal system, and whose inverse is also the frequency response of a stable and causal system. (To simplify how we talk about such factors, we shall adopt an abuse of terminology that is common when talking about Fourier transforms, referring to the factor itself — rather than the system whose frequency response is this factor — as being stable and causal, with a stable and causal inverse.)</p>
+          <p><strong>Applications</strong>&nbsp;</p>
+          <p>The Wiener filter has a variety of applications in signal processing, image processing, control systems, and digital communications. These applications generally fall into one of four main categories:</p>
+          <ul>
+          <li>  System identification</li>
+          <li>  Deconvolution</li>
+          <li>  Noise reduction</li>
+          <li>  Signal detection</li>
+          </ul>
+          <p>For example, the Wiener filter can be used in image processing to remove noise from a picture. It is commonly used to denoise audio signals, especially speech, as a pre-processor before speech recognition.</p>
+          
+          </div>
+          <div class="bug-report-mobile">
+              <bug-report id="bug-report" title="[BUG REPORT] ESTIMATE THE SIGNAL FROM ITS NOISY OBSERVATION USING A LINEAR FILTER DESIGNED BY
+          MINIMIZING THE MEAN SQUARE ERROR (WIENER FILTER)" page-type="text" context-info="{&quot;organisation&quot;:&quot;Virtual Labs&quot;,&quot;developer_institute&quot;:&quot;IITD&quot;,&quot;expname&quot;:&quot;ESTIMATE THE SIGNAL FROM ITS NOISY OBSERVATION USING A LINEAR FILTER DESIGNED BY\nMINIMIZING THE MEAN SQUARE ERROR (WIENER FILTER)&quot;,&quot;labname&quot;:&quot;Virtual Lab&quot;,&quot;phase&quot;:&quot;Testing&quot;}" checkbox-json="{&quot;text&quot;:[&quot;Insufficient Content&quot;],&quot;video&quot;:[&quot;Insufficient Content&quot;],&quot;assesment&quot;:[&quot;Incorrect Options&quot;,&quot;Incorrect Answer&quot;,&quot;Incorrect Question&quot;],&quot;assessment&quot;:[&quot;Incorrect Options&quot;,&quot;Incorrect Answer&quot;,&quot;Incorrect Question&quot;],&quot;simulation&quot;:[&quot;Simulation Not Working&quot;,&quot;Incorrect Results/Observations&quot;,&quot;Insufficient/Incorrect Instructions&quot;],&quot;DEFAULT&quot;:[&quot;Page Not Loading&quot;,&quot;Content Not Visible&quot;,&quot;Incorrect Content&quot;]}" position="override" button_style="
+                          position: fixed; 
+                          bottom: 20px;
+                          right: 20px;
+                          z-index: 1;
+                          font-size: 0;
+                          padding: 25px;
+                          border-radius: 50%;
+                          border: none;
+                          background-color: #0fc0ff;
+                          background-image: url(data:image/png;base64,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);
+                          background-repeat: no-repeat;
+                          background-position: center;
+                          background-size: 30px;
+                          filter: invert(1);">
+              </bug-report>
+          </div>        </div>
+      </div>
+      <footer class="text-light pt-2 vlabs-footer d-flex flex-column">
+        <div class="row px-5 mx-0">
+          <div class="col d-flex flex-column">
+            <span class="font-weight-bold vlabs-footer-sect-name pb-2 mb-3">Community Links</span>
+            <a href="https://www.sakshat.ac.in/" class="text-light">Sakshat Portal</a>
+            <a href="http://outreach.vlabs.ac.in/" class="text-light">Outreach Portal</a>
+            <a href="https://vlab.co.in/faq" class="text-light">FAQ: Virtual Labs</a>
+          </div>
+          <div class="col d-flex flex-column">
+            <span class="font-weight-bold vlabs-footer-sect-name pb-2 mb-3">Contact Us</span>
+            <span> Phone: General Information: 011-26582050 </span>
+            <span> Email: support@vlabs.ac.in </span>
+          </div>
+          <div class="col d-flex flex-column">
+            <span class="font-weight-bold vlabs-footer-sect-name pb-2 mb-3">Follow Us</span>
+            <div class="social-links">
+      	<a class="p-2 mt-1 mr-2 d-inline-flex justify-content-center align-items-center" style="background: #55acee;" href="https://twitter.com/TheVirtualLabs">
+      	  <i class="fab fa-twitter"></i>
+      	</a>
+      	<a class="p-2 mt-1 mr-2 d-inline-flex justify-content-center align-items-center" style="background: #3b5998;" href="https://www.facebook.com/Virtual-Labs-IIT-Delhi-301510159983871/">
+      	  <i class="fab fa-facebook"></i>
+      	</a>
+      	<a class="p-2 mt-1 mr-2 d-inline-flex justify-content-center align-items-center" style="background: #e52d27;" href="https://www.youtube.com/watch?v=asxRaOgk6a0">
+      	  <i class="fab fa-youtube"></i>
+      	</a>
+      	<a class="p-2 mt-1 mr-2 d-inline-flex justify-content-center align-items-center" style="background: #2867B2;" href="https://in.linkedin.com/in/virtual-labs-008ba9136">
+      	  <i class="fab fa-linkedin"></i>
+      	</a>
+            </div>
+          </div>
+        </div>
+        <div class="m-0 py-2 text-center" style="font-family: &quot;Open Sans&quot;, sans-serif; background: #212121;">
+          <a class="text-primary font-weight-bold" href="https://www.gnu.org/licenses/agpl-3.0.en.html"> AGPL 3.0 </a>
+          &nbsp;&amp;&nbsp;
+          <a class="text-primary font-weight-bold" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"> Creative Commons (CC BY-NC-SA 4.0) </a>
+        </div>
+      </footer>
+    <script src="./assets/js/toggleSidebar.js"></script>
+    <script src="./assets/js/event-handler.js"></script>
+
+
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register("sw.js");
+        });
+      }
+    </script>
+  
+
+<script type="module" src="https://cdn.vlabs.ac.in/bug-report/vlabs-bug-report.js"></script><script type="module" src="/exp-noisy-observation-iitd/plugins/svc-rating/index.js"></script><script type="module" src="/exp-noisy-observation-iitd/plugins/svc-rating/config.js"></script><script type="module" src="https://apis.google.com/js/api.js"></script></body></html>
