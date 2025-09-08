@@ -32,7 +32,7 @@
     </li>
     <li>
       <strong>4. Show Wiener Filter Coefficients:</strong> 
-      Click the <em>“Show Filter Coefficients”</em> button to visualize the Wiener filter coefficients, which minimize the error between the estimated signal and the original input message signal.
+      Click the <em>“Plot Filter Coefficients”</em> button to visualize the Wiener filter coefficients, which minimize the error between the estimated signal and the original input message signal.
     </li>
     <li>
       <strong>5. Generate the Estimated Signal:</strong> 
