@@ -1,0 +1,615 @@
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<style>
+	#h1 {
+    color: #333;
+    font-size: 22px; /* Increased font size */
+    margin-bottom: 20px;
+}
+#container {
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  padding: 25px 40px;
+  max-width: 100%;
+  margin: 20px auto;
+  text-align: left;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+h1 {
+  color: #1e3a8a;
+  font-size: 24px;
+  margin-bottom: 25px;
+  text-align: justify;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li.step {
+  margin: 12px 0;
+  padding: 12px 15px;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+li.step::before {
+  content: "✔";
+  color: #10b981;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+li.step:hover {
+  transform: scale(1.02);
+  background-color: #f3f4f6;
+}
+
+/* Color code each step */
+.step1 {
+  background-color: #ffe0e0;
+  border-left: 5px solid #ef4444;
+}
+.step2 {
+  background-color: #e0f7ff;
+  border-left: 5px solid #0ea5e9;
+}
+.step3 {
+  background-color: #e0ffe5;
+  border-left: 5px solid #22c55e;
+}
+.step4 {
+  background-color: #f5e0ff;
+  border-left: 5px solid #a855f7;
+}
+#carrierFrequency,
+  label[for="carrierFrequency"] {
+    display: none;
+  }
+	</style>
+<div id="mse-section">
+    <h1 id="h1">Instructions for Calculating MSE vs. SNR Using Wiener Filtering</h1>
+    <ul>
+      <li class="step step1">Step 1: Enter Sampling Frequency, Message Frequency, Carrier Frequency, Filter Order, and SNR (dB).</li>
+      <li class="step step2">Step 2: Click "Calculate MSE" to view filtered output and computed MSE.</li>
+      <li class="step step3">Step 3: Click "Plot MSE vs SNR" to view the performance graph.</li>
+    </ul>
+  </div>
+
+</div>
+
+<hr/>
+<br>
+<div class="flex min-h-[10vh]">
+  <div class="px-6 pb-6 mt-1 flex-1">
+    <div class="">
+      <div class="flex flex-col justify-center">
+        <div class="flex max-lg:flex-col gap-x-12 gap-y-2 mt-2">
+        <div class="flex items-center justify-center gap-1 mt-2">
+    <!-- Dropdown for user input selection -->
+<label for="inputSelector">Input signal:</label>
+<select id="inputSelector" onchange="handleInputChange()">
+    <option value="" disabled selected>Select an input</option>
+    <option value="sine" selected>Sine Wave</option>
+    <option value="cosine">Cosine Wave</option>
+    <option value="am">AM Signal</option>
+    <option value="dsbsc">DSBSC Signal</option>
+</select>
+        </div>
+
+          <div class="flex items-center justify-center gap-1 mt-2">
+    <label for="messageFrequency">Message Frequency (Hz):</label>
+<input class="input-field border border-black px-2 py-1 rounded-sm" type="number" id="messageFrequency" value="10">
+            </div>
+                      <div class="flex items-center justify-center gap-1 mt-2">
+    <label for="carrierFrequency">Carrier Frequency (Hz):</label>
+<input class="input-field border border-black px-2 py-1 rounded-sm" type="number" id="carrierFrequency" value="100">
+            </div>
+                          <div class="flex items-center justify-center gap-1 mt-2">
+    <label for="samplingFrequency">Sampling Frequency (Hz):</label>
+<input class="input-field border border-black px-2 py-1 rounded-sm" type="number" id="samplingFrequency" value="1000">
+            </div>
+            <div class="flex items-center justify-center gap-1 mt-2">
+    <label for="filterOrder">Filter Order:</label>
+<input class="input-field border border-black px-2 py-1 rounded-sm" type="number" id="filterOrder" value="100" min="10">
+            </div>
+          <div class="flex items-center justify-center gap-1 mt-2">
+    <label for="snrInput">SNR (in dB):</label>
+<input class="input-field border border-black px-2 py-1 rounded-sm" type="number" id="snrInput" value="0" min = "-10" max = "20"/>
+          </div
+         <br/>
+        </div>
+        </div>
+        </div>
+    </div>
+  </div>
+</div>
+  
+  <div class="flex flex-col gap-4 mt-4">
+    <div class="flex flex-wrap gap-4">
+      <button onclick="generateEstimatedSignal()" class="bg-blue-600 text-white px-3 py-1 rounded-md">Calculate MSE</button>
+      <button onclick="plotMSEGraph()" class="bg-blue-600 text-white px-3 py-1 rounded-md">Plot MSE vs SNR</button>
+      <button onclick="window.location.reload(true);" class="bg-green-600 text-white px-3 py-1 rounded-md">Reset Simulator</button>
+      <span id="mseDisplay" class="text-lg text-red-700 font-semibold ml-4 hidden"></span>
+    </div>
+  
+    <div class="flex flex-col lg:flex-row mt-4">
+      <div class="basis-2/5">
+        <h3 class="ml-3 text-[#42c7bc] text-[20px] font-medium">MSE Results</h3>
+        <div id="mseDiv">
+          <table id="mseObservationTable" class="border border-gray-300 w-full text-left mt-2">
+            <tr class="bg-slate-300"><th>SNR (dB)</th><th>MSE</th></tr>
+          </table>
+        </div>
+        <br />
+
+      </div>
+      <div class="basis-3/5">
+        <div id="mseChart" style="width: 100%; height: 400px;"></div>
+      </div>
+    </div>
+  </div>
+
+  
+  <script>
+    // Function to check if the number of input bits is odd
+    function checkFrequencies() {
+        const messageFrequency = document.getElementById('messageFrequency').valueASNumber;
+        const carrierFrequency = document.getElementById('carrierFrequency').valueASNumber;
+        //const bitsArray = input.split(',').map(item => item.trim()); // Create an array from the input
+
+        // Check if the length of the array is odd
+        if (messageFrequency >= carrierFrequency) {
+            alert("The carrier frequency must be higher than the message frequency.");
+            window.location.reload(true); 
+        } 
+    }
+
+    // Select all button elements on the page
+    const buttons = document.querySelectorAll('button');
+
+    // Attach the click event listener to each button
+    buttons.forEach(button => {
+        button.addEventListener('click', checkFrequencies);
+    });
+</script>
+
+    <script>
+    // Function to check if the number of input bits is odd
+    function checkFrequencies2() {
+        const carrierFreq = document.getElementById('carrierFrequency').valueASNumber;
+        const samplingFreq = document.getElementById('samplingFrequency').valueASNumber;
+        //const bitsArray = input.split(',').map(item => item.trim()); // Create an array from the input
+
+        // Check if the length of the array is odd
+        if (samplingFreq <= carrierFreq) {
+            alert("The sampling frequency must be higher than the carrier frequency.");
+            window.location.reload(true); 
+        } 
+    }
+
+    // Select all button elements on the page
+    const buttons1 = document.querySelectorAll('button');
+
+    // Attach the click event listener to each button
+    buttons.forEach(button => {
+        button.addEventListener('click', checkFrequencies2);
+    });
+</script>
+
+<script>
+    function generateSinusoid(fm, fs, L) {
+        let tt = [];
+        let y = [];
+        for (let i = 0; i < L; i++) {
+            let t = i / fs;
+            tt.push(t);
+            y.push(Math.sin(2 * Math.PI * fm * t));
+        }
+        return { tt, y };
+    }
+
+
+    function addNoise(signal, snr) {
+        let snr_linear = Math.pow(10, snr / 10);
+        let signal_power = signal.reduce((sum, val) => sum + val * val, 0) / signal.length;
+        let noise_variance = signal_power / snr_linear;
+        return signal.map(val => val + Math.sqrt(noise_variance) * randn());
+    }
+
+    function fft(signal) {
+        let N = signal.length;
+        let X = new Array(N).fill(0).map(() => [0, 0]);
+
+        for (let k = 0; k < N; k++) {
+            for (let n = 0; n < N; n++) {
+                let phi = (2 * Math.PI * k * n) / N;
+                let cos = Math.cos(phi);
+                let sin = Math.sin(phi);
+                X[k][0] += signal[n] * cos;  // Real part
+                X[k][1] -= signal[n] * sin;  // Imaginary part
+            }
+        }
+        return X;
+    }
+
+    function ifft(X) {
+        let N = X.length;
+        let x = new Array(N).fill(0);
+
+        for (let n = 0; n < N; n++) {
+            for (let k = 0; k < N; k++) {
+                let phi = (2 * Math.PI * k * n) / N;
+                let cos = Math.cos(phi);
+                let sin = Math.sin(phi);
+                x[n] += (X[k][0] * cos - X[k][1] * sin) / N;
+            }
+        }
+        return x;
+    }
+
+    function multiplyComplexArrays(A, B) {
+        return A.map((a, i) => [
+            a[0] * B[i][0] - a[1] * B[i][1],  // Real part
+            a[0] * B[i][1] + a[1] * B[i][0]   // Imaginary part
+        ]);
+    }
+
+    function autoCorrelation(X) {
+        return multiplyComplexArrays(X, X.map(x => [x[0], -x[1]]));  // X .* conj(X)
+    }
+
+    function crossCorrelation(X, Y) {
+        return multiplyComplexArrays(X, Y.map(y => [y[0], -y[1]]));  // X .* conj(Y)
+    }
+
+     function toeplitz(column, row) {
+        let n = column.length;
+        let toeplitzMatrix = [];
+
+        for (let i = 0; i < n; i++) {
+            toeplitzMatrix[i] = [];
+            for (let j = 0; j < n; j++) {
+                if (j >= i) {
+                    toeplitzMatrix[i][j] = row[j - i];
+                } else {
+                    toeplitzMatrix[i][j] = column[i - j];
+                }
+            }
+        }
+        return toeplitzMatrix;
+    }
+
+    function transpose(matrix) {
+     return matrix[0].map((_, colIndex) => matrix.map(row => row[colIndex]));
+     }
+     
+function solveToeplitz(toeplitzMatrix, Rxy) {
+let N = toeplitzMatrix.length;
+
+// Check if the matrix is square
+if (N === 0 || toeplitzMatrix.some(row => row.length !== N)) {
+    throw new Error('Toeplitz matrix must be square and non-empty.');
+}
+
+// Initialize solution vector B with zeros
+let B = new Array(N).fill(0);
+
+// Perform Gaussian elimination to solve the linear system
+for (let i = 0; i < N; i++) {
+    // Check for zero pivot
+    if (toeplitzMatrix[i][i] === 0) {
+        throw new Error('Matrix is singular and cannot be solved.');
+    }
+
+    // Normalize the pivot row
+    let pivot = toeplitzMatrix[i][i];
+    for (let j = 0; j < N; j++) {
+        toeplitzMatrix[i][j] /= pivot; // Normalize row
+    }
+    Rxy[i] /= pivot; // Normalize Rxy as well
+
+    // Eliminate entries below the pivot
+    for (let j = i + 1; j < N; j++) {
+        let factor = toeplitzMatrix[j][i];
+        for (let k = 0; k < N; k++) {
+            toeplitzMatrix[j][k] -= factor * toeplitzMatrix[i][k];
+        }
+        Rxy[j] -= factor * Rxy[i]; // Update Rxy
+    }
+}
+
+// Back substitution to find the solution
+for (let i = N - 1; i >= 0; i--) {
+    B[i] = Rxy[i];
+    for (let j = i + 1; j < N; j++) {
+        B[i] -= toeplitzMatrix[i][j] * B[j];
+    }
+}
+
+return B;
+}
+
+    // Function to get the next power of 2
+    function nextPowerOf2(value) {
+        if (value < 1) return 1; // Return 1 for values less than 1
+
+        // Use bitwise operations to find the next power of 2
+        let power = 1;
+        while (power < value) {
+            power *= 2; // Double the power until it's greater than or equal to value
+        }
+        return power;
+    }
+    
+            // Helper function to calculate the next power of 2
+    function nextPowerOf2(n) {
+        return Math.pow(2, Math.ceil(Math.log2(n)));
+    }
+
+            const rr = {
+        showLink: false,             
+        displaylogo: false,           
+        modeBarButtonsToRemove: ['sendDataToCloud'] 
+    };
+
+    // Generate random Gaussian noise
+    function randn() {
+            let u1 = Math.random();
+            let u2 = Math.random();
+            return Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+        }
+
+        // Manual PSD calculation function
+        function manualPSD(signal, fs) {
+            let N = signal.length;
+            let fft_signal = manualFFT(signal.map(val => ({ re: val, im: 0 })));
+
+            let positiveFrequencies = fft_signal.slice(0, Math.floor(N / 2) + 1);
+            let psd = positiveFrequencies.map(c => (1 / (fs * N)) * (c.re ** 2 + c.im ** 2));
+
+            // Adjust for one-sided spectrum
+            for (let i = 1; i < psd.length - 1; i++) {
+                psd[i] *= 2;
+            }
+
+            let f = Array.from({ length: Math.floor(N / 2) + 1 }, (_, i) => (i * fs) / N);
+            return { psd, f };
+        }
+
+        // Manual FFT implementation (Cooley-Tukey algorithm)
+        function manualFFT(signal) {
+            let N = signal.length;
+            if (N <= 1) return signal;
+
+            if ((N & (N - 1)) !== 0) {
+                // Zero-padding to next power of two
+                let size = 1 << Math.ceil(Math.log2(N));
+                signal = signal.concat(Array(size - N).fill({ re: 0, im: 0 }));
+            }
+
+            return fftRecursive(signal);
+        }
+
+        function fftRecursive(signal) {
+            let N = signal.length;
+            if (N <= 1) return signal;
+
+            // Divide
+            let even = fftRecursive(signal.filter((_, index) => index % 2 === 0));
+            let odd = fftRecursive(signal.filter((_, index) => index % 2 !== 0));
+
+            // Combine
+            let result = Array(N).fill({ re: 0, im: 0 });
+            for (let k = 0; k < N / 2; k++) {
+                let expTerm = {
+                    re: Math.cos((-2 * Math.PI * k) / N),
+                    im: Math.sin((-2 * Math.PI * k) / N)
+                };
+                let oddK = complexMultiply(expTerm, odd[k]);
+                result[k] = complexAdd(even[k], oddK);
+                result[k + N / 2] = complexSubtract(even[k], oddK);
+            }
+            return result;
+        }
+
+        // Complex number operations
+        function complexAdd(a, b) {
+            return { re: a.re + b.re, im: a.im + b.im };
+        }
+
+        function complexSubtract(a, b) {
+            return { re: a.re - b.re, im: a.im - b.im };
+        }
+
+        function complexMultiply(a, b) {
+            return {
+                re: a.re * b.re - a.im * b.im,
+                im: a.re * b.im + a.im * b.re
+            };
+        }
+</script>
+<script>
+    let mseData = [];
+let recordedSNRs = [];
+
+    let fs;    // Sampling frequency
+    let fm;
+    let fc;
+    let T = 1;        // Total recording time (1 second)
+    let L;   // Signal length
+    let { tt, y } = generateSinusoid(120, fs, L);
+    let snr;
+    let x;
+    let N;      // Filter order
+    let yN;
+    let xN;
+    let X;
+    let Y;
+    let Rxx;
+    let Rxy;
+    let RxxToeplitz;
+    let B;
+    let B_fft;  // Pad with zeros 
+    let X_fft;
+    let Y_fft;
+    let xest;
+    let mse;
+    
+    function handleInputChange(fs, fm, fc) {
+// Get the selected input from the dropdown
+const selectedInput = document.getElementById('inputSelector').value;
+
+// Generate time vector
+let tt = Array.from({ length: fs }, (_, i) => i / fs);
+
+// Variable to hold the result
+let y;
+
+// Perform different operations based on the selected input
+switch (selectedInput) {
+    case 'sine':
+        y = tt.map((x) => Math.sin(2 * Math.PI * fm * x));
+        label111 = document.querySelector('label[for="carrierFrequency"]');
+	label111.style.display = 'none';
+	carrierFrequency.style.display = 'none';
+        break;
+    case 'cosine':
+        y = tt.map((x) => Math.cos(2 * Math.PI * fm * x));
+        label111 = document.querySelector('label[for="carrierFrequency"]');
+	label111.style.display = 'none';
+	carrierFrequency.style.display = 'none';
+        break;
+    case 'am':
+        let modulatingSignal = tt.map((x) => Math.sin(2 * Math.PI * fm * x));
+        let carrier = tt.map((x) => Math.cos(2 * Math.PI * fc * x));
+        y = modulatingSignal.map((value, index) => (1 + value) * carrier[index]);
+        label111 = document.querySelector('label[for="carrierFrequency"]');
+	label111.style.display = 'block';
+	carrierFrequency.style.display = 'block';
+        break;
+    case 'dsbsc':
+        let messageSignal = tt.map((x) => Math.sin(2 * Math.PI * fm * x));
+        let carrierSignal = tt.map((x) => Math.cos(2 * Math.PI * fc * x));
+        y = messageSignal.map((value, index) => value * carrierSignal[index]);
+        label111 = document.querySelector('label[for="carrierFrequency"]');
+	label111.style.display = 'block';
+	carrierFrequency.style.display = 'block';
+        break;
+    default:
+        alert('Please select a valid input.');
+        return;
+}
+
+return y;
+}
+
+function generateEstimatedSignal() {
+
+  let fs = parseInt(document.getElementById('samplingFrequency').value);			
+  let fm = parseInt(document.getElementById('messageFrequency').value);
+  let fc = parseInt(document.getElementById('carrierFrequency').value);
+  let N = parseInt(document.getElementById('filterOrder').value);
+  let snr = parseFloat(document.getElementById('snrInput').value);
+
+  // Time axis
+  let tt = Array.from({ length: fs }, (_, i) => i / fs);
+
+  // Generate original message signal
+  let y = handleInputChange(fs, fm, fc);
+  if (!y) return;
+
+  // Add noise
+  let x = addNoise(y, snr);
+
+  // Slicing
+  let yN = y.slice(0, N);
+  let xN = x.slice(0, N);
+
+  // Frequency-domain Wiener filtering
+  let X = fft(xN);
+  let Y = fft(yN);
+  let Rxx = ifft(autoCorrelation(X));
+  let Rxy = ifft(crossCorrelation(X, Y));
+  let RxxToeplitz = toeplitz(Rxx, Rxx);
+  let B = solveToeplitz(RxxToeplitz, Rxy);
+  let B_fft = fft([...B, ...new Array(fs - N).fill(0)]);
+  let X_fft = fft(x);
+  let Y_fft = multiplyComplexArrays(B_fft, X_fft);
+  let xest = ifft(Y_fft);
+
+  // Calculate MSE
+  let mse = x.slice(N).reduce((sum, val, i) => sum + Math.pow(y[i+N] - xest[i+N], 2), 0) / (fs - N);
+  mse = parseFloat(mse.toFixed(10));
+  document.getElementById("mseDisplay").innerHTML = "MSE: " + mse;
+
+  // Plot estimated signal
+  xest = xest.map(val => Math.round(val * 1e6) / 1e6);
+
+
+  // Save SNR vs MSE
+  if (!recordedSNRs.includes(snr)) {
+    mseData.push({ SNR: snr, MSE: mse });
+    recordedSNRs.push(snr);
+    updateMSETable();
+  }
+}
+
+function updateMSETable() {
+  const table = document.getElementById("mseObservationTable");
+  table.innerHTML = "<tr><th>SNR (dB)</th><th>MSE</th></tr>";
+
+  mseData.sort((a, b) => a.SNR - b.SNR);
+
+  mseData.forEach((data) => {
+    const newRow = table.insertRow(-1);
+    const cell1 = newRow.insertCell(0);
+    const cell2 = newRow.insertCell(1);
+
+    cell1.textContent = data.SNR;
+    cell2.textContent = data.MSE;
+  });
+}
+
+function plotMSEGraph() {
+  const snr = mseData.map(d => d.SNR);
+  const mse = mseData.map(d => d.MSE);
+
+  if (snr.length === 0) {
+    alert("Please generate at least one estimated signal first.");
+    return;
+  }
+
+  const trace = {
+    x: snr,
+    y: mse,
+    mode: "lines+markers",
+    name: "Simulated MSE",
+    type: "scatter"
+  };
+
+  const layout = {
+    title: "MSE vs SNR using Wiener Filtering",
+    xaxis: { title: "SNR (dB)", zeroline: false },
+    yaxis: { title: "Mean Squared Error (MSE)", zeroline: false }
+  };
+
+  Plotly.newPlot("mseChart", [trace], layout);
+}
+
+function resetMSESimulator() {
+  mseData = [];
+  recordedSNRs = [];
+  document.getElementById("mseObservationTable").innerHTML = "<tr><th>SNR (dB)</th><th>MSE</th></tr>";
+  Plotly.purge("mseChart");
+  document.getElementById("mseDisplay").innerHTML = "";
+}
+
+</script>
