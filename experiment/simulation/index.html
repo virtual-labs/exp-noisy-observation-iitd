@@ -72,12 +72,13 @@
 	<div id = "instructions">
     <h1>Instructions for Wiener Filtering for Sine, Cosine, AM, and DSB-SC Signals</h1>
     <ul>
-        <li class="step step1">Step 1: Click on 'Generate Message' button to generate input message signal</li>
-        <li class="step step2">Step 2: Click on 'Generate Noisy Signal' button to generate noisy signal</li>
-		<li class="step step3">Step 3: Click on 'Generate PSD for Noisy Signal' to view the power spectral density of the noisy signal</li>
-        <li class="step step4">Step 4: Click on 'Show Filter Coefficeints' to view wiener filter Coefficients</li>
-		<li class="step step1">Step 5: Click on 'Generate Estimated Signal' to view the estimated signal emerging from the Wiener filter.</li>
-		<li class="step step2">Step 6: Click on 'Generate Residual Signal' to view the difference between the original message signal and the filtered signal</li>
+        <li class="step step4"><strong>Note:</strong> Use the input fields to enter the input signal, message frequency (Hz), sampling frequency (Hz), filter order, and the SNR (in dB).</li>
+        <li class="step step1"><strong>Step 1:</strong> Click on <em>'Generate Message'</em> button to generate input message signal</li>
+        <li class="step step2"><strong>Step 2:</strong> Click on <em>'Generate Noisy Signal'</em> button to generate noisy signal</li>
+		<li class="step step3"><strong>Step 3:</strong> Click on <em>'Generate PSD for Noisy Signal'</em> to view the power spectral density of the noisy signal</li>
+        <li class="step step4"><strong>Step 4:</strong> Click on <em>'Plot Filter Coefficeints'</em> to view wiener filter Coefficients</li>
+		<li class="step step1"><strong>Step 5:</strong> Click on <em>'Generate Estimated Signal'</em> to view the estimated (filtered) signal from the Wiener filter.</li>
+		<li class="step step2"><strong>Step 6:</strong> Click on <em>'Generate Residual Signal'</em> to view the difference between the original message signal and the filtered signal</li>
 		</ul>
 	</div>
 	<hr/>
@@ -164,7 +165,7 @@
                   class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[450px] left-[250px]"
                   onclick="wienerCoefficients()"
                 >
-                Show Filter Coefficeints
+                Plot Filter Coefficeints
                 </button>
 				
 			    <button
@@ -221,8 +222,12 @@
 	
 <div class="right-half">
 <br/>
-			  <div id = "scrolltoxyz1" class="flex items-center gap-2 justify-center max-lg:flex-col">
-                <div id="mseDisplay" class="w-[600px] h-[450px]"></div>
+			  <div id = "scrolltoxyz1" class="flex flex-col items-center gap-2 justify-center">
+            <!----
+                <div id="mseDisplay"></div>
+            ---->
+                <br/>
+                <div>
                 <a href ="ber_vs_snr.html">
                     <button
                     class="button bg-green-500 text-white rounded-md px-2 py-1"
@@ -230,6 +235,7 @@
                     Plot MSE vs SNR
                   </button>
               </a>
+            </div>
               </div>
 			  <!--
     <table id="resultsTable" border="1" class = "custom-table">
@@ -638,12 +644,26 @@ function handleInputChange(fs, fm, fc) {
         let xest = ifft(Y_fft);
         let mse = x.slice(N).reduce((sum, val, i) => sum + Math.pow(y[i+N] - xest[i+N], 2), 0) / (fs - N);
 
-        document.getElementById("mseDisplay").innerHTML = "   MSE:" + mse;
+        //document.getElementById("mseDisplay").innerHTML = "   MSE:" + mse;
         // Take real part of estimated signal (to avoid small imaginary errors)
         xest = xest.map(val => Math.round(val * 1e6) / 1e6);
         Plotly.newPlot('plot2', [
             { x: tt.slice(N), y: xest.slice(N), mode: 'lines', name: 'Estimated Signal' }
-        ], { title: 'Estimated Signal' }, rr);
+        ], { title: 'Estimated Signal' ,
+        annotations: [
+        {
+            xref: 'paper',      // relative to the plotting area
+            yref: 'paper',
+            x: 0.5,             // center horizontally
+            y: 1.05,            // above the top of the plot
+            text: "MSE: " + mse.toFixed(6),
+            showarrow: false,
+            font: { size: 14, color: 'red' },
+            align: 'center'
+        }
+    ]
+    
+    }, rr);
 	   document.getElementById('scrolltoestimated').scrollIntoView({ behavior: 'smooth' });
     }
     
