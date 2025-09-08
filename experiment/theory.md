@@ -1,10 +1,20 @@
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],  // Enable $...$ for inline
+      displayMath: [['$$','$$'], ['\\[','\\]']]
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+</script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 ### Theory
 
 Imagine you have a noisy signal and you want to recover a cleaner, desired version of it. **Wiener filtering** is a powerful technique that helps achieve exactly that.  
 
-The goal is to design a **linear filter** — a system that takes an input signal and produces an output signal as a weighted sum of past and present inputs — denoted by $h[n]$. This filter processes the **observed signal** $x[n]$ to generate an output $y[n]$.  
 
 Here, *optimal* means minimizing the **Mean-Square Error (MSE)**, a common performance criterion in signal processing because it is mathematically tractable and provides effective results.  
 
