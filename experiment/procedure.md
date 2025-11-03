@@ -18,30 +18,35 @@
     </li>
         <br/>
     <h3><strong>Steps:</strong></h3>
-    <li>
-      <strong>1. Generate Input Signal:</strong> 
-      Click the <em>“Generate Message”</em> button to generate the input signal.
-    </li>
-    <li>
-      <strong>2. Generate Noisy Signal:</strong> 
-      Click the <em>“Generate Noisy Signal”</em> button to add Additive White Gaussian Noise (AWGN) to the input signal and generate the noisy signal.
-    </li>
-    <li>
-      <strong>3. Display Power Spectral Density (PSD) of the Noisy Signal:</strong> 
-      Click the <em>“Show PSD for Noisy Signal”</em> button to visualize the PSD of the noisy signal.
-    </li>
-    <li>
-      <strong>4. Plot Wiener Filter Coefficients:</strong> 
-      Click the <em>“Plot Filter Coefficients”</em> button to visualize the Wiener filter coefficients, which minimize the error between the estimated signal and the original input message signal.
-    </li>
-    <li>
-      <strong>5. Generate the Estimated Signal:</strong> 
-      Click the <em>“Generate Estimated Signal”</em> button to visualize the estimated signal produced as the Wiener filter output.
-    </li>
-    <li>
-      <strong>6. Generate the Residual Signal:</strong> 
-      Click the <em>“Generate Residual Signal”</em> button to display the difference between the original input message signal and the filtered signal.
-    </li>
+<li>
+  <strong>1. Generate Reference Signal:</strong> 
+  Click the <em>“Generate Reference Signal”</em> button to generate the reference signal.
+</li>
+<li>
+  <strong>2. Generate Noisy Input Signal:</strong> 
+  Click the <em>“Generate Noisy Input Signal”</em> button to add Additive White Gaussian Noise (AWGN) to the reference signal and generate the noisy signal.
+</li>
+<li>
+  <strong>3. Display Power Spectral Density (PSD) of the Noisy and Estimated Signals:</strong> 
+  Click the <em>“Show PSD for Noisy Signal”</em> and <em>“Show PSD for Estimated Signal”</em> buttons to visualize the PSD of the noisy signal and the estimated signal, respectively.
+</li>
+<li>
+  <strong>4. Compute Wiener Filter Coefficients:</strong> 
+  Click the <em>“Compute Filter Coefficients”</em> button to compute and visualize the Wiener filter coefficients, which minimize the error between the estimated signal and the reference signal.
+</li>
+<li>
+  <strong>5. Generate the Estimated Signal:</strong> 
+  Click the <em>“Generate Estimated Signal”</em> button to visualize the estimated signal produced by the Wiener filter.
+</li>
+<li>
+  <strong>6. Generate the Residual Signal:</strong> 
+  Click the <em>“Generate Residual Signal”</em> button to display the difference between the reference and the estimated signal.
+</li>
+<li>
+  <strong>7. Compare the Reference Signal and the Estimated Signal:</strong> 
+  Click the <em>“Compare”</em> button to visualize the comparison between the reference signal and the estimated signal.
+</li>
+
   </ul>
 </body>
 </html>
