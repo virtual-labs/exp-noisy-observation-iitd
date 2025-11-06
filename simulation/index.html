@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <title>Virtual Labs</title>
+    <style>
+	    .container {
+            display: flex;
+			    height: 100vh; /* Full viewport height */
+        width: 100vw; /* Full viewport width */
+        }
+		.left-half {
+            width: 40vw;
+			}
+
+        .middle {
+            width: 50vw;
+		    position: relative;
+		    overflow: auto;
+        }
+		        .right-half {
+				width: 10vw;
+				
+        }
+/* Custom table styles */
+.custom-table {
+    width: auto;
+    border-collapse: collapse;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+/* Header and cell styles */
+.custom-table th,
+.custom-table td {
+    border: 1px solid black;  /* Adds a solid black border */
+    padding: 5px;  /* Slightly larger padding for better spacing */
+    text-align: center;
+    font-size: 17px;  /* Set font size for headers and cells */
+}
+
+/* Header-specific styles */
+.custom-table th {
+    width: auto;  /* Sets the width to auto to fit content */
+    background-color: #f2f2f2;  /* Light grey background for header */
+    font-weight: bold;  /* Bold text for headers */
+    font-size: 18px;  /* Larger font size for headers */
+}
+
+/* Alternate row styling for better readability */
+.custom-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;  /* Slightly darker background for even rows */
+}
+
+/* Table hover effect */
+.custom-table tbody tr:hover {
+    background-color: #e6f7ff;  /* Light blue background on row hover */
+}
+
+#carrierFrequency,
+  label[for="carrierFrequency"] {
+    display: none;
+  }
+    </style>
+  </head>
+  <body>
+    <!-- sidebar and body -->
+	    <!-- sidebar and body -->
+	<div id = "instructions">
+    <h1>Instructions for Wiener Filtering for Sine, Cosine, AM, and DSB-SC Signals</h1>
+    <ul>
+        <li class="step step4"><strong>Note:</strong> Use the input fields to enter the input signal, message frequency (Hz), sampling frequency (Hz), wiener filter order, and the SNR (in dB).</li>
+        <li class="step step1"><strong>Step 1:</strong> Click on <em>'Generate Input Signal'</em> button to generate the input signal</li>
+        <li class="step step2"><strong>Step 2:</strong> Click the <em>'Generate Noisy Input Signal'</em> button to generate the noisy input signal by applying AWGN to the input signal.</li>
+        <li class="step step3"><strong>Step 3:</strong> Click on <em>'Generate PSD for Noisy Signal'</em> to view the power spectral density of the noisy signal</li>
+        <li class="step step4"><strong>Step 4:</strong> Click on <em>'Compute Filter Coefficeints'</em> to compute and view wiener filter Coefficients</li>
+		<li class="step step1"><strong>Step 5:</strong> Click on <em>'Generate Estimated Signal'</em> to view the estimated (filtered) signal from the Wiener filter.</li>
+		<li class="step step2"><strong>Step 6:</strong> Click on <em>'Generate Residual Signal'</em> to view the difference between the input signal and the filtered signal</li>
+		</ul>
+	</div>
+	<hr/>
+	<br>
+    <div class="flex min-h-[10vh]">
+      <div class="px-6 pb-6 mt-1 flex-1">
+        <div class="">
+          <div class="flex flex-col justify-center">
+            <div class="flex max-lg:flex-col gap-x-12 gap-y-2 mt-2">
+			<div class="flex items-center justify-center gap-1 mt-2">
+	    <!-- Dropdown for user input selection -->
+    <label for="inputSelector">Input signal:</label>
+    <select id="inputSelector" onchange="handleInputChange()">
+        <option value="" disabled selected>Select an input</option>
+        <option value="sine" selected>Sine Wave</option>
+        <option value="cosine">Cosine Wave</option>
+        <option value="am">AM Signal</option>
+		<option value="dsbsc">DSBSC Signal</option>
+    </select>
+			</div>
+
+              <div class="flex items-center justify-center gap-1 mt-2">
+        <label for="messageFrequency">Message Frequency (Hz):</label>
+<input class="input-field border border-black px-2 py-1 rounded-sm" type="number" id="messageFrequency" value="10">
+                </div>
+			              <div class="flex items-center justify-center gap-1 mt-2">
+        <label for="carrierFrequency">Carrier Frequency (Hz):</label>
+<input class="input-field border border-black px-2 py-1 rounded-sm" type="number" id="carrierFrequency" value="100">
+                </div>
+				              <div class="flex items-center justify-center gap-1 mt-2">
+        <label for="samplingFrequency">Sampling Frequency (Hz):</label>
+<input class="input-field border border-black px-2 py-1 rounded-sm" type="number" id="samplingFrequency" value="1000">
+                </div>
+				<div class="flex items-center justify-center gap-1 mt-2">
+        <label for="filterOrder">Wiener Filter Order:</label>
+<input class="input-field border border-black px-2 py-1 rounded-sm" type="number" id="filterOrder" value="100" min="10">
+                </div>
+              <div class="flex items-center justify-center gap-1 mt-2">
+        <label for="snrInput">SNR (in dB):</label>
+    <input class="input-field border border-black px-2 py-1 rounded-sm" type="number" id="snrInput" value="20"/>
+              </div
+			 <br/>
+            </div>
+            </div>
+            </div>
+        </div>
+      </div>
+    </div>
+	<hr/>
+	
+	<div class = "container">
+	<div class = "left-half relative">
+	          <div class="flex gap-1">
+              <div class="flex-1 flex flex-col items-center">
+                <div class="w-full">
+				<br><br><br><br>
+                  <img
+                    src="Wiener_Filter.png"
+                    alt="Wiener Filter" 
+					style= "height:450px; width: 550px; margin-left: 40px"
+                  />
+
+				<button
+                  class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[60px] left-[2px]"
+                  onclick="simulateWiener()"
+                >
+                  Generate Input Signal
+                </button>
+								<button
+                  class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[100px] left-[2px]"
+                  onclick="generateNoisySignal()"
+                >
+                  Generate Noisy Input Signal
+                </button>
+				
+			    <button
+                  class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[450px] left-[2px]"
+                  onclick="generatePSD2()"
+                >
+                  Generate PSD for Noisy Signal
+                </button>
+				
+					                <button
+                  class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[450px] left-[250px]"
+                  onclick="wienerCoefficients()"
+                >
+                Compute Filter Coefficeints
+                </button>
+				
+			    <button
+                  class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[500px] left-[12px]"
+                  onclick="generateEstimatedSignal()"
+                >
+                Generate Estimated Signal
+                </button>
+				
+							    <button
+                  class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[500px] left-[245px]"
+                  onclick="generateResidueSignal()"
+                >
+                Generate Residue Signal
+                </button>
+
+                <button
+                  class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[550px] left-[160px]"
+                  onclick="compare()"
+                >
+                Compare Signals
+                </button>
+                <button
+                class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[600px] left-[95px]"
+                onclick="generatePSDEstimated()"
+              >
+                Generate PSD for Estimated Signal
+              </button>
+
+              <button 
+              class="bg-green-500 text-white rounded-md px-3 py-1 absolute top-[650px] left-[160px]"
+              onclick="location.reload();"
+            >
+              Reset Simulator
+            </button>
+				
+              </div>
+              </div>
+			  </div>
+	</div>
+
+
+				
+	<div class = "middle">
+	            <div id = "scrolltomessage" class="flex items-center gap-2 justify-center max-lg:flex-col">
+              <div id="plot11" class="w-[600px] h-[450px]"></div>
+			</div>
+			<div id = "scrolltonoisy" class="flex items-center gap-2 justify-center max-lg:flex-col">
+              <div id="plot12" class="w-[600px] h-[450px]"></div>
+			</div>
+			<div id = "scrolltopsd2" class="flex items-center gap-2 justify-center max-lg:flex-col">
+                <div id="psdPlot2" class="w-[600px] h-[450px]"></div>
+              </div>
+			  			<div id = "scrolltocoefficients" class="flex items-center gap-2 justify-center max-lg:flex-col">
+                <div id="plotB" class="w-[600px] h-[450px]"></div>
+              </div>
+			  <div id = "scrolltoestimated" class="flex items-center gap-2 justify-center max-lg:flex-col">
+                <div id="plot2" class="w-[600px] h-[450px]"></div>
+              </div>
+			 <div id = "scrolltoresidue" class="flex items-center gap-2 justify-center max-lg:flex-col">
+                <div id="plot3" class="w-[600px] h-[450px]"></div>
+              </div>
+            <div id = "scrolltocompare" class="flex items-center gap-2 justify-center max-lg:flex-col">
+                <div id="compare" class="w-[600px] h-[450px]"></div>
+              </div>
+              <div id = "scrolltopsdestimated" class="flex items-center gap-2 justify-center max-lg:flex-col">
+                <div id="psdPlotestimated" class="w-[600px] h-[450px]"></div>
+              </div>
+	</div>
+	
+<div class="right-half">
+<br/>
+			  <div id = "scrolltoxyz1" class="flex flex-col items-center gap-2 justify-center">
+            <!----
+                <div id="mseDisplay"></div>
+            ---->
+                <br/>
+                <div>
+                <a href ="ber_vs_snr.html">
+                    <button
+                    class="button bg-green-500 text-white rounded-md px-2 py-1"
+                  >
+                    Plot MSE vs SNR
+                  </button>
+              </a>
+            </div>
+              </div>
+			  <!--
+    <table id="resultsTable" border="1" class = "custom-table">
+        <tr>
+            <th>SNR (dB)</th>
+            <th>BER</th>
+        </tr>
+    </table>
+
+    <a href="alamouti-ber-vs-snr.html"><button class="button bg-blue-500 text-white rounded-md px-2 py-1 text-base"
+	onclick="plotBERvsSNR()">Plot BER vs SNR</button></a>
+    <div id="plot-BER-SNR"></div>
+	-->
+</div>
+</div>
+	
+	<script>
+        // Function to check if the number of input bits is odd
+        function checkFrequencies() {
+            const messageFrequency = document.getElementById('messageFrequency').valueASNumber;
+			const carrierFrequency = document.getElementById('carrierFrequency').valueASNumber;
+            //const bitsArray = input.split(',').map(item => item.trim()); // Create an array from the input
+
+            // Check if the length of the array is odd
+            if (messageFrequency >= carrierFrequency) {
+                alert("The carrier frequency must be higher than the message frequency.");
+				window.location.reload(true); 
+            } 
+        }
+
+        // Select all button elements on the page
+        const buttons = document.querySelectorAll('button');
+
+        // Attach the click event listener to each button
+        buttons.forEach(button => {
+            button.addEventListener('click', checkFrequencies);
+        });
+    </script>
+	
+		<script>
+        // Function to check if the number of input bits is odd
+        function checkFrequencies2() {
+			const carrierFreq = document.getElementById('carrierFrequency').valueASNumber;
+			const samplingFreq = document.getElementById('samplingFrequency').valueASNumber;
+            //const bitsArray = input.split(',').map(item => item.trim()); // Create an array from the input
+
+            // Check if the length of the array is odd
+            if (samplingFreq <= carrierFreq) {
+                alert("The sampling frequency must be higher than the carrier frequency.");
+				window.location.reload(true); 
+            } 
+        }
+
+        // Select all button elements on the page
+        const buttons1 = document.querySelectorAll('button');
+
+        // Attach the click event listener to each button
+        buttons.forEach(button => {
+            button.addEventListener('click', checkFrequencies2);
+        });
+    </script>
+	
+    <script>
+        function generateSinusoid(fm, fs, L) {
+            let tt = [];
+            let y = [];
+            for (let i = 0; i < L; i++) {
+                let t = i / fs;
+                tt.push(t);
+                y.push(Math.sin(2 * Math.PI * fm * t));
+            }
+            return { tt, y };
+        }
+
+
+// Function to generate Gaussian noise
+function randn() {
+    let u1 = Math.random();
+    let u2 = Math.random();
+    return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+}
+
+// Function to add Gaussian noise to a signal based on the desired SNR
+function addNoise(signal, snr_db) {
+    // Convert SNR from dB to linear scale
+    let snr_linear = Math.pow(10, snr_db / 10);
+
+    // Calculate the signal power
+    let signal_power = signal.reduce((sum, val) => sum + val * val, 0) / signal.length;
+
+    // Calculate the noise variance
+    let noise_variance = signal_power / snr_linear;
+
+    // Add noise to the signal
+    return signal.map(val => val + Math.sqrt(noise_variance) * randn());
+}
+
+
+        function fft(signal) {
+            let N = signal.length;
+            let X = new Array(N).fill(0).map(() => [0, 0]);
+
+            for (let k = 0; k < N; k++) {
+                for (let n = 0; n < N; n++) {
+                    let phi = (2 * Math.PI * k * n) / N;
+                    let cos = Math.cos(phi);
+                    let sin = Math.sin(phi);
+                    X[k][0] += signal[n] * cos;  // Real part
+                    X[k][1] -= signal[n] * sin;  // Imaginary part
+                }
+            }
+            return X;
+        }
+
+        function ifft(X) {
+            let N = X.length;
+            let x = new Array(N).fill(0);
+
+            for (let n = 0; n < N; n++) {
+                for (let k = 0; k < N; k++) {
+                    let phi = (2 * Math.PI * k * n) / N;
+                    let cos = Math.cos(phi);
+                    let sin = Math.sin(phi);
+                    x[n] += (X[k][0] * cos - X[k][1] * sin) / N;
+                }
+            }
+            return x;
+        }
+
+        function multiplyComplexArrays(A, B) {
+            return A.map((a, i) => [
+                a[0] * B[i][0] - a[1] * B[i][1],  // Real part
+                a[0] * B[i][1] + a[1] * B[i][0]   // Imaginary part
+            ]);
+        }
+
+        function autoCorrelation(X) {
+            return multiplyComplexArrays(X, X.map(x => [x[0], -x[1]]));  // X .* conj(X)
+        }
+
+        function crossCorrelation(X, Y) {
+            return multiplyComplexArrays(X, Y.map(y => [y[0], -y[1]]));  // X .* conj(Y)
+        }
+
+         function toeplitz(column, row) {
+            let n = column.length;
+            let toeplitzMatrix = [];
+
+            for (let i = 0; i < n; i++) {
+                toeplitzMatrix[i] = [];
+                for (let j = 0; j < n; j++) {
+                    if (j >= i) {
+                        toeplitzMatrix[i][j] = row[j - i];
+                    } else {
+                        toeplitzMatrix[i][j] = column[i - j];
+                    }
+                }
+            }
+            return toeplitzMatrix;
+        }
+
+        function transpose(matrix) {
+         return matrix[0].map((_, colIndex) => matrix.map(row => row[colIndex]));
+         }
+		 
+function solveToeplitz(toeplitzMatrix, Rxy) {
+    let N = toeplitzMatrix.length;
+
+    // Check if the matrix is square
+    if (N === 0 || toeplitzMatrix.some(row => row.length !== N)) {
+        throw new Error('Toeplitz matrix must be square and non-empty.');
+    }
+
+    // Initialize solution vector B with zeros
+    let B = new Array(N).fill(0);
+
+    // Perform Gaussian elimination to solve the linear system
+    for (let i = 0; i < N; i++) {
+        // Check for zero pivot
+        if (toeplitzMatrix[i][i] === 0) {
+            throw new Error('Matrix is singular and cannot be solved.');
+        }
+
+        // Normalize the pivot row
+        let pivot = toeplitzMatrix[i][i];
+        for (let j = 0; j < N; j++) {
+            toeplitzMatrix[i][j] /= pivot; // Normalize row
+        }
+        Rxy[i] /= pivot; // Normalize Rxy as well
+
+        // Eliminate entries below the pivot
+        for (let j = i + 1; j < N; j++) {
+            let factor = toeplitzMatrix[j][i];
+            for (let k = 0; k < N; k++) {
+                toeplitzMatrix[j][k] -= factor * toeplitzMatrix[i][k];
+            }
+            Rxy[j] -= factor * Rxy[i]; // Update Rxy
+        }
+    }
+
+    // Back substitution to find the solution
+    for (let i = N - 1; i >= 0; i--) {
+        B[i] = Rxy[i];
+        for (let j = i + 1; j < N; j++) {
+            B[i] -= toeplitzMatrix[i][j] * B[j];
+        }
+    }
+
+    return B;
+}
+
+        // Function to get the next power of 2
+        function nextPowerOf2(value) {
+            if (value < 1) return 1; // Return 1 for values less than 1
+
+            // Use bitwise operations to find the next power of 2
+            let power = 1;
+            while (power < value) {
+                power *= 2; // Double the power until it's greater than or equal to value
+            }
+            return power;
+        }
+		
+		        // Helper function to calculate the next power of 2
+        function nextPowerOf2(n) {
+            return Math.pow(2, Math.ceil(Math.log2(n)));
+        }
+	
+		        const rr = {
+            showLink: false,             
+            displaylogo: false,           
+            modeBarButtonsToRemove: ['sendDataToCloud'] 
+        };
+
+        let fs;    // Sampling frequency
+		let fm;
+		let fc;
+        let T = 1;        // Total recording time (1 second)
+        let L;   // Signal length
+        let { tt, y } = generateSinusoid(120, fs, L);
+        let snr_db;
+        let x;
+        let N;      // Filter order
+        let yN;
+        let xN;
+        let X;
+        let Y;
+        let Rxx;
+        let Rxy;
+        let RxxToeplitz;
+        let B;
+        let B_fft;  // Pad with zeros 
+        let X_fft;
+        let Y_fft;
+        let xest;
+		let mse;
+		
+function handleInputChange(fs, fm, fc) {
+    // Get the selected input from the dropdown
+    const selectedInput = document.getElementById('inputSelector').value;
+
+    // Generate time vector
+    let tt = Array.from({ length: fs }, (_, i) => i / fs);
+
+    // Variable to hold the result
+    let y;
+
+    // Perform different operations based on the selected input
+    switch (selectedInput) {
+        case 'sine':
+            y = tt.map((x) => Math.sin(2 * Math.PI * fm * x));
+            label111 = document.querySelector('label[for="carrierFrequency"]');
+	label111.style.display = 'none';
+	carrierFrequency.style.display = 'none';
+            break;
+        case 'cosine':
+            y = tt.map((x) => Math.cos(2 * Math.PI * fm * x));
+            label111 = document.querySelector('label[for="carrierFrequency"]');
+	label111.style.display = 'none';
+	carrierFrequency.style.display = 'none';
+            break;
+        case 'am':
+            let modulatingSignal = tt.map((x) => Math.sin(2 * Math.PI * fm * x));
+            let carrier = tt.map((x) => Math.cos(2 * Math.PI * fc * x));
+            y = modulatingSignal.map((value, index) => (1 + value) * carrier[index]);
+            label111 = document.querySelector('label[for="carrierFrequency"]');
+	label111.style.display = 'block';
+	carrierFrequency.style.display = 'block';
+            break;
+        case 'dsbsc':
+            let messageSignal = tt.map((x) => Math.sin(2 * Math.PI * fm * x));
+            let carrierSignal = tt.map((x) => Math.cos(2 * Math.PI * fc * x));
+            y = messageSignal.map((value, index) => value * carrierSignal[index]);
+            label111 = document.querySelector('label[for="carrierFrequency"]');
+	label111.style.display = 'block';
+	carrierFrequency.style.display = 'block';
+            break;
+        default:
+            alert('Please select a valid input.');
+            return;
+    }
+
+    return y;
+}
+
+
+        function simulateWiener() {
+            // Main Wiener Filter Process
+            let fs = parseInt(document.getElementById('samplingFrequency').value);  
+            //fs = nextPowerOf2(fs);  // Ensure fs is a power of 2 for FFT
+            let fc = parseInt(document.getElementById('carrierFrequency').value);
+            let fm = parseInt(document.getElementById('messageFrequency').value);
+
+            // Generate input signal based on the selection
+            let y = handleInputChange(fs, fm, fc);
+            if (!y) return;  // Exit if no valid signal
+
+            // User input for SNR in dB
+            let snr_db = parseFloat(document.getElementById('snrInput').value);
+
+            // Add Gaussian noise to the signal (assumes addNoise function is defined)
+            let x = addNoise(y, snr_db);
+
+            // Get filter order
+            let N = parseInt(document.getElementById('filterOrder').value);
+            
+            // Slice first N samples for Wiener filter process
+            let yN = y.slice(0, N);
+            let xN = x.slice(0, N);
+
+            // FFT of signals (assumes fft and ifft functions are defined)
+            let X = fft(xN);
+            let Y = fft(yN);
+
+            // Compute autocorrelation and cross-correlation in frequency domain
+            let Rxx = ifft(autoCorrelation(X));
+            let Rxy = ifft(crossCorrelation(X, Y));
+
+            // Convert Rxx to Toeplitz matrix (assumes toeplitz function is defined)
+            let RxxToeplitz = toeplitz(Rxx, Rxx);
+
+            // Wiener-Hopf solution: B = inv(Rxx) * Rxy (assumes solveToeplitz function is defined)
+            let B = solveToeplitz(RxxToeplitz, Rxy);
+
+            // Perform convolution in frequency domain for filtering
+            let B_fft = fft([...B, ...new Array(fs - N).fill(0)]);  // Zero padding
+            let X_fft = fft(x);
+            let Y_fft = multiplyComplexArrays(B_fft, X_fft);  // Assumes multiplyComplexArrays is defined
+            let xest = ifft(Y_fft);
+
+            // Take real part of estimated signal to avoid small imaginary errors
+            xest = xest.map(val => Math.round(val * 1e6) / 1e6);
+
+            // Plot original message signal
+            Plotly.newPlot('plot11', [
+                { x: Array.from({ length: fs }, (_, i) => i / fs), y: y, mode: 'lines', name: 'Original Message Signal' }
+            ], { title: 'Input signal' }, rr);
+				document.getElementById('scrolltomessage').scrollIntoView({ behavior: 'smooth' });
+        }
+
+
+	function generateNoisySignal() {
+            let fs = parseInt(document.getElementById('samplingFrequency').value);			
+            //fs = nextPowerOf2(fs);  // Ensure fs is a power of 2 for FFT
+			let tt = Array.from({ length: fs }, (_, i) => i / fs);
+            let fm = parseInt(document.getElementById('messageFrequency').value);
+            let fc = parseInt(document.getElementById('carrierFrequency').value);
+
+            // Generate input signal based on the selection
+            let y = handleInputChange(fs, fm, fc);
+            if (!y) return;  // Exit if no valid signal
+
+            // User input for SNR in dB
+            let snr_db = parseFloat(document.getElementById('snrInput').value);
+
+            // Add Gaussian noise to the signal (assumes addNoise function is defined)
+            let x = addNoise(y, snr_db);
+
+		        Plotly.newPlot('plot12', [
+            { x: tt, y: x, mode: 'lines', name: 'Noisy Signal' },
+        ], { title: 'Noisy Input Signal' }, rr);
+			document.getElementById('scrolltonoisy').scrollIntoView({ behavior: 'smooth' });
+    }
+	
+
+	function generateEstimatedSignal() {
+            let fs = parseInt(document.getElementById('samplingFrequency').value);			
+            //fs = nextPowerOf2(fs);  // Ensure fs is a power of 2 for FFT
+			let tt = Array.from({ length: fs }, (_, i) => i / fs);
+            let fm = parseInt(document.getElementById('messageFrequency').value);
+            let fc = parseInt(document.getElementById('carrierFrequency').value);
+
+            // Generate input signal based on the selection
+            let y = handleInputChange(fs, fm, fc);
+            if (!y) return;  // Exit if no valid signal
+
+        // User input for SNR in dB
+        let snr_db = parseFloat(document.getElementById('snrInput').value);
+
+        // Add Gaussian noise to the signal
+        let x = addNoise(y, snr_db);
+
+        let N = parseInt(document.getElementById('filterOrder').value);      // Filter order
+        let yN = y.slice(0, N);
+        let xN = x.slice(0, N);
+
+        // FFT of signals
+        let X = fft(xN);
+        let Y = fft(yN);
+
+        // Compute autocorrelation and cross-correlation in frequency domain
+        let Rxx = ifft(autoCorrelation(X));
+        let Rxy = ifft(crossCorrelation(X, Y));
+        // Convert Rxx to Toeplitz matrix
+        let RxxToeplitz = toeplitz(Rxx, Rxx);
+
+        // Wiener-Hopf solution: B = inv(Rxx) * Rxy (solving for B)
+        let B = solveToeplitz(RxxToeplitz, Rxy);
+        //let B_fft = fft([...B, ...new Array(L - N).fill(0)]);  // Pad with zeros 
+		let B_fft = fft([...B, ...new Array(fs - N).fill(0)]);  // Pad with zeros 
+        let X_fft = fft(x);
+        let Y_fft = multiplyComplexArrays(B_fft, X_fft);
+        let xest = ifft(Y_fft);
+        let mse = x.slice(N).reduce((sum, val, i) => sum + Math.pow(y[i+N] - xest[i+N], 2), 0) / (fs - N);
+
+        //document.getElementById("mseDisplay").innerHTML = "   MSE:" + mse;
+        // Take real part of estimated signal (to avoid small imaginary errors)
+        xest = xest.map(val => Math.round(val * 1e6) / 1e6);
+        Plotly.newPlot('plot2', [
+            { x: tt.slice(N), y: xest.slice(N), mode: 'lines', name: 'Estimated Signal' }
+        ], { title: 'Estimated Signal' ,
+        annotations: [
+        {
+            xref: 'paper',      // relative to the plotting area
+            yref: 'paper',
+            x: 0.5,             // center horizontally
+            y: 1.05,            // above the top of the plot
+            text: "MSE: " + mse.toFixed(6),
+            showarrow: false,
+            font: { size: 14, color: 'red' },
+            align: 'center'
+        }
+    ]
+    
+    }, rr);
+	   document.getElementById('scrolltoestimated').scrollIntoView({ behavior: 'smooth' });
+    }
+    
+	function generateResidueSignal() {
+            let fs = parseInt(document.getElementById('samplingFrequency').value);			
+            //fs = nextPowerOf2(fs);  // Ensure fs is a power of 2 for FFT
+			let tt = Array.from({ length: fs }, (_, i) => i / fs);
+            let fm = parseInt(document.getElementById('messageFrequency').value);
+            let fc = parseInt(document.getElementById('carrierFrequency').value);
+
+            // Generate input signal based on the selection
+            let y = handleInputChange(fs, fm, fc);
+            if (!y) return;  // Exit if no valid signal
+
+        // User input for SNR in dB
+        let snr_db = parseFloat(document.getElementById('snrInput').value);
+
+        // Add Gaussian noise to the signal
+        let x = addNoise(y, snr_db);
+
+        let N = parseInt(document.getElementById('filterOrder').value);      // Filter order
+        let yN = y.slice(0, N);
+        let xN = x.slice(0, N);
+
+        // FFT of signals
+        let X = fft(xN);
+        let Y = fft(yN);
+
+        // Compute autocorrelation and cross-correlation in frequency domain
+        let Rxx = ifft(autoCorrelation(X));
+        let Rxy = ifft(crossCorrelation(X, Y));
+        // Convert Rxx to Toeplitz matrix
+        let RxxToeplitz = toeplitz(Rxx, Rxx);
+
+        // Wiener-Hopf solution: B = inv(Rxx) * Rxy (solving for B)
+        let B = solveToeplitz(RxxToeplitz, Rxy);
+        let B_fft = fft([...B, ...new Array(fs - N).fill(0)]);  // Pad with zeros 
+        let X_fft = fft(x);
+        let Y_fft = multiplyComplexArrays(B_fft, X_fft);
+        xest = ifft(Y_fft);
+        Plotly.newPlot('plot3', [
+            { x: tt.slice(N), y: x.slice(N).map((val, i) => val - xest[i + N]), mode: 'lines', name: 'Residue Signal', line: { width: 0.5 } }
+        ], { title: 'Residue Signal', yaxis: { range: [-1, 1] } }, rr);
+		document.getElementById('scrolltoresidue').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function compare() {
+    let fs = parseInt(document.getElementById('samplingFrequency').value);			
+    let tt = Array.from({ length: fs }, (_, i) => i / fs);
+    let fm = parseInt(document.getElementById('messageFrequency').value);
+    let fc = parseInt(document.getElementById('carrierFrequency').value);
+
+    // Generate input signal
+    let y = handleInputChange(fs, fm, fc);
+    if (!y) return;  // Exit if signal generation failed
+
+    // SNR in dB
+    let snr_db = parseFloat(document.getElementById('snrInput').value);
+
+    // Add Gaussian noise
+    let x = addNoise(y, snr_db);
+
+    // Filter order
+    let N = parseInt(document.getElementById('filterOrder').value);
+    let yN = y.slice(0, N);
+    let xN = x.slice(0, N);
+
+    // FFT
+    let X = fft(xN);
+    let Y = fft(yN);
+
+    // Correlations in frequency domain
+    let Rxx = ifft(autoCorrelation(X));
+    let Rxy = ifft(crossCorrelation(X, Y));
+
+    // Solve Wiener-Hopf equations
+    let RxxToeplitz = toeplitz(Rxx, Rxx);
+    let B = solveToeplitz(RxxToeplitz, Rxy);
+
+    // Apply filter
+    let B_fft = fft([...B, ...new Array(fs - N).fill(0)]);
+    let X_fft = fft(x);
+    let Y_fft = multiplyComplexArrays(B_fft, X_fft);
+    let xest = ifft(Y_fft);
+    xest = xest.map(val => Math.round(val * 1e6) / 1e6)
+
+    // Plotting
+    const trace1 = {
+        x: tt.slice(N),
+        y: y.slice(N),
+        mode: 'lines',
+        name: 'Input signal'
+    };
+
+    const trace2 = {
+        x: tt.slice(N),
+        y: xest.slice(N),
+        mode: 'lines',
+        name: 'Estimated Signal'
+    };
+
+    const layout = {
+        title: 'Reference vs. Estimated Signal',
+        xaxis: { title: 'Time (s)' },
+        yaxis: { title: 'Amplitude' }
+    };
+
+    Plotly.newPlot('compare', [trace1, trace2], layout);
+
+    // Smooth scroll
+    document.getElementById('scrolltocompare').scrollIntoView({ behavior: 'smooth' });
+}
+
+ 
+ /////////////////////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////
+
+        // Generate random Gaussian noise
+        function randn() {
+            let u1 = Math.random();
+            let u2 = Math.random();
+            return Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
+        }
+
+        // Manual PSD calculation function
+        function manualPSD(signal, fs) {
+            let N = signal.length;
+            let fft_signal = manualFFT(signal.map(val => ({ re: val, im: 0 })));
+
+            let positiveFrequencies = fft_signal.slice(0, Math.floor(N / 2) + 1);
+            let psd = positiveFrequencies.map(c => (1 / (fs * N)) * (c.re ** 2 + c.im ** 2));
+
+            // Adjust for one-sided spectrum
+            for (let i = 1; i < psd.length - 1; i++) {
+                psd[i] *= 2;
+            }
+
+            let f = Array.from({ length: Math.floor(N / 2) + 1 }, (_, i) => (i * fs) / N);
+            return { psd, f };
+        }
+
+        // Manual FFT implementation (Cooley-Tukey algorithm)
+        function manualFFT(signal) {
+            let N = signal.length;
+            if (N <= 1) return signal;
+
+            if ((N & (N - 1)) !== 0) {
+                // Zero-padding to next power of two
+                let size = 1 << Math.ceil(Math.log2(N));
+                signal = signal.concat(Array(size - N).fill({ re: 0, im: 0 }));
+            }
+
+            return fftRecursive(signal);
+        }
+
+        function fftRecursive(signal) {
+            let N = signal.length;
+            if (N <= 1) return signal;
+
+            // Divide
+            let even = fftRecursive(signal.filter((_, index) => index % 2 === 0));
+            let odd = fftRecursive(signal.filter((_, index) => index % 2 !== 0));
+
+            // Combine
+            let result = Array(N).fill({ re: 0, im: 0 });
+            for (let k = 0; k < N / 2; k++) {
+                let expTerm = {
+                    re: Math.cos((-2 * Math.PI * k) / N),
+                    im: Math.sin((-2 * Math.PI * k) / N)
+                };
+                let oddK = complexMultiply(expTerm, odd[k]);
+                result[k] = complexAdd(even[k], oddK);
+                result[k + N / 2] = complexSubtract(even[k], oddK);
+            }
+            return result;
+        }
+
+        // Complex number operations
+        function complexAdd(a, b) {
+            return { re: a.re + b.re, im: a.im + b.im };
+        }
+
+        function complexSubtract(a, b) {
+            return { re: a.re - b.re, im: a.im - b.im };
+        }
+
+        function complexMultiply(a, b) {
+            return {
+                re: a.re * b.re - a.im * b.im,
+                im: a.re * b.im + a.im * b.re
+            };
+        }
+
+        // Function to generate PSD for the original signal
+        function generatePSD1() {
+            let fs = parseInt(document.getElementById('samplingFrequency').value);			
+            fs = nextPowerOf2(fs);  // Ensure fs is a power of 2 for FFT
+			let tt = Array.from({ length: fs }, (_, i) => i / fs);
+            let fm = parseInt(document.getElementById('messageFrequency').value);
+            let fc = parseInt(document.getElementById('carrierFrequency').value);
+
+            // Generate input signal based on the selection
+            let y = handleInputChange(fs, fm, fc);
+            if (!y) return;  // Exit if no valid signal
+
+            // Plot PSD for the original signal
+            plotPSD(y, null, fs, 'psdPlot1'); // Pass y as the original signal, null for x
+        }
+
+        // Function to generate PSD for the noisy signal
+        function generatePSD2() {
+            let fs = parseInt(document.getElementById('samplingFrequency').value);			
+            fs = nextPowerOf2(fs);  // Ensure fs is a power of 2 for FFT
+			let tt = Array.from({ length: fs }, (_, i) => i / fs);
+            let fm = parseInt(document.getElementById('messageFrequency').value);
+            let fc = parseInt(document.getElementById('carrierFrequency').value);
+
+            // Generate input signal based on the selection
+            let y = handleInputChange(fs, fm, fc);
+            if (!y) return;  // Exit if no valid signal
+
+            // Get SNR in dB from user input
+            let snr_db = parseFloat(document.getElementById('snrInput').value);
+            let snr_linear = Math.pow(10, snr_db / 10); // Convert SNR to linear scale
+
+            // Calculate signal power and noise variance
+            let signal_power = y.reduce((sum, value) => sum + Math.pow(value, 2), 0) / fs;
+            let noise_variance = signal_power / snr_linear;
+
+            // Generate noisy signal
+            let x = y.map(value => value + Math.sqrt(noise_variance) * randn());
+
+            // Plot PSD for the noisy signal
+            plotPSD(y, x, fs, 'psdPlot2'); // Pass y as the original signal and x as the noisy signal
+        }
+
+
+        // Updated plotPSD function to take a divId parameter
+        function plotPSD(y, x, fs, divId) {
+		    let fc = parseInt(document.getElementById('carrierFrequency').value);
+            let { psd: psd_y, f: f_y } = manualPSD(y, fs);
+            let tracePSD1 = {
+                x: f_y,
+                y: psd_y.map(p => 10 * Math.log10(p)),
+                mode: 'lines',
+                name: 'Original Signal PSD',
+                line: { color: 'red' }
+            };
+
+            // Plot for original signal
+            Plotly.newPlot(divId, [tracePSD1], {
+                title: 'Power Spectral Density of Estimated Signal',
+                xaxis: { title: 'Frequency (Hz)' 
+				//range: [fc-500, fc+500]
+				},
+                yaxis: {
+                    title: 'Power/Frequency (dB/Hz)',
+                    range: [-100, 5] // Specify your desired y-axis range here
+                }
+            }, rr);
+			//document.getElementById('scrolltopsd1').scrollIntoView({ behavior: 'smooth' });
+
+            // If x is not null, calculate and plot the PSD for the noisy signal
+            if (x) {
+                let { psd: psd_x, f: f_x } = manualPSD(x, fs);
+                let tracePSD2 = {
+                    x: f_x,
+                    y: psd_x.map(p => 10 * Math.log10(p)),
+                    mode: 'lines',
+                    name: 'Noisy Signal PSD',
+                    line: { color: 'black' }
+                };
+
+                // Plot for noisy signal
+                Plotly.newPlot('psdPlot2', [tracePSD2], {
+                    title: 'Power Spectral Density of Noisy Signal',
+                    xaxis: { title: 'Frequency (Hz)' 
+					//range: [fc - 500, fc + 500]
+					},
+                    yaxis: {
+                        title: 'Power/Frequency (dB/Hz)'
+                        //range: [-120, 10] // Specify your desired y-axis range here
+                    }
+                }, rr);
+			document.getElementById('scrolltopsd2').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+
+		
+        function generatePSDEstimated() {
+            let fs = parseInt(document.getElementById('samplingFrequency').value);			
+            fs = nextPowerOf2(fs);  // Ensure fs is a power of 2 for FFT
+			let tt = Array.from({ length: fs }, (_, i) => i / fs);
+            let fm = parseInt(document.getElementById('messageFrequency').value);
+            let fc = parseInt(document.getElementById('carrierFrequency').value);
+
+            // Generate input signal based on the selection
+            let y = xest;
+
+
+            // Plot PSD for the original signal
+            plotPSD(y, null, fs, 'psdPlotestimated'); // Pass y as the original signal, null for x
+        }
+
+		function wienerCoefficients() {
+    // Main Wiener Filter Process
+    let fs = parseInt(document.getElementById('samplingFrequency').value);  
+    let fm = parseInt(document.getElementById('messageFrequency').value);
+    let fc = parseInt(document.getElementById('carrierFrequency').value);
+
+    // Generate input signal based on the selection
+    let y = handleInputChange(fs, fm, fc);
+    if (!y) return;  // Exit if no valid signal
+
+    // User input for SNR in dB
+    let snr_db = parseFloat(document.getElementById('snrInput').value);
+
+    // Add Gaussian noise to the signal (assumes addNoise function is defined)
+    let x = addNoise(y, snr_db);
+
+    // Get filter order
+    let N = parseInt(document.getElementById('filterOrder').value);
+    
+    // Slice first N samples for Wiener filter process
+    let yN = y.slice(0, N);
+    let xN = x.slice(0, N);
+
+    // FFT of signals (assumes fft and ifft functions are defined)
+    let X = fft(xN);
+    let Y = fft(yN);
+
+    // Compute autocorrelation and cross-correlation in frequency domain
+    let Rxx = ifft(autoCorrelation(X));
+    let Rxy = ifft(crossCorrelation(X, Y));
+
+    // Convert Rxx to Toeplitz matrix (assumes toeplitz function is defined)
+    let RxxToeplitz = toeplitz(Rxx, Rxx);
+
+    // Wiener-Hopf solution: B = inv(Rxx) * Rxy (assumes solveToeplitz function is defined)
+    let B = solveToeplitz(RxxToeplitz, Rxy);
+
+    const maData = [{
+        x: Array.from({ length: B.length }, (_, i) => i).flatMap(i => [i, i, null]),  // X-axis (index of B)
+        y: B.map(b => b.re || b).flatMap(y => [0, y, null]),  // Take real part if B is complex
+        type: 'scatter',
+        mode: 'lines',
+        name: 'Filter Coefficients (B)',
+        line: { color: 'blue', width: 4 },
+    }];
+
+    // Layout for the plot
+    const bLayout = {
+        title: 'Wiener Filter Coefficients',
+        xaxis: { title: 'Coefficient Index' },
+        yaxis: { title: 'Coefficient Value' }
+    };
+
+    // Plot the graph using Plotly
+    Plotly.newPlot('plotB', maData, bLayout);
+
+    // Scroll to the coefficients plot section
+    document.getElementById('scrolltocoefficients').scrollIntoView({ behavior: 'smooth' });
+}
+
+    </script>
+	
+	<style>
+#container {
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  padding: 25px 40px;
+  max-width: 100%;
+  margin: 20px auto;
+  text-align: left;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+h1 {
+  color: #1e3a8a;
+  font-size: 24px;
+  margin-bottom: 25px;
+  text-align: justify;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li.step {
+  margin: 12px 0;
+  padding: 12px 15px;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+li.step::before {
+  content: "✔";
+  color: #10b981;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+li.step:hover {
+  transform: scale(1.02);
+  background-color: #f3f4f6;
+}
+
+/* Color code each step */
+.step1 {
+  background-color: #ffe0e0;
+  border-left: 5px solid #ef4444;
+}
+.step2 {
+  background-color: #e0f7ff;
+  border-left: 5px solid #0ea5e9;
+}
+.step3 {
+  background-color: #e0ffe5;
+  border-left: 5px solid #22c55e;
+}
+.step4 {
+  background-color: #f5e0ff;
+  border-left: 5px solid #a855f7;
+}
+	</style>
+  <script src="../assets/js/iframeResize.js"></script>
+        
+        </body>
+</html>
