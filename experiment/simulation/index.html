@@ -72,13 +72,13 @@
 	<div id = "instructions">
     <h1>Instructions for Wiener Filtering for Sine, Cosine, AM, and DSB-SC Signals</h1>
     <ul>
-        <li class="step step4"><strong>Note:</strong> Use the input fields to enter the input signal, message frequency (Hz), sampling frequency (Hz), filter order, and the SNR (in dB).</li>
-        <li class="step step1"><strong>Step 1:</strong> Click on <em>'Generate Reference Signal'</em> button to generate the reference signal</li>
-        <li class="step step2"><strong>Step 2:</strong> Click the <em>'Generate Noisy Input Signal'</em> button to generate the noisy input signal by applying AWGN to the reference signal.</li>
+        <li class="step step4"><strong>Note:</strong> Use the input fields to enter the input signal, message frequency (Hz), sampling frequency (Hz), wiener filter order, and the SNR (in dB).</li>
+        <li class="step step1"><strong>Step 1:</strong> Click on <em>'Generate Input Signal'</em> button to generate the input signal</li>
+        <li class="step step2"><strong>Step 2:</strong> Click the <em>'Generate Noisy Input Signal'</em> button to generate the noisy input signal by applying AWGN to the input signal.</li>
         <li class="step step3"><strong>Step 3:</strong> Click on <em>'Generate PSD for Noisy Signal'</em> to view the power spectral density of the noisy signal</li>
         <li class="step step4"><strong>Step 4:</strong> Click on <em>'Compute Filter Coefficeints'</em> to compute and view wiener filter Coefficients</li>
 		<li class="step step1"><strong>Step 5:</strong> Click on <em>'Generate Estimated Signal'</em> to view the estimated (filtered) signal from the Wiener filter.</li>
-		<li class="step step2"><strong>Step 6:</strong> Click on <em>'Generate Residual Signal'</em> to view the difference between the reference signal and the filtered signal</li>
+		<li class="step step2"><strong>Step 6:</strong> Click on <em>'Generate Residual Signal'</em> to view the difference between the input signal and the filtered signal</li>
 		</ul>
 	</div>
 	<hr/>
@@ -113,7 +113,7 @@
 <input class="input-field border border-black px-2 py-1 rounded-sm" type="number" id="samplingFrequency" value="1000">
                 </div>
 				<div class="flex items-center justify-center gap-1 mt-2">
-        <label for="filterOrder">Filter Order:</label>
+        <label for="filterOrder">Wiener Filter Order:</label>
 <input class="input-field border border-black px-2 py-1 rounded-sm" type="number" id="filterOrder" value="100" min="10">
                 </div>
               <div class="flex items-center justify-center gap-1 mt-2">
@@ -145,7 +145,7 @@
                   class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[60px] left-[2px]"
                   onclick="simulateWiener()"
                 >
-                  Generate Reference Signal
+                  Generate Input Signal
                 </button>
 								<button
                   class="button bg-blue-500 text-white rounded-md px-2 py-1 absolute top-[100px] left-[2px]"
@@ -608,7 +608,7 @@ function handleInputChange(fs, fm, fc) {
             // Plot original message signal
             Plotly.newPlot('plot11', [
                 { x: Array.from({ length: fs }, (_, i) => i / fs), y: y, mode: 'lines', name: 'Original Message Signal' }
-            ], { title: 'Reference Signal' }, rr);
+            ], { title: 'Input signal' }, rr);
 				document.getElementById('scrolltomessage').scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -788,7 +788,7 @@ function handleInputChange(fs, fm, fc) {
         x: tt.slice(N),
         y: y.slice(N),
         mode: 'lines',
-        name: 'Reference Signal'
+        name: 'Input signal'
     };
 
     const trace2 = {
