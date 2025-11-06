@@ -67,7 +67,7 @@
         <h1 id="instructions-title">Instructions for Calculating MSE vs. SNR Using Wiener Filtering</h1>
         <ul>
             <li class="step step1">Step 1: Enter Sampling Frequency, Message Frequency, Carrier Frequency, Wiener Filter Order, and SNR (dB).</li>
-            <li class="step step2">Step 2: Click "Calculate MSE" to compute the MSE.</li>
+            <li class="step step2">Step 2: Click "Calculate MSE" to view filtered output and computed MSE.</li>
             <li class="step step3">Step 3: Click "Plot MSE vs SNR" to view the performance graph.</li>
         </ul>
     </div>
@@ -87,7 +87,7 @@
                             <option value="cosine">Cosine Wave</option>
                             <option value="am">AM Signal</option>
                             <option value="dsbsc">DSBSC Signal</option>
-                            <option value="csv">Input Real Data</option> <!-- Added CSV option -->
+                            <option value="csv">CSV File Input</option> <!-- Added CSV option -->
                         </select>
                     </div>
 
@@ -147,50 +147,51 @@
             </div>
         </div>
     </div>
+  <script>
+    // Function to check if the number of input bits is odd
+    function checkFrequencies() {
+        const messageFrequency = document.getElementById('messageFrequency').valueASNumber;
+        const carrierFrequency = document.getElementById('carrierFrequency').valueASNumber;
+        //const bitsArray = input.split(',').map(item => item.trim()); // Create an array from the input
+
+        // Check if the length of the array is odd
+        if (messageFrequency >= carrierFrequency) {
+            alert("The carrier frequency must be higher than the message frequency.");
+            window.location.reload(true); 
+        } 
+    }
+
+    // Select all button elements on the page
+    const buttons = document.querySelectorAll('button');
+
+    // Attach the click event listener to each button
+    buttons.forEach(button => {
+        button.addEventListener('click', checkFrequencies);
+    });
+</script>
+
     <script>
-        // Function to check if the number of input bits is odd
-        function checkFrequencies() {
-            const messageFrequency = parseFloat(document.getElementById('messageFrequency').value);
-            const carrierFrequency = parseFloat(document.getElementById('carrierFrequency').value);
-    
-            // Check if the carrier frequency is greater than the message frequency
-            if (messageFrequency >= carrierFrequency) {
-                alert("The carrier frequency must be higher than the message frequency.");
-                window.location.reload(true); // Remove or handle differently
-            } 
-        }
-    
-        // Select all button elements on the page
-        const buttons = document.querySelectorAll('button');
-    
-        // Attach the click event listener to each button
-        buttons.forEach(button => {
-            button.addEventListener('click', checkFrequencies);
-        });
-    </script>
-    
-    <script>
-        // Function to check if the number of input bits is odd
-        function checkFrequencies2() {
-            const carrierFreq = parseFloat(document.getElementById('carrierFrequency').value);
-            const samplingFreq = parseFloat(document.getElementById('samplingFrequency').value);
-    
-            // Check if the sampling frequency is greater than the carrier frequency
-            if (samplingFreq <= carrierFreq) {
-                alert("The sampling frequency must be higher than the carrier frequency.");
-                window.location.reload(true); // Remove or handle differently
-            } 
-        }
-    
-        // Select all button elements on the page
-        const buttons1 = document.querySelectorAll('button');
-    
-        // Attach the click event listener to each button
-        buttons1.forEach(button => {
-            button.addEventListener('click', checkFrequencies2);
-        });
-    </script>
-    
+    // Function to check if the number of input bits is odd
+    function checkFrequencies2() {
+        const carrierFreq = document.getElementById('carrierFrequency').valueASNumber;
+        const samplingFreq = document.getElementById('samplingFrequency').valueASNumber;
+        //const bitsArray = input.split(',').map(item => item.trim()); // Create an array from the input
+
+        // Check if the length of the array is odd
+        if (samplingFreq <= carrierFreq) {
+            alert("The sampling frequency must be higher than the carrier frequency.");
+            window.location.reload(true); 
+        } 
+    }
+
+    // Select all button elements on the page
+    const buttons1 = document.querySelectorAll('button');
+
+    // Attach the click event listener to each button
+    buttons.forEach(button => {
+        button.addEventListener('click', checkFrequencies2);
+    });
+</script>
 
 <script>
     function generateSinusoid(fm, fs, L) {
@@ -479,17 +480,11 @@ let recordedSNRs = [];
                     let modulatingSignal = tt.map((x) => Math.sin(2 * Math.PI * fm * x));
                     let carrier = tt.map((x) => Math.cos(2 * Math.PI * fc * x));
                     y = modulatingSignal.map((value, index) => (1 + value) * carrier[index]);
-                    label111 = document.querySelector('label[for="carrierFrequency"]');
-	label111.style.display = 'block';
-	carrierFrequency.style.display = 'block';
                     break;
                 case 'dsbsc':
                     let messageSignal = tt.map((x) => Math.sin(2 * Math.PI * fm * x));
                     let carrierSignal = tt.map((x) => Math.cos(2 * Math.PI * fc * x));
                     y = messageSignal.map((value, index) => value * carrierSignal[index]);
-                    label111 = document.querySelector('label[for="carrierFrequency"]');
-	label111.style.display = 'block';
-	carrierFrequency.style.display = 'block';
                     break;
                 case 'csv':
                     if (parsedSignalData.length === 0) {
@@ -570,23 +565,11 @@ function parseCSV(contents) {
             document.getElementById("mseDisplay").innerHTML = "MSE: " + mse;
 
             // Save SNR vs MSE
-            /*
             if (!recordedSNRs.includes(snr)) {
                 mseData.push({ SNR: snr, MSE: mse });
                 recordedSNRs.push(snr);
                 updateMSETable();
             }
-        }
-        */
-        if (recordedSNRs.includes(snr)) {
-    // Display an alert if SNR already exists
-    alert("SNR value already exists!");
-} else {
-    // Otherwise, add the new SNR and MSE values
-    mseData.push({ SNR: snr, MSE: mse });
-    recordedSNRs.push(snr);
-    updateMSETable();
-}
         }
 
         function updateMSETable() {
