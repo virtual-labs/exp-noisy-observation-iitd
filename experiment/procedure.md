@@ -27,8 +27,8 @@
   Click the <em>“Generate Noisy Input Signal”</em> button to add Additive White Gaussian Noise (AWGN) to the reference signal and generate the noisy signal.
 </li>
 <li>
-  <strong>3. Display Power Spectral Density (PSD) of the Noisy and Estimated Signals:</strong> 
-  Click the <em>“Show PSD for Noisy Signal”</em> and <em>“Show PSD for Estimated Signal”</em> buttons to visualize the PSD of the noisy signal and the estimated signal, respectively.
+  <strong>3. Display Power Spectral Density (PSD) of the Noisy Signal:</strong> 
+  Click the <em>“Show PSD for Noisy Signal”</em> button to visualize the PSD of the noisy signal.
 </li>
 <li>
   <strong>4. Compute Wiener Filter Coefficients:</strong> 
@@ -45,6 +45,14 @@
 <li>
   <strong>7. Compare the Reference Signal and the Estimated Signal:</strong> 
   Click the <em>“Compare”</em> button to visualize the comparison between the reference signal and the estimated signal.
+</li>
+<li>
+  <strong>8. Display Power Spectral Density (PSD) of the Estimated Signal:</strong> 
+  Click the <em>“Show PSD for Estimated Signal”</em> button to visualize the PSD of the estimated signal.
+</li>
+<li>
+  <strong>9. Plot MSE vs SNR:</strong> 
+  Click the <em>“Plot MSE vs SNR”</em> button to visualize the Mean Squared Error (MSE) versus Signal-to-Noise Ratio (SNR) plot for the Wiener filter.
 </li>
 
   </ul>
