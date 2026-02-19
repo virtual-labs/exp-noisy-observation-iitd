@@ -153,7 +153,7 @@
         "d": "Amplitude is not sufficient; power spectra are needed."
       },
       "correctAnswer": "c",
-      "difficulty": "intermediate"
+      "difficulty": "advanced"
     },
     {
       "question": "10. What is a major limitation of the classical Wiener filter in real-time applications?",
@@ -170,7 +170,7 @@
         "d": "It can be used outside band-limited cases with appropriate assumptions."
       },
       "correctAnswer": "b",
-      "difficulty": "intermediate"
+      "difficulty": "advanced"
     }
   ]
 }
