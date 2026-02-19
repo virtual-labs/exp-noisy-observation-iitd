@@ -16,7 +16,7 @@
         "d": "Incorrect: MSE takes into account both the noise and the desired signal in optimizing the filter."
       },
       "correctAnswer": "a",
-      "difficulty": "hard"
+      "difficulty": "intermediate"
     },
     {
       "question": "2. What does the Wiener–Hopf equation relate to in the context of Wiener filtering?",
@@ -33,7 +33,7 @@
         "d": "Incorrect: The equation doesn't directly give the frequency response but rather provides a time-domain relationship."
       },
       "correctAnswer": "a",
-      "difficulty": "hard"
+      "difficulty": "intermediate"
     },
     {
       "question": "3. What is the significance of the term P<sup>T</sup> R<sup>-1</sup> P in the Wiener filter's error reduction formula?",
@@ -50,7 +50,7 @@
         "d": "Incorrect: While it involves the cross-correlation, it focuses on error reduction rather than just the correlation term."
       },
       "correctAnswer": "a",
-      "difficulty": "hard"
+      "difficulty": "intermediate"
     },
     {
       "question": "4. Which of the following is a limitation of the Wiener filter in real-time applications?",
@@ -67,7 +67,7 @@
         "d": "Incorrect: The Wiener filter works best with stationary signals, but its performance can degrade with highly non-stationary signals."
       },
       "correctAnswer": "a",
-      "difficulty": "hard"
+      "difficulty": "intermediate"
     },
     {
       "question": "5. In the frequency domain, how does the Wiener filter affect the input signal?",
@@ -84,7 +84,7 @@
         "d": "Incorrect: It does not create a notch filter, but rather adjusts the frequency spectrum to reduce error."
       },
       "correctAnswer": "a",
-      "difficulty": "hard"
+      "difficulty": "intermediate"
     },
     {
       "question": "6. How is the autocorrelation matrix R used in the computation of the Wiener filter's optimal coefficients?",
@@ -101,7 +101,7 @@
         "d": "Incorrect: Normalization is not its primary function; the matrix helps calculate the optimal coefficients by capturing the input signal's correlation."
       },
       "correctAnswer": "a",
-      "difficulty": "hard"
+      "difficulty": "advanced"
     },
     {
       "question": "7. Which type of Wiener filter is more commonly used in real-time applications?",
@@ -118,7 +118,7 @@
         "d": "Incorrect: The unconstrained Wiener filter may require future data, making it unsuitable for real-time applications."
       },
       "correctAnswer": "c",
-      "difficulty": "hard"
+      "difficulty": "advanced"
     },
     {
       "question": "8. What does the term 'causal' mean in the context of Wiener filters?",
@@ -135,7 +135,7 @@
         "d": "Incorrect: The filter applies different coefficients based on the statistical properties of the signal, not constant coefficients."
       },
       "correctAnswer": "a",
-      "difficulty": "hard"
+      "difficulty": "advanced"
     },
     {
       "question": "9. Why is the autocorrelation phi_xx[k] of a signal x[n] important in Wiener filtering?",
@@ -152,7 +152,7 @@
         "d": "Incorrect: The autocorrelation relates to the input signal's structure, not the desired signal's spectral content."
       },
       "correctAnswer": "a",
-      "difficulty": "hard"
+      "difficulty": "advanced"
     },
     {
       "question": "10. In practice, how do we typically implement a Wiener filter in a discrete-time system?",
@@ -169,7 +169,7 @@
         "d": "Incorrect: The Wiener filter is usually implemented in the time domain using autocorrelation and cross-correlation matrices."
       },
       "correctAnswer": "a",
-      "difficulty": "hard"
+      "difficulty": "advanced"
     }
   ]
 }
