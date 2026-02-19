@@ -38,10 +38,13 @@ This is the **Mean-Square Error (MSE)**, denoted by $\xi$. It represents the exp
 - $y[n]$: The **output signal** of the filter, which serves as the closest possible estimate of $d[n]$.  
 
 ### Block Diagram
+<div align = "center">
 
 ![](1736155213_wiener-filter/1736155213_wiener-filter-1.png)
 
+
 **Fig: Block diagram view of the FIR Wiener filter for discrete series. An input signal $x[n]$ is convolved with the Wiener filter $g[n]$ and the result is compared to a reference signal $s[n]$ to obtain the filtering error $e[n]$.**
+</div>
 
 In the above figure, $G(z)$ is an FIR filter of order $N$ with coefficients $a_i$.  
 The input $x[n]$ is processed to produce the output $r[n]$.  
