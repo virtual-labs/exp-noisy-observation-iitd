@@ -1,7 +1,7 @@
 <script>
   window.MathJax = {
     tex: {
-      inlineMath: [['$', '$'], ['\\(', '\\)']],  // Enable $...$ for inline
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
       displayMath: [['$$','$$'], ['\\[','\\]']]
     },
     options: {
@@ -11,180 +11,214 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-### Theory
+### Theory of Wiener Filtering
 
-Imagine you have a noisy signal and you want to recover a cleaner, desired version of it. **Wiener filtering** is a powerful technique that helps achieve exactly that.  
-
-
-Here, *optimal* means minimizing the **Mean-Square Error (MSE)**, a common performance criterion in signal processing because it is mathematically tractable and provides effective results.  
-
-$$
-e[n] = d[n] - y[n]
-$$
-
-This defines the **error signal** $e[n]$, which is the difference between the desired signal $d[n]$ (what we want) and the output $y[n]$ (what the filter produces).  
-
-$$
-\xi = E\{e^2[n]\}
-$$
-
-This is the **Mean-Square Error (MSE)**, denoted by $\xi$. It represents the expected value (average) of the squared error. Squaring ensures all errors are positive and penalizes larger deviations more heavily.  
-
-#### Key Terms
-
-- $x[n]$: The **input signal** or **observed signal**, which often contains noise or distortions.  
-- $d[n]$: The **desired signal**, the clean version we aim to estimate. While it’s not directly available in real time, its statistical properties are crucial.  
-- $h[n]$: The **impulse response** of the Wiener filter, i.e., the set of coefficients that define how the input is transformed.  
-- $y[n]$: The **output signal** of the filter, which serves as the closest possible estimate of $d[n]$.  
-
-### Block Diagram
-<div align = "center">
-
-![](1736155213_wiener-filter/1736155213_wiener-filter-1.png)
+Wiener filtering is a fundamental technique in statistical signal processing used to estimate a desired signal from a noisy observation. The objective is to design a linear time-invariant (LTI) filter whose output minimizes the mean-square error (MSE) between the estimated signal and the desired signal.
 
 
-**Fig: Block diagram view of the FIR Wiener filter for discrete series. An input signal $x[n]$ is convolved with the Wiener filter $g[n]$ and the result is compared to a reference signal $s[n]$ to obtain the filtering error $e[n]$.**
-</div>
 
-In the above figure, $G(z)$ is an FIR filter of order $N$ with coefficients $a_i$.  
-The input $x[n]$ is processed to produce the output $r[n]$.  
-The desired signal is $s[n]$, and the error signal is defined as:
+### Signal Model and Notation
 
-$$
-e[n] = s[n] - r[n]
-$$
+Let:
 
-The Wiener filter chooses the coefficients $a_i$ of $G(z)$ to minimize the mean square error (MSE):
+- $x[n]$ denote the observed (input) signal  
+- $d[n]$ denote the desired (reference) signal  
+- $h[n]$ denote the impulse response (filter coefficients)  
+- $y[n]$ denote the filter output (estimate of $d[n]$)  
+- $e[n]$ denote the estimation error  
 
-$$
-\min E\{|e[n]|^2\} = \min E\{|s[n] - r[n]|^2\}
-$$
-
-In the big picture, the signal is attenuated and added with noise, then the signal is passed through a Wiener filter. The function of the Wiener filter is to minimize the mean square error between the filter output of the received signal and the reference signal by adjusting the Wiener filter tap coefficient.
-
-### Autocorrelation ($\varphi_{xx}[k]$)
-
-The autocorrelation measures how similar a signal is to a time-shifted version of itself:
-
-$$
-\varphi_{xx}[k] = E\{x[n]\,x[n+k]\}
-$$
-
-If $k = 0$ this gives the average power $E\{x^2[n]\}$.  
-For wide-sense stationary (WSS) signals, autocorrelation depends only on the lag $k$, not on absolute time.
-
-### Cross-correlation ($\varphi_{xd}[k]$)
-
-Cross-correlation measures similarity between two signals (for example the noisy observation $x[n]$ and the desired clean signal $d[n]$):
-
-$$
-\varphi_{xd}[k] = E\{x[n]\,d[n+k]\}
-$$
-
-This tells us whether something in $x[n]$ at time $n$ predicts something in $d[n]$ at time $n+k$.
-
-### Unconstrained (Two-Sided Theoretical) Wiener Filter
-
-This is the most general Wiener filter.  
-It may be **non-causal** (uses future samples) and **IIR** (infinite memory).  
-It gives the theoretical benchmark.
-
-The filter output is the convolution of the impulse response with the input:
+The output of the LTI filter is given by the convolution:
 
 $$
 y[n] = \sum_{m=-\infty}^{\infty} h[m]\,x[n-m]
 $$
 
-Minimizing mean-square error leads to the Wiener–Hopf equations:
+Here, $h[m]$ represents the filter coefficient at lag $m$, and $x[n-m]$ is the input sample delayed by $m$. The summation combines all weighted past and future samples (for the general case).
+
+The estimation error is defined as:
 
 $$
-\sum_{m=-\infty}^{\infty} h_{\text{opt}}[m]\,\varphi_{xx}[n-m] \;=\; \varphi_{xd}[n]
+e[n] = d[n] - y[n]
 $$
 
-**Intuition:** the optimal filter balances how the input correlates with itself ($\varphi_{xx}$) and how the input relates to the desired signal ($\varphi_{xd}$).
+This represents the difference between the desired signal and its estimate.
 
-In the **z-/frequency domain** this becomes simple multiplication:
+
+
+### Mean-Square Error Criterion
+
+The performance of the filter is evaluated using the mean-square error:
+
+$$
+\xi = E\{e^2[n]\} = E\{(d[n] - y[n])^2\}
+$$
+
+Here, $E\{\cdot\}$ denotes the statistical expectation operator. The squaring ensures that both positive and negative errors contribute positively.
+
+The Wiener filtering problem consists of determining the impulse response $h[n]$ that minimizes $\xi$:
+
+$$
+h_{\text{opt}} = \arg \min_h E\{(d[n] - y[n])^2\}
+$$
+
+Here, $\arg \min$ denotes the value of $h[n]$ that minimizes the MSE.
+
+
+
+### Correlation Functions
+
+#### Autocorrelation Function
+
+The autocorrelation of the input signal is defined as:
+
+$$
+\varphi_{xx}[k] = E\{x[n]\,x[n+k]\}
+$$
+
+Here, $k$ is the lag (time shift). This function measures how similar the signal is to a shifted version of itself.
+
+For wide-sense stationary (WSS) processes, $\varphi_{xx}[k]$ depends only on $k$.  
+At $k=0$, $\varphi_{xx}[0] = E\{x^2[n]\}$ represents the average power of the input signal.
+
+#### Cross-Correlation Function
+
+The cross-correlation between the input and desired signal is:
+
+$$
+\varphi_{xd}[k] = E\{x[n]\,d[n+k]\}
+$$
+
+This measures how the input signal $x[n]$ is related to the desired signal $d[n]$ at a shift of $k$.
+
+
+
+### Wiener–Hopf Equation
+
+Minimization of the MSE leads to the Wiener–Hopf equation:
+
+$$
+\sum_{m=-\infty}^{\infty} h_{\text{opt}}[m]\,\varphi_{xx}[k-m] = \varphi_{xd}[k], \quad \forall k
+$$
+
+Here, $h_{\text{opt}}[m]$ are the optimal filter coefficients.  
+This equation expresses that the filtered input must match the cross-correlation with the desired signal for all lags $k$.
+
+
+
+### Frequency-Domain Representation
+
+Taking the Fourier (or $z$-) transform of the Wiener–Hopf equation yields:
 
 $$
 H_{\text{opt}}(z) = \frac{\Phi_{xd}(z)}{\Phi_{xx}(z)}
 $$
 
-- $\Phi_{xd}(z)$ — cross-power spectral density (input vs desired).  
-- $\Phi_{xx}(z)$ — auto-power spectral density of input.  
+where:
 
-So the optimal filter boosts frequencies where input looks like the desired signal and attenuates frequencies dominated by noise.
+- $\Phi_{xx}(z)$ is the power spectral density (PSD) of $x[n]$  
+- $\Phi_{xd}(z)$ is the cross-power spectral density between $x[n]$ and $d[n]$  
 
-### Noise-cancelling Example
+Here, $H_{\text{opt}}(z)$ represents the frequency response of the optimal filter.
 
-Suppose the observed signal is:
+
+
+### Noise Reduction Model
+
+Consider the additive noise model:
 
 $$
 x[n] = s[n] + v[n]
 $$
 
-Here $s[n]$ = clean signal, $v[n]$ = noise.  
-The desired signal is $d[n] = s[n]$.  
-If $s$ and $v$ are uncorrelated, then:
+where:
+- $s[n]$ is the desired (clean) signal  
+- $v[n]$ is additive noise  
+
+Assume that $s[n]$ and $v[n]$ are uncorrelated, and let $d[n] = s[n]$. Then:
 
 $$
-\Phi_{xx}(z) = \Phi_{ss}(z) + \Phi_{vv}(z), \qquad \Phi_{xd}(z) = \Phi_{ss}(z)
+\Phi_{xx}(z) = \Phi_{ss}(z) + \Phi_{vv}(z), \quad \Phi_{xd}(z) = \Phi_{ss}(z)
 $$
 
-So the Wiener filter becomes:
+Here:
+- $\Phi_{ss}(z)$ is the PSD of the signal  
+- $\Phi_{vv}(z)$ is the PSD of the noise  
+
+The optimal Wiener filter becomes:
 
 $$
 H_{\text{opt}}(z) = \frac{\Phi_{ss}(z)}{\Phi_{ss}(z) + \Phi_{vv}(z)}
 $$
+At frequencies where the noise power $\Phi_{vv}(z)$ is large, the denominator increases, causing the filter to reduce the gain (attenuation) at those frequencies.
 
-### Practical FIR Wiener Filter (order N)
 
-Real-time systems often use a finite-length FIR filter.  
-An FIR of order $N$ has taps $h[0]..h[N-1]$ and is naturally causal when implemented this way.
+
+### Finite-Length (FIR) Wiener Filter
+
+In practical implementations, a finite impulse response (FIR) filter of order $N$ is used:
 
 $$
 y[n] = \sum_{k=0}^{N-1} h[k]\,x[n-k]
 $$
 
-Write filter coefficients as a vector $H$ and the recent input samples as vector $X[n]$:
+Here, only past and present samples are used, making the filter causal.
+
+Define the coefficient vector and input vector as:
 
 $$
-H = [h[0],\dots,h[N-1]]^T,\quad X[n] = [x[n],x[n-1],\dots,x[n-N+1]]^T
+H = [h[0], h[1], \dots, h[N-1]]^T
 $$
+
+$$
+X[n] = [x[n], x[n-1], \dots, x[n-N+1]]^T
+$$
+
+Then the filter output is:
 
 $$
 y[n] = H^T X[n]
 $$
 
+Here, $H^T$ denotes the transpose of $H$, and the expression represents an inner product.
+
 Define:
 
-- $R = E\{X X^T\}$ — input autocorrelation matrix.  
-- $P = E\{X d[n]\}$ — cross-correlation vector with desired output.  
+- $R = E\{X[n] X^T[n]\}$ : autocorrelation matrix of the input  
+- $P = E\{X[n] d[n]\}$ : cross-correlation vector  
 
-Then:
+The optimal coefficient vector is obtained as:
 
 $$
 H_{\text{opt}} = R^{-1} P
 $$
+- **$R^{-1}$:** The inverse of the input autocorrelation matrix. It effectively "undoes" redundancies in the input data to help the filter isolate the unique parts of the signal.
+- **$P$:** The cross-correlation vector. It indicates the direction in which the filter should adjust its weights to match the desired output.
 
-This gives the optimal FIR coefficients by solving the normal equations.
 
-The minimum achievable error is:
+### Minimum Mean-Square Error
+
+The minimum achievable MSE is given by:
 
 $$
 \xi_{\min} = \sigma_d^2 - P^T R^{-1} P
 $$
 
-Here $\sigma_d^2 = E\{d^2[n]\}$.  
-The term $P^T R^{-1} P$ is the error reduction achieved by the filter.
+where:
+
+$$
+\sigma_d^2 = E\{d^2[n]\}
+$$
+
+Here, $d[n]$ denotes the desired signal, and $\sigma_d^2$ represents its average power.  
+The term $P^T R^{-1} P$ represents the amount of the desired signal power that can be recovered (estimated) from the observed input signal $x[n]$.
+
+
 
 ### Applications
 
-The Wiener filter has a variety of applications in signal processing, image processing, control systems, and digital communications. These applications generally fall into one of four main categories:
+Wiener filtering is widely applied in:
 
-* System identification  
-* Deconvolution  
-* Noise reduction  
-* Signal detection  
-
-For example, the Wiener filter can be used in image processing to remove noise from a picture. It is commonly used to denoise audio signals, especially speech, as a pre-processor before speech recognition.
-
+- **Noise Reduction:** Removing background hiss from recordings.  
+- **System Identification:** Mapping how an unknown system behaves.  
+- **Channel Equalization:** Fixing distorted signals in 4G/5G networks.  
+- **Image Restoration:** Removing "blur" from digital photographs.
