@@ -2,7 +2,7 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "1. In the Wiener filter design, what is the significance of minimizing the Mean-Square Error (MSE) in the context of signal recovery?",
+      "question": "In the Wiener filter design, what is the significance of minimizing the Mean-Square Error (MSE) in the context of signal recovery?",
       "answers": {
         "a": "MSE minimization ensures that the error between the desired and actual signals is as small as possible over time.",
         "b": "MSE minimization guarantees that the filter will always be able to recover the clean signal exactly.",
@@ -19,7 +19,7 @@
       "difficulty": "intermediate"
     },
     {
-      "question": "2. What does the Wiener–Hopf equation relate to in the context of Wiener filtering?",
+      "question": "What does the Wiener–Hopf equation relate to in the context of Wiener filtering?",
       "answers": {
         "a": "The Wiener–Hopf equation relates the cross-correlation between the input and desired signals to the autocorrelation of the input signal.",
         "b": "The Wiener–Hopf equation provides a method to solve the FIR filter coefficients using the error signal.",
@@ -36,7 +36,7 @@
       "difficulty": "intermediate"
     },
     {
-      "question": "3. What is the significance of the term P<sup>T</sup> R<sup>-1</sup> P in the Wiener filter's error reduction formula?",
+      "question": "What is the significance of the term P^T R^{-1} P in the Wiener filter's error reduction formula?",
       "answers": {
         "a": "It represents the error reduction achieved by filtering the input signal using the Wiener filter's optimal coefficients.",
         "b": "It describes the variance of the noise in the system, which is minimized by the filter.",
@@ -44,7 +44,7 @@
         "d": "It is the contribution of the cross-correlation between the input and desired signal to the total error."
       },
       "explanations": {
-        "a": "Correct: The term P<sup>T</sup> R<sup>-1</sup> P represents the error reduction that results from applying the Wiener filter's optimal coefficients to the input signal.",
+        "a": "Correct: The term P^T R^{-1} P represents the error reduction that results from applying the Wiener filter's optimal coefficients to the input signal.",
         "b": "Incorrect: This term is not related to noise variance; it is related to the error reduction in the desired signal.",
         "c": "Incorrect: It is not directly related to noise in the output but to the filter's efficiency in reducing error.",
         "d": "Incorrect: While it involves the cross-correlation, it focuses on error reduction rather than just the correlation term."
@@ -53,41 +53,41 @@
       "difficulty": "intermediate"
     },
     {
-      "question": "4. Which of the following is a limitation of the Wiener filter in real-time applications?",
+      "question": "What is a major practical limitation of the classical Wiener filter in real-time applications?",
       "answers": {
-        "a": "The Wiener filter requires knowledge of the desired signal, which is often unavailable in real-time applications.",
-        "b": "The Wiener filter works only for white noise and fails in the presence of colored noise.",
-        "c": "The Wiener filter always introduces some amount of distortion to the desired signal, even if noise is perfectly removed.",
-        "d": "The Wiener filter performs poorly in the presence of highly non-stationary signals."
+        "a": "It requires knowledge of the future and/or the desired signal, which is typically unavailable in real-time.",
+        "b": "It only works for white noise and fails for colored noise.",
+        "c": "It always introduces distortion to the desired signal, even in noise-free conditions.",
+        "d": "It cannot be applied to finite-length signals."
       },
       "explanations": {
-        "a": "Correct: In real-time, the desired signal d[n] is typically unavailable, making the implementation of the Wiener filter challenging.",
-        "b": "Incorrect: The Wiener filter can handle colored noise through its use of autocorrelation and cross-correlation.",
-        "c": "Incorrect: The Wiener filter is designed to minimize distortion while filtering out noise.",
-        "d": "Incorrect: The Wiener filter works best with stationary signals, but its performance can degrade with highly non-stationary signals."
+        "a": "Correct: The classical Wiener filter is non-causal and relies on the desired signal for MSE minimization, making real-time implementation challenging.",
+        "b": "Incorrect: The Wiener filter can handle colored noise if the autocorrelation and cross-correlation are known.",
+        "c": "Incorrect: While some distortion is possible, the filter is designed to minimize MSE and balance signal preservation with noise reduction.",
+        "d": "Incorrect: The filter can be implemented on finite-length signals using FIR approximations."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "In the frequency-domain Wiener filter, how does the filter modify the input signal spectrum?",
+      "answers": {
+        "a": "It amplifies frequencies where the signal dominates the noise and attenuates frequencies where noise dominates.",
+        "b": "It removes all frequencies above a certain threshold regardless of the signal content.",
+        "c": "It equalizes the power across all frequencies to achieve a flat spectrum.",
+        "d": "It creates notches at the frequencies where noise is present."
+      },
+      "explanations": {
+        "a": "Correct: The frequency-domain Wiener filter adjusts the gain at each frequency based on the signal-to-noise ratio, preserving high-SNR frequencies and attenuating low-SNR ones.",
+        "b": "Incorrect: The filter does not simply remove frequencies; it performs adaptive attenuation based on signal and noise spectra.",
+        "c": "Incorrect: Equalization is not the goal; the filter minimizes MSE rather than flattening the spectrum.",
+        "d": "Incorrect: It does not create strict notch filters but applies frequency-dependent attenuation proportional to noise power."
       },
       "correctAnswer": "a",
       "difficulty": "intermediate"
     },
     {
-      "question": "5. In the frequency domain, how does the Wiener filter affect the input signal?",
-      "answers": {
-        "a": "It amplifies frequencies where the input signal matches the desired signal and attenuates frequencies dominated by noise.",
-        "b": "It removes all frequencies above a certain threshold to improve signal quality.",
-        "c": "It equalizes the signal power across all frequencies to minimize errors.",
-        "d": "It creates a notch filter to remove the frequencies corresponding to the noise only."
-      },
-      "explanations": {
-        "a": "Correct: The Wiener filter amplifies frequencies where the input resembles the desired signal and attenuates those where noise dominates.",
-        "b": "Incorrect: The Wiener filter does not operate by simply removing frequencies but by adjusting their relative strengths based on the input and desired signal correlation.",
-        "c": "Incorrect: It does not equalize power, but rather balances the signal and noise frequencies.",
-        "d": "Incorrect: It does not create a notch filter, but rather adjusts the frequency spectrum to reduce error."
-      },
-      "correctAnswer": "a",
-      "difficulty": "intermediate"
-    },
-    {
-      "question": "6. How is the autocorrelation matrix R used in the computation of the Wiener filter's optimal coefficients?",
+      "question": "How is the autocorrelation matrix R used in the computation of the Wiener filter's optimal coefficients?",
       "answers": {
         "a": "It captures the correlations between the different time shifts of the input signal, which are used to calculate the optimal filter coefficients.",
         "b": "It directly measures the error in the input signal, which is used to optimize the filter.",
@@ -104,7 +104,7 @@
       "difficulty": "advanced"
     },
     {
-      "question": "7. Which type of Wiener filter is more commonly used in real-time applications?",
+      "question": "Which type of Wiener filter is more commonly used in real-time applications?",
       "answers": {
         "a": "The non-causal Wiener filter.",
         "b": "The infinite impulse response (IIR) Wiener filter.",
@@ -121,7 +121,7 @@
       "difficulty": "advanced"
     },
     {
-      "question": "8. What does the term 'causal' mean in the context of Wiener filters?",
+      "question": "What does the term 'causal' mean in the context of Wiener filters?",
       "answers": {
         "a": "The filter depends only on past and current input values, not future ones.",
         "b": "The filter depends on both past and future input values to achieve optimal performance.",
@@ -138,7 +138,7 @@
       "difficulty": "advanced"
     },
     {
-      "question": "9. Why is the autocorrelation phi_xx[k] of a signal x[n] important in Wiener filtering?",
+      "question": "Why is the autocorrelation φ_xx[k] of a signal x[n] important in Wiener filtering?",
       "answers": {
         "a": "It helps in determining how the input signal's past values correlate with its future values, which aids in estimating the desired signal.",
         "b": "It directly represents the noise characteristics in the input signal and is used to cancel noise.",
@@ -146,7 +146,7 @@
         "d": "It provides information about the spectral content of the desired signal."
       },
       "explanations": {
-        "a": "Correct: The autocorrelation phi_xx[k] describes how different time shifts of the signal correlate, which is key to determining the optimal filter coefficients.",
+        "a": "Correct: The autocorrelation φ_xx[k] describes how different time shifts of the signal correlate, which is key to determining the optimal filter coefficients.",
         "b": "Incorrect: The autocorrelation represents the signal's internal correlations, not the noise characteristics directly.",
         "c": "Incorrect: The autocorrelation matrix helps with signal correlation, not directly with noise power.",
         "d": "Incorrect: The autocorrelation relates to the input signal's structure, not the desired signal's spectral content."
@@ -155,7 +155,7 @@
       "difficulty": "advanced"
     },
     {
-      "question": "10. In practice, how do we typically implement a Wiener filter in a discrete-time system?",
+      "question": "In practice, how do we typically implement a Wiener filter in a discrete-time system?",
       "answers": {
         "a": "By using an FIR filter with finite coefficients that are calculated based on the autocorrelation matrix and cross-correlation vector.",
         "b": "By applying an IIR filter with infinite coefficients derived from the Wiener–Hopf equations.",

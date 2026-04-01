@@ -2,24 +2,7 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "1. In Wiener filtering, under what condition does the optimal filter become a simple gain factor (i.e., scalar multiplication)?",
-      "answers": {
-        "a": "When the noise is white and the signal is deterministic.",
-        "b": "When both signal and noise are uncorrelated white processes.",
-        "c": "When the autocorrelation matrix becomes diagonal.",
-        "d": "When the signal and noise have equal power spectra."
-      },
-      "explanations": {
-        "a": "Deterministic signals violate the random process assumption.",
-        "b": "White and uncorrelated processes lead to diagonal correlation matrices.",
-        "c": "A diagonal autocorrelation matrix results in scalar gain per frequency.",
-        "d": "Equal power does not lead to scalar filtering; it leads to SNR = 1."
-      },
-      "correctAnswer": "c",
-      "difficulty": "intermediate"
-    },
-    {
-      "question": "2. What is the form of the Wiener filter H(f) in the frequency domain for stationary input and noise?",
+      "question": "What is the most general frequency-domain expression for the Wiener filter for stationary processes?",
       "answers": {
         "a": "H(f) = S_x(f) / S_y(f)",
         "b": "H(f) = S_d(f) / (S_d(f) + S_n(f))",
@@ -27,16 +10,33 @@
         "d": "H(f) = |X(f)|^2 / |Y(f)|^2"
       },
       "explanations": {
-        "a": "This is not the Wiener solution; it's related to power ratios.",
-        "b": "This is an approximation often used in practice but not general form.",
-        "c": "This is the correct frequency-domain Wiener filter: cross-spectrum over input spectrum.",
-        "d": "This relates to periodogram estimation, not Wiener filtering."
+        "a": "Incorrect. This ratio does not represent the Wiener solution.",
+        "b": "Incorrect. This is a special case valid when the desired signal and noise are uncorrelated and additive.",
+        "c": "Correct! This is the most general Wiener filter form using cross-power spectral density.",
+        "d": "Incorrect. This relates to spectral estimation, not Wiener filtering."
       },
       "correctAnswer": "c",
       "difficulty": "intermediate"
     },
     {
-      "question": "3. The Wiener-Hopf equation arises from which of the following optimization principles?",
+      "question": "In FIR Wiener filtering, how is the optimal filter coefficient vector H_opt computed from the input and desired signals?",
+      "answers": {
+        "a": "H_opt = X[n] / d[n]",
+        "b": "H_opt = R * P",
+        "c": "H_opt = R^{-1} * P",
+        "d": "H_opt = P^{-1} * R"
+      },
+      "explanations": {
+        "a": "Incorrect. Simply dividing the vectors does not yield the Wiener solution.",
+        "b": "Incorrect. Multiplying the autocorrelation matrix by the cross-correlation vector is not correct; inversion is needed.",
+        "c": "Correct! The optimal coefficient vector is given by H_opt = R^{-1} P, where R is the input autocorrelation matrix and P is the cross-correlation vector.",
+        "d": "Incorrect. The cross-correlation vector is not inverted; only R is inverted."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "The Wiener-Hopf equation arises from which of the following optimization principles?",
       "answers": {
         "a": "Least squares estimation of noise.",
         "b": "Maximizing output SNR.",
@@ -44,34 +44,16 @@
         "d": "Minimizing filter energy subject to distortion constraints."
       },
       "explanations": {
-        "a": "Noise estimation is not the primary criterion.",
-        "b": "Wiener filtering minimizes MSE, not maximizes SNR directly.",
-        "c": "The orthogonality principle gives rise to the Wiener-Hopf equations.",
-        "d": "This is related to constrained optimization, not Wiener filtering."
+        "a": "Incorrect. Noise estimation is not the primary criterion.",
+        "b": "Incorrect. Wiener filtering minimizes MSE, not maximizes SNR directly.",
+        "c": "Correct! The orthogonality principle gives rise to the Wiener-Hopf equations.",
+        "d": "Incorrect. This is related to constrained optimization, not Wiener filtering."
       },
       "correctAnswer": "c",
       "difficulty": "intermediate"
     },
     {
-      "question": "4. In the frequency domain Wiener filter design, what condition leads to the filter behaving as an ideal pass-through (i.e., H(f) ≈ 1)?",
-      "answers": {
-        "a": "When the noise power spectral density is much greater than the signal power spectral density.",
-        "b": "When the signal power spectral density dominates the noise power spectral density at all frequencies.",
-        "c": "When the signal and noise power spectra are equal at all frequencies.",
-        "d": "When both signal and noise are uncorrelated and zero-mean."
-      },
-      "explanations": {
-        "a": "In this case, the filter suppresses the signal to minimize noise impact, not pass it through.",
-        "b": "When signal power >> noise power, the Wiener filter approaches unity (pass-through behavior).",
-        "c": "This results in a Wiener filter magnitude of 0.5, not 1.",
-        "d": "This is a general assumption, not a frequency-domain pass-through condition."
-      },
-      "correctAnswer": "b",
-      "difficulty": "intermediate"
-    }
-    ,
-    {
-      "question": "5. In practice, what issue arises when estimating the Wiener filter coefficients using sample data?",
+      "question": "In practice, what issue arises when estimating the Wiener filter coefficients using sample data?",
       "answers": {
         "a": "High computational complexity in estimating Fourier transforms.",
         "b": "Noise whitening can distort the desired signal.",
@@ -79,97 +61,114 @@
         "d": "The Wiener filter only works on infinite-length signals."
       },
       "explanations": {
-        "a": "DFT is not the core issue in coefficient estimation.",
-        "b": "Noise whitening is not a requirement in Wiener filtering.",
-        "c": "The sample correlation matrix can be nearly singular, affecting stability.",
-        "d": "Finite-length implementations are possible but need caution."
+        "a": "Incorrect. DFT is not the core issue in coefficient estimation.",
+        "b": "Incorrect. Noise whitening is not a requirement in Wiener filtering.",
+        "c": "Correct! The sample correlation matrix can be nearly singular, affecting stability.",
+        "d": "Incorrect. Finite-length implementations are possible but need caution."
       },
       "correctAnswer": "c",
       "difficulty": "intermediate"
     },
     {
-      "question": "6. Which of the following is **not** an assumption made in the derivation of the Wiener filter?",
+      "question": "What does the autocorrelation function φ_xx[k] represent in Wiener filtering?",
       "answers": {
-        "a": "Signal and noise are uncorrelated.",
-        "b": "Signal and noise are jointly Gaussian.",
-        "c": "The system is linear and time-invariant.",
-        "d": "Mean square error is the cost function."
+        "a": "The power spectral density of the desired signal",
+        "b": "The similarity between the signal and its shifted version",
+        "c": "The error between desired and estimated signal",
+        "d": "The frequency response of the filter"
       },
       "explanations": {
-        "a": "This is a core assumption of Wiener filtering.",
-        "b": "Joint Gaussianity is not required — only second-order statistics matter.",
-        "c": "LTI systems are assumed to apply convolution-based filtering.",
-        "d": "Wiener filtering is defined to minimize MSE."
+        "a": "Incorrect. PSD is the Fourier transform of autocorrelation.",
+        "b": "Correct! Autocorrelation measures similarity between a signal and its shifted version.",
+        "c": "Incorrect. That defines estimation error.",
+        "d": "Incorrect. This refers to filter characteristics, not correlation."
       },
       "correctAnswer": "b",
       "difficulty": "intermediate"
     },
     {
-      "question": "7. Which of the following best describes the effect of the Wiener filter on the input spectrum?",
+      "question": "What is the role of the cross-correlation function φ_xd[k] in Wiener filtering?",
       "answers": {
-        "a": "It normalizes the signal spectrum.",
-        "b": "It suppresses frequencies where the SNR is low.",
-        "c": "It equalizes the spectrum of the signal.",
-        "d": "It boosts the noise spectrum to enhance clarity."
+        "a": "It measures similarity between noise and signal",
+        "b": "It relates input signal to desired signal at different lags",
+        "c": "It determines the filter length",
+        "d": "It defines the noise power"
       },
       "explanations": {
-        "a": "Normalization is not the filtering objective.",
-        "b": "Wiener filters attenuate components where SNR is low.",
-        "c": "Equalization differs from Wiener filtering objectives.",
-        "d": "Boosting noise is counterproductive and incorrect."
+        "a": "Incorrect. It relates input and desired signal, not specifically noise.",
+        "b": "Correct! Cross-correlation measures relation between input and desired signal at lag k.",
+        "c": "Incorrect. Filter length is chosen separately.",
+        "d": "Incorrect. Noise power comes from autocorrelation/PSD."
       },
       "correctAnswer": "b",
       "difficulty": "intermediate"
     },
     {
-      "question": "8. In adaptive implementations, which algorithm is considered a stochastic approximation of the Wiener solution?",
+      "question": "In the FIR Wiener filter formulation, what does the matrix R represent?",
       "answers": {
-        "a": "LMS (Least Mean Squares) algorithm.",
-        "b": "Kalman filter.",
-        "c": "Matched filter algorithm.",
-        "d": "Fourier series estimator."
+        "a": "Cross-correlation matrix between input and desired signal",
+        "b": "Autocorrelation matrix of the input signal",
+        "c": "Noise covariance matrix",
+        "d": "Identity matrix used for normalization"
       },
       "explanations": {
-        "a": "LMS approximates the Wiener solution iteratively with stochastic gradients.",
-        "b": "Kalman filter is recursive but more complex than Wiener filtering.",
-        "c": "Matched filters maximize correlation, not minimize MSE.",
-        "d": "Fourier series estimation is unrelated."
+        "a": "Incorrect. That corresponds to vector P.",
+        "b": "Correct! R = E{X[n] X^T[n]} is the autocorrelation matrix of the input.",
+        "c": "Incorrect. Noise covariance is not explicitly used here.",
+        "d": "Incorrect. R is data-dependent, not identity."
       },
-      "correctAnswer": "a",
+      "correctAnswer": "b",
       "difficulty": "intermediate"
     },
     {
-      "question": "9. For colored noise, the optimal Wiener filter requires knowledge of:",
+      "question": "In the additive noise model x[n] = s[n] + v[n], what assumption allows the Wiener filter to simplify to H(z) = Φ_ss(z) / (Φ_ss(z) + Φ_vv(z))?",
       "answers": {
-        "a": "Only the signal power spectrum.",
-        "b": "Only the noise autocorrelation.",
-        "c": "Both signal and noise power spectra.",
-        "d": "The amplitude spectrum of the desired signal."
+        "a": "The signal and noise are correlated",
+        "b": "The signal and noise are uncorrelated",
+        "c": "The signal is deterministic",
+        "d": "The noise is white only"
       },
       "explanations": {
-        "a": "Noise characteristics are essential when it's colored.",
-        "b": "Signal characteristics are also required for optimal filtering.",
-        "c": "Both spectra are needed to derive the optimal filter in the frequency domain.",
-        "d": "Amplitude is not sufficient; power spectra are needed."
+        "a": "Incorrect. Correlation would introduce cross terms in the spectrum.",
+        "b": "Correct! Uncorrelated signal and noise ensure Φ_xd(z) = Φ_ss(z), leading to this form.",
+        "c": "Incorrect. Wiener filtering assumes random processes, not deterministic signals.",
+        "d": "Incorrect. Noise need not be white; only uncorrelated with the signal."
       },
-      "correctAnswer": "c",
+      "correctAnswer": "b",
       "difficulty": "advanced"
     },
     {
-      "question": "10. What is a major limitation of the classical Wiener filter in real-time applications?",
+      "question": "What does the term P^T R^{-1} P represent in the minimum MSE expression?",
       "answers": {
-        "a": "It introduces significant phase distortion.",
-        "b": "It assumes non-causal filtering which is non-implementable in real-time.",
-        "c": "It increases the noise floor significantly.",
-        "d": "It only works for band-limited signals."
+        "a": "Total noise power in the system",
+        "b": "The portion of desired signal power recoverable from input",
+        "c": "The estimation error",
+        "d": "The filter energy"
       },
       "explanations": {
-        "a": "Phase distortion is not the main constraint.",
-        "b": "The classical Wiener filter is non-causal, hence impractical for real-time use without modifications.",
-        "c": "It minimizes noise impact, not increases it.",
-        "d": "It can be used outside band-limited cases with appropriate assumptions."
+        "a": "Incorrect. Noise power is not directly represented here.",
+        "b": "Correct! It represents the recoverable part of desired signal power.",
+        "c": "Incorrect. This term reduces the error, not equals it.",
+        "d": "Incorrect. It is not related to filter energy."
       },
       "correctAnswer": "b",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "In Wiener filtering, under what condition does the optimal filter become a simple gain factor (i.e., scalar multiplication)?",
+      "answers": {
+        "a": "When the noise is white and the signal is deterministic.",
+        "b": "When both signal and noise are uncorrelated white processes.",
+        "c": "When the autocorrelation matrix becomes diagonal.",
+        "d": "When the signal and noise have equal power spectra."
+      },
+      "explanations": {
+        "a": "Incorrect. Deterministic signals violate the random process assumption.",
+        "b": "Incorrect. White and uncorrelated processes lead to diagonal correlation matrices but not necessarily a scalar gain.",
+        "c": "Correct! A diagonal autocorrelation matrix results in scalar gain per frequency.",
+        "d": "Incorrect. Equal power does not lead to scalar filtering; it leads to SNR = 1."
+      },
+      "correctAnswer": "c",
       "difficulty": "advanced"
     }
   ]
